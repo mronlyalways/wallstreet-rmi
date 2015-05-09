@@ -1,0 +1,26 @@
+﻿using SharedFeatures.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Wallstreet.Model
+{
+    public interface IDataService
+    {
+        IEnumerable<ShareInformation> LoadMarketInformation();
+
+        IEnumerable<Order> LoadOrders();
+
+        IEnumerable<Transaction> LoadTransactions();
+
+        void AddNewMarketInformationAvailableCallback(Action<ShareInformation> callback);
+
+        void AddNewOrderAddedCallback(Action<Order> callback);
+
+        void AddOrderRemovedCallback(Action<Order> callback);
+
+        void AddNewTransactionAddedCallback(Action<Transaction> callback);
+    }
+}
