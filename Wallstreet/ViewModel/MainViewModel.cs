@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
-using SharedFeatures.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Wallstreet.localhost;
 using Wallstreet.Model;
 
 namespace Wallstreet.ViewModel
@@ -18,8 +18,8 @@ namespace Wallstreet.ViewModel
             MarketInformation = new ObservableCollection<ShareInformation>(data.LoadMarketInformation());
             Transactions = new ObservableCollection<Transaction>(data.LoadTransactions());
             var orders = data.LoadOrders();
-            BuyingOrders = new ObservableCollection<Order>(orders.Where(x => x.Type == Order.OrderType.BUY));
-            SellingOrders = new ObservableCollection<Order>(orders.Where(x => x.Type == Order.OrderType.SELL));
+            BuyingOrders = new ObservableCollection<Order>(orders.Where(x => x.Type == OrderType.BUY));
+            SellingOrders = new ObservableCollection<Order>(orders.Where(x => x.Type == OrderType.SELL));
 
             data.AddNewMarketInformationAvailableCallback(OnNewMarketInformationAvailable);
             data.AddNewOrderAddedCallback(OnNewOrderAdded);
@@ -51,7 +51,7 @@ namespace Wallstreet.ViewModel
 
         private void OnNewOrderAdded(Order order)
         {
-            if (order.Type == Order.OrderType.BUY)
+            if (order.Type == OrderType.BUY)
             {
                 BuyingOrders.Add(order);
             }
@@ -63,7 +63,7 @@ namespace Wallstreet.ViewModel
 
         private void OnOrderRemoved(Order order)
         {
-            if (order.Type == Order.OrderType.BUY)
+            if (order.Type == OrderType.BUY)
             {
                 BuyingOrders.Remove(order);
             }

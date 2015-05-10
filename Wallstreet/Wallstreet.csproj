@@ -54,6 +54,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -77,8 +79,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\XcoDataService.cs" />
+    <Compile Include="Model\WcfDataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Service References\localhost\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ResourceLocator.cs" />
     <Page Include="MainWindow.xaml">
@@ -122,20 +129,59 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\localhost\Wallstreet.localhost.FirmDepot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\Wallstreet.localhost.Order.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\Wallstreet.localhost.ShareInformation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\Wallstreet.localhost.Transaction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\WallstreetDataService.wsdl" />
+    <None Include="Service References\localhost\WallstreetDataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\localhost\WallstreetDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\localhost\WallstreetDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\localhost\WallstreetDataService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharedFeatures\SharedFeatures.csproj">
-      <Project>{5b7cfee1-57c4-4b1a-bce8-d06fbcb027f1}</Project>
-      <Name>SharedFeatures</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <DesignData Include="SampleData\MainViewModelSampleData.xaml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\localhost\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\localhost\WallstreetDataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\localhost\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\localhost\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\localhost\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

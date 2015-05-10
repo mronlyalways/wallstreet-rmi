@@ -11,7 +11,7 @@ namespace Wallstreet.ViewModel
         static ResourceLocator()
         {
             kernel = new StandardKernel();
-            kernel.Bind<IDataService>().To<XcoDataService>().InSingletonScope();
+            kernel.Bind<IDataService>().To<WcfDataService>().InSingletonScope();
         }
 
         public MainViewModel Main

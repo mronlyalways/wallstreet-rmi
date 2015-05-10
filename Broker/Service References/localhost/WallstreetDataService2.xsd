@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfShareInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ShareInformation" nillable="true" type="tns:ShareInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfShareInformation" nillable="true" type="tns:ArrayOfShareInformation" />
+  <xs:complexType name="ShareInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NoOfShares" type="xs:int" />
+      <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
+      <xs:element minOccurs="0" name="PurchasingVolume" type="xs:int" />
+      <xs:element minOccurs="0" name="SalesVolume" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ShareInformation" nillable="true" type="tns:ShareInformation" />
+  <xs:complexType name="ArrayOfOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvestorId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Limit" type="xs:double" />
+      <xs:element minOccurs="0" name="NoOfOpenShares" type="xs:int" />
+      <xs:element minOccurs="0" name="NoOfProcessedShares" type="xs:int" />
+      <xs:element minOccurs="0" name="ShareName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="tns:OrderStatus" />
+      <xs:element minOccurs="0" name="TotalNoOfShares" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" type="tns:OrderType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
+  <xs:simpleType name="OrderStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OPEN" />
+      <xs:enumeration value="PARTIAL" />
+      <xs:enumeration value="DONE" />
+      <xs:enumeration value="DELETED" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderStatus" nillable="true" type="tns:OrderStatus" />
+  <xs:simpleType name="OrderType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BUY" />
+      <xs:enumeration value="SELL" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="OrderType" nillable="true" type="tns:OrderType" />
+  <xs:complexType name="ArrayOfTransaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Transaction" nillable="true" type="tns:Transaction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTransaction" nillable="true" type="tns:ArrayOfTransaction" />
+  <xs:complexType name="Transaction">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BrokerId" type="xs:long" />
+      <xs:element minOccurs="0" name="BuyerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BuyingOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NoOfSharesSold" type="xs:int" />
+      <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
+      <xs:element minOccurs="0" name="Provision" type="xs:double" />
+      <xs:element minOccurs="0" name="SellerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellingOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShareName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalCost" type="xs:double" />
+      <xs:element minOccurs="0" name="TransactionId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Transaction" nillable="true" type="tns:Transaction" />
+  <xs:complexType name="Request">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
+      <xs:element minOccurs="0" name="Shares" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Request" nillable="true" type="tns:Request" />
+  <xs:complexType name="FirmDepot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OwnedShares" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FirmDepot" nillable="true" type="tns:FirmDepot" />
+</xs:schema>

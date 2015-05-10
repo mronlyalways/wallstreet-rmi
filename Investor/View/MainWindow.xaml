@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:m="clr-namespace:SharedFeatures.Model;assembly=SharedFeatures"
-        xmlns:im="clr-namespace:Investor.Model"
+        xmlns:im="clr-namespace:Investor.localhost"
         Title="SBC Investor"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Window.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="BuyingShareInformationTemplate" DataType="{x:Type m:ShareInformation}">
+            <DataTemplate x:Key="BuyingShareInformationTemplate" DataType="{x:Type im:ShareInformation}">
                 <StackPanel Orientation="Horizontal" Margin="5,10">
                     <Label Content="Share Name:"/>
                     <Label Content="{Binding FirmName}"/>
@@ -23,7 +22,7 @@
                     <Label Content="{Binding PricePerShare}"/>
                 </StackPanel>
             </DataTemplate>
-            <DataTemplate x:Key="SellingShareInformationTemplate" DataType="{x:Type im:OwningShareDTO}">
+            <!--<DataTemplate x:Key="SellingShareInformationTemplate" DataType="{x:Type im:OwningShareDTO}">
                 <StackPanel Orientation="Horizontal" Margin="5,10">
                     <Label Content="Share Name:"/>
                     <Label Content="{Binding ShareName}"/>
@@ -34,8 +33,8 @@
                     <Label Content="Value:"/>
                     <Label Content="{Binding Value}"/>
                 </StackPanel>
-            </DataTemplate>
-            <DataTemplate x:Key="OrderTemplate" DataType="{x:Type m:Order}">
+            </DataTemplate>-->
+            <DataTemplate x:Key="OrderTemplate" DataType="{x:Type im:Order}">
                 <StackPanel Orientation="Horizontal" Margin="5,10">
                     <Label Content="Order Type:"/>
                     <Label Content="{Binding Type}"/>
@@ -82,7 +81,7 @@
                     <Label Grid.Column="0" Grid.Row="0" Content="Buy"/>
                     <Label Grid.Column="1" Grid.Row="0" Content="Sell"/>
                     <ListBox Grid.Column="0" Grid.Row="1" ItemTemplate="{StaticResource BuyingShareInformationTemplate}" ItemsSource="{Binding MarketInformation}" SelectedItem="{Binding SelectedBuyingShare}"/>
-                    <ListBox Grid.Column="1" Grid.Row="1" ItemTemplate="{StaticResource SellingShareInformationTemplate}" ItemsSource="{Binding OwnedShares}" SelectedItem="{Binding SelectedSellingShare}"/>
+                    <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding OwnedShares}" SelectedItem="{Binding SelectedSellingShare}"/>
                     <StackPanel Grid.Column="0" Grid.Row="2">
                         <Label Content="Share to be aquired:" />
                         <Label Content="{Binding SelectedBuyingShare}" />

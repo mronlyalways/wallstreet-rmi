@@ -1,7 +1,8 @@
-﻿using SharedFeatures.Model;
+﻿using Firm.localhost;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using XcoSpaces;
@@ -14,45 +15,27 @@ namespace Firm
     {
         static void Main(string[] args)
         {
-            using (XcoSpace space = new XcoSpace(0))
-            {
-                string name;
-                int shares;
-                double pricePerShare;
-                if (args.Count() == 3 && Int32.TryParse(args[1], out shares) && Double.TryParse(args[2], out pricePerShare))
-                {
-                    name = args[0];
-                    try
-                    {
-                        XcoQueue<Request> q = space.Get<XcoQueue<Request>>("RequestQ", new Uri("xco://" + Environment.MachineName + ":" + 9000));
-                        q.Enqueue(new Request() { FirmName = name, Shares = shares, PricePerShare = pricePerShare });
-                    }
-                    catch (XcoException)
-                    {
-                        Console.WriteLine("Unable to reach server.\nPress enter to exit.");
-                        Console.ReadLine();
-                    }
-                }
-                else
-                {
-                    Console.Error.WriteLine("Enter a firmname, the number of shares and the price per share.\nPress enter to exit.");
-                    name = Console.ReadLine();
-                    Int32.TryParse(Console.ReadLine(), out shares);
-                    Double.TryParse(Console.ReadLine(), out pricePerShare);
-                    Console.ReadLine();
+            var wallstreetClient = new WallstreetDataServiceClient(new InstanceContext(new WallstreetHandlerDummy()));
 
-                    try
-                    {
-                        XcoQueue<Request> q = space.Get<XcoQueue<Request>>("RequestQ", new Uri("xco://" + Environment.MachineName + ":" + 9000));
-                        q.Enqueue(new Request() { FirmName = name, Shares = shares, PricePerShare = pricePerShare });
-                    }
-                    catch (XcoException)
-                    {
-                        Console.WriteLine("Unable to reach server.\nPress enter to exit.");
-                        Console.ReadLine();
-                    }
-                }
+            string name;
+            int shares;
+            double pricePerShare;
+            if (args.Count() == 3)
+            {
+                name = args[0];
+                shares = Int32.Parse(args[1]);
+                pricePerShare = Double.Parse(args[2]);
             }
+            else
+            {
+                Console.WriteLine("Enter a triple <FirmName> <NoOfShares> <PricePerShare> to create firm.");
+                var input = Console.ReadLine().Split(' ');
+                name = input[0];
+                shares = Int32.Parse(input[1]);
+                pricePerShare = Double.Parse(input[2]);
+            }
+            var depot = wallstreetClient.RegisterFirm(new Request() { FirmName = name, Shares = shares, PricePerShare = pricePerShare });
+            Console.WriteLine("Depot created.");
         }
     }
 }

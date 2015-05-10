@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
-        xmlns:m="clr-namespace:SharedFeatures.Model;assembly=SharedFeatures"
+        xmlns:m="clr-namespace:Wallstreet.localhost"
         mc:Ignorable="d ignore"
         Title="Wallstreet Application"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
