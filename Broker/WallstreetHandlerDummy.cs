@@ -15,5 +15,7 @@ namespace Broker
         public void OnNewOrderAvailable(Order order) { }
 
         public void OnNewTransactionAvailable(Transaction transaction) { }
+
+        public void OnNewInvestorDepotAvailable(InvestorDepot transaction) { }
     }
 }
