@@ -267,6 +267,7 @@ namespace Investor.ViewModel
         private void CancelPendingOrder()
         {
             data.CancelOrder(SelectedPendingOrder);
+            pendingOrders.Remove(SelectedPendingOrder);
         }
 
         private void Logout()
