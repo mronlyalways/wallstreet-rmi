@@ -98,7 +98,7 @@ namespace Investor.Model
 
         public void OnNewOrderAvailable(Order order)
         {
-            if (email != null && order.InvestorId == email)
+            if (email != null && order.InvestorId.Equals(email))
             {
                 ExecuteOnGUIThread(orderAddedCallbacks, order);
             }
@@ -106,7 +106,7 @@ namespace Investor.Model
 
         public void OnNewInvestorDepotAvailable(InvestorDepot depot)
         {
-            if (email != null && depot != null && depot.Email == email)
+            if (email != null && depot != null && depot.Email.Equals(email))
             {
                 ExecuteOnGUIThread(investorAddedCallbacks, depot);
             }
@@ -114,7 +114,7 @@ namespace Investor.Model
 
         public void OnNewTransactionAvailable(Transaction transaction)
         {
-            if (email != null && (transaction.BuyerId == email || transaction.SellerId == email))
+            if (email != null && (transaction.BuyerId.Equals(email) || transaction.SellerId.Equals(email)))
             {
                 ExecuteOnGUIThread(transactionAddedCallbacks, transaction);
             }

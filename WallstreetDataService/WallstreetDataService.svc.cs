@@ -77,17 +77,15 @@ namespace WallstreetDataService
 
         public IEnumerable<Order> GetPendingOrders(string investorId)
         {
-            return data.Orders.Values.Where(x => x.InvestorId == investorId && (x.Status == Order.OrderStatus.PARTIAL || x.Status == Order.OrderStatus.OPEN));
+            return data.Orders.Values.Where(x => x.InvestorId.Equals(investorId) && (x.Status == Order.OrderStatus.PARTIAL || x.Status == Order.OrderStatus.OPEN));
         }
 
         public void PutOrder(Order order)
         {
-
             data.Orders[order.Id] = order;
 
             if (data.Brokers.Count > 0)
             {
-
                 Interlocked.Increment(ref putOrdersCounter);
                 int counter = (int) Interlocked.Read(ref putOrdersCounter) % data.Brokers.Count;
 
@@ -98,12 +96,8 @@ namespace WallstreetDataService
                     Interlocked.Exchange(ref putOrdersCounter, 0);
                 }
                 
-                var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName == order.ShareName && x.Type != order.Type));
-                if (result == null)
-                {
-                    data.Orders[order.Id] = order;
-                }
-                else
+                var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type));
+                if (result.Order != null) // else punish : do nothing
                 {
                     foreach (Order o in result.Matches)
                     {
@@ -137,10 +131,16 @@ namespace WallstreetDataService
                         NotifySubscribers(data.InvestorCallbacks, seller);
                     }
                     NotifySubscribers(data.OrderCallbacks, result.Order);
+                    data.Orders[order.Id] = order;
                     foreach (Order ord in result.Matches)
                     {
                         NotifySubscribers(data.OrderCallbacks, ord);
                     }
+
+                    var info = data.ShareInformation[order.ShareName];
+                    info.PurchasingVolume = CalculatePurchasingVolume(data.Orders.Values);
+                    info.SalesVolume = CalculateSalesVolume(data.Orders.Values);
+                    NotifySubscribers(data.ShareInformationCallbacks, info);
                 }
             }
         }
@@ -251,6 +251,16 @@ namespace WallstreetDataService
             {
                 callback(arg);
             }
+        }
+
+        private int CalculateSalesVolume(IEnumerable<Order> orders)
+        {
+            return orders.Where(x => x.Status != Order.OrderStatus.DONE && x.Type == Order.OrderType.SELL).Sum(x => x.NoOfOpenShares);
+        }
+
+        private int CalculatePurchasingVolume(IEnumerable<Order> orders)
+        {
+            return orders.Where(x => x.Status != Order.OrderStatus.DONE && x.Type == Order.OrderType.BUY).Sum(x => x.NoOfOpenShares);
         }
     }
 }

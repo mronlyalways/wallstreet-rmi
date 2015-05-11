@@ -37,6 +37,7 @@ namespace Investor.ViewModel
         {
             PendingOrders = new ObservableCollection<Order>(PendingOrders.Where(x => !x.Id.Equals(order.Id) && x.Status != OrderStatus.DONE));
             PendingOrders.Add(order);
+            PendingOrders = new ObservableCollection<Order>(PendingOrders.Where(x => x.Status != OrderStatus.DONE));
         }
 
         private void UpdateInvestorInformation(InvestorDepot d)

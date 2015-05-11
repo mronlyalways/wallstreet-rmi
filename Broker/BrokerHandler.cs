@@ -60,46 +60,30 @@ namespace Broker
             var newOrder = result.Item1;
             var matches = result.Item2;
             var newTransactions = result.Item3;
-            if (matches.Count() > 0)
+            if ((order.Type == OrderType.BUY && IsAffordableForBuyer(order.InvestorId, newTransactions))
+                || (order.Type == OrderType.SELL && SellerHasEnoughShares(order.InvestorId, order.ShareName, newTransactions)))
             {
-                if (IsAffordableForBuyers(newTransactions.Select(x => x.BuyerId), newTransactions) && SellersHaveEnoughShares(newTransactions.Select(x => x.SellerId), order.ShareName, newTransactions))
-                {
-                    return new OrderMatchResult { Order = newOrder, Matches = matches.ToArray(), Transactions = newTransactions.ToArray() };
-                }
-                else
-                {
-                    return null;
-                }
+                return new OrderMatchResult { Order = newOrder, Matches = matches.ToArray(), Transactions = newTransactions.ToArray() };
             }
             else
             {
-                return null;
+                return new OrderMatchResult { Order = null, Matches = null, Transactions = null };
             }
         }
 
-        private bool IsAffordableForBuyers(IEnumerable<string> buyerIds, IEnumerable<Transaction> transactions)
+        private bool IsAffordableForBuyer(string id, IEnumerable<Transaction> transactions)
         {
-            bool affordable = true;
-            foreach (string id in buyerIds)
-            {
-                var moneyNeeded = transactions.Where(x => x.BuyerId == id).Sum(x => x.TotalCost + x.Provision);
-                var balance = wallstreetClient.GetInvestorDepot(id).Budget;
-                affordable &= balance >= moneyNeeded;
-            }
-            return affordable;
+            var moneyNeeded = transactions.Where(x => x.BuyerId == id).Sum(x => x.TotalCost + x.Provision);
+            var balance = wallstreetClient.GetInvestorDepot(id).Budget;
+            return balance >= moneyNeeded;
         }
 
-        private bool SellersHaveEnoughShares(IEnumerable<string> sellerIds, string shareName, IEnumerable<Transaction> transactions)
+        private bool SellerHasEnoughShares(string id, string shareName, IEnumerable<Transaction> transactions)
         {
-            bool haveEnough = true;
-            foreach (string id in sellerIds)
-            {
-                var sharesNeeded = transactions.Where(x => x.SellerId == id).Sum(x => x.NoOfSharesSold);
-                var seller = wallstreetClient.GetInvestorDepot(id);
-                var balance = seller == null ? wallstreetClient.GetFirmDepot(id).OwnedShares : seller.Shares[shareName];
-                haveEnough &= balance >= sharesNeeded;
-            }
-            return haveEnough;
+            var sharesNeeded = transactions.Where(x => x.SellerId == id).Sum(x => x.NoOfSharesSold);
+            var seller = wallstreetClient.GetInvestorDepot(id);
+            var balance = seller == null ? wallstreetClient.GetFirmDepot(id).OwnedShares : seller.Shares[shareName];
+            return balance >= sharesNeeded;
         }
 
         /// <summary>
@@ -144,6 +128,8 @@ namespace Broker
                     BuyingOrderId = buyMode ? order.Id : match.Id,
                     SellingOrderId = buyMode ? match.Id : order.Id,
                     NoOfSharesSold = sharesProcessed,
+                    TotalCost = totalCost,
+                    Provision = totalCost * 0.03,
                     PricePerShare = stockPrice
                 });
                 order.NoOfProcessedShares += sharesProcessed;
