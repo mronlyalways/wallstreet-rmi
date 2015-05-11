@@ -54,6 +54,7 @@ namespace Broker
 
         public OrderMatchResult OnNewOrderMatchingRequestAvailable(Order order, Order[] orders)
         {
+            Console.WriteLine("Process order: " + order);
             var stockPrice = wallstreetClient.GetShareInformation(order.ShareName).PricePerShare;
             var result = MatchOrders(order, orders.ToList(), stockPrice);
             var newOrder = result.Item1;

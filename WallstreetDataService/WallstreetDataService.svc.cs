@@ -7,12 +7,14 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using WallstreetDataService.Model;
+using System.Threading;
 
 namespace WallstreetDataService
 {
     public class WallstreetDataService : IWallstreetDataService, IBrokerService
     {
         private DataRepository data;
+        static private long putOrdersCounter = 0;
 
         public WallstreetDataService(DataRepository data)
         {
@@ -70,22 +72,36 @@ namespace WallstreetDataService
 
         public IEnumerable<Order> GetOrders()
         {
-            return data.PendingOrders.Values;
+            return data.Orders.Values;
         }
 
         public IEnumerable<Order> GetPendingOrders(string investorId)
         {
-            return data.PendingOrders.Values.Where(x => x.InvestorId == investorId && (x.Status == Order.OrderStatus.PARTIAL || x.Status == Order.OrderStatus.OPEN));
+            return data.Orders.Values.Where(x => x.InvestorId == investorId && (x.Status == Order.OrderStatus.PARTIAL || x.Status == Order.OrderStatus.OPEN));
         }
 
         public void PutOrder(Order order)
         {
+
+            data.Orders[order.Id] = order;
+
             if (data.Brokers.Count > 0)
             {
-                var result = data.Brokers.First().OnNewOrderMatchingRequestAvailable(order, data.PendingOrders.Values.Where(x => x.ShareName == order.ShareName && x.Type != order.Type));
+
+                Interlocked.Increment(ref putOrdersCounter);
+                int counter = (int) Interlocked.Read(ref putOrdersCounter) % data.Brokers.Count;
+
+                IBroker broker = data.Brokers.ToList()[counter];
+
+                if (counter == data.Brokers.Count)
+                {
+                    Interlocked.Exchange(ref putOrdersCounter, 0);
+                }
+                
+                var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName == order.ShareName && x.Type != order.Type));
                 if (result == null)
                 {
-                    data.PendingOrders[order.Id] = order;
+                    data.Orders[order.Id] = order;
                 }
                 else
                 {
@@ -93,7 +109,7 @@ namespace WallstreetDataService
                     {
                         if (o.Status != Order.OrderStatus.DONE)
                         {
-                            data.PendingOrders[o.Id] = o;
+                            data.Orders[o.Id] = o;
                         }
                     }
 
@@ -127,16 +143,12 @@ namespace WallstreetDataService
                     }
                 }
             }
-            else
-            {
-                data.PendingOrders[order.Id] = order;
-            }
         }
 
         public void DeleteOrder(Order order)
         {
             Order o;
-            data.PendingOrders.TryRemove(order.Id, out o);
+            data.Orders.TryRemove(order.Id, out o);
         }
 
         public IEnumerable<Transaction> GetTransactions()
@@ -159,7 +171,7 @@ namespace WallstreetDataService
                 var info = result.ShareInformation;
                 var order = result.Order;
                 data.FirmDepots[depot.FirmName] = depot;
-                data.PendingOrders[order.Id] = order;
+                data.Orders[order.Id] = order;
                 NotifySubscribers(data.OrderCallbacks, order);
                 data.ShareInformation[info.FirmName] = info;
                 NotifySubscribers(data.ShareInformationCallbacks, info);
@@ -212,8 +224,19 @@ namespace WallstreetDataService
 
         public void RegisterBroker()
         {
+            bool empty = data.Brokers.Count == 0;
             var subscriber = OperationContext.Current.GetCallbackChannel<IBroker>();
             data.Brokers.Add(subscriber);
+
+            if (empty && data.Brokers.Count == 1)
+            {
+                Order[] pending = data.Orders.Values.Where(x => x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED).ToArray();
+
+                foreach (Order o in pending)
+                {
+                    PutOrder(o);
+                }
+            }
         }
 
         public void UnregisterBroker()

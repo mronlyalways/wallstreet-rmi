@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Firm
@@ -33,6 +34,8 @@ namespace Firm
             }
             var depot = wallstreetClient.RegisterFirm(new Request() { FirmName = name, Shares = shares, PricePerShare = pricePerShare });
             Console.WriteLine("Depot created.");
+
+            Thread.Sleep(2000);
         }
     }
 }

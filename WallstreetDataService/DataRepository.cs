@@ -15,7 +15,7 @@ namespace WallstreetDataService
             Brokers = new ConcurrentBag<IBroker>();
             ShareInformation = new ConcurrentDictionary<string, ShareInformation>();
             InvestorDepots = new ConcurrentDictionary<string, InvestorDepot>();
-            PendingOrders = new ConcurrentDictionary<string, Order>();
+            Orders = new ConcurrentDictionary<string, Order>();
             Transactions = new ConcurrentBag<Transaction>();
             FirmDepots = new ConcurrentDictionary<string, FirmDepot>();
             PendingRequests = new ConcurrentBag<Request>();
@@ -28,7 +28,7 @@ namespace WallstreetDataService
         public ConcurrentBag<IBroker> Brokers { get; set; }
         public ConcurrentDictionary<string, ShareInformation> ShareInformation { get; set; }
         public ConcurrentDictionary<string, InvestorDepot> InvestorDepots { get; set; }
-        public ConcurrentDictionary<string, Order> PendingOrders { get; set; }
+        public ConcurrentDictionary<string, Order> Orders { get; set; }
         public ConcurrentBag<Transaction> Transactions { get; set; }
         public ConcurrentDictionary<string, FirmDepot> FirmDepots { get; set; }
         public ConcurrentBag<Request> PendingRequests { get; set; }
