@@ -1240,6 +1240,12 @@ namespace Firm.localhost {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/RegisterBroker", ReplyAction="http://tempuri.org/IBrokerService/RegisterBrokerResponse")]
         System.Threading.Tasks.Task RegisterBrokerAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/UnregisterBroker", ReplyAction="http://tempuri.org/IBrokerService/UnregisterBrokerResponse")]
+        void UnregisterBroker();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/UnregisterBroker", ReplyAction="http://tempuri.org/IBrokerService/UnregisterBrokerResponse")]
+        System.Threading.Tasks.Task UnregisterBrokerAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1286,6 +1292,14 @@ namespace Firm.localhost {
         
         public System.Threading.Tasks.Task RegisterBrokerAsync() {
             return base.Channel.RegisterBrokerAsync();
+        }
+        
+        public void UnregisterBroker() {
+            base.Channel.UnregisterBroker();
+        }
+        
+        public System.Threading.Tasks.Task UnregisterBrokerAsync() {
+            return base.Channel.UnregisterBrokerAsync();
         }
     }
 }

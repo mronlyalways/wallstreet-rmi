@@ -196,6 +196,12 @@ namespace WallstreetDataService
             data.Brokers.Add(subscriber);
         }
 
+        public void UnregisterBroker()
+        {
+            var subscriber = OperationContext.Current.GetCallbackChannel<IBroker>();
+            data.Brokers = new ConcurrentBag<IBroker>(data.Brokers.Where(x => x.GetHashCode() != subscriber.GetHashCode()));
+        }
+
         private void NotifySubscribers<T>(IEnumerable<Action<T>> callbacks, T arg)
         {
             foreach (Action<T> callback in callbacks)

@@ -13,5 +13,8 @@ namespace WallstreetDataService
     {
         [OperationContract]
         void RegisterBroker();
+
+        [OperationContract]
+        void UnregisterBroker();
     }
 }

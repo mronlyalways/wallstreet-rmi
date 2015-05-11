@@ -193,6 +193,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="UnregisterBroker">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnregisterBrokerResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="OnNewRegistrationRequestAvailable">
     <xs:complexType>
       <xs:sequence>

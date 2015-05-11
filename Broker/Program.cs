@@ -18,6 +18,8 @@ namespace Broker
             client.RegisterBroker();
             Console.WriteLine("Broker online. Press enter to exit ...");
             Console.ReadLine();
+            client.UnregisterBroker();
+            client.Close();
         }
     }
 }
