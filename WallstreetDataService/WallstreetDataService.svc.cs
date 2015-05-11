@@ -37,6 +37,10 @@ namespace WallstreetDataService
         {
             data.ShareInformation[info.FirmName] = info;
             NotifySubscribers(data.ShareInformationCallbacks, info);
+            foreach (Order o in data.Orders.Values.Where(x => x.Status != Order.OrderStatus.DONE && x.Type == Order.OrderType.BUY))
+            {
+                PutOrder(o);
+            }
         }
 
         public IEnumerable<InvestorDepot> GetInvestorInformation()
