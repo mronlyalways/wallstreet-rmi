@@ -33,9 +33,10 @@ namespace Broker
             var info = wallstreetClient.GetShareInformation(firmName);
             if (info == null)
             {
-                info = new ShareInformation() { FirmName = firmName, NoOfShares = request.Shares, PricePerShare = request.PricePerShare, PurchasingVolume = 0, SalesVolume = request.Shares };
+                info = new ShareInformation() { FirmName = firmName, NoOfShares = 0, PricePerShare = request.PricePerShare, PurchasingVolume = 0, SalesVolume = 0 };
             }
-
+            info.NoOfShares += request.Shares;
+            info.SalesVolume += request.Shares;
             var order = new Order()
             {
                 Id = firmName + DateTime.Now.Ticks,

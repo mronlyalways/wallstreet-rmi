@@ -105,10 +105,7 @@ namespace WallstreetDataService
                 {
                     foreach (Order o in result.Matches)
                     {
-                        if (o.Status != Order.OrderStatus.DONE)
-                        {
-                            data.Orders[o.Id] = o;
-                        }
+                         data.Orders[o.Id] = o;
                     }
 
                     foreach (Transaction t in result.Transactions)
@@ -135,7 +132,7 @@ namespace WallstreetDataService
                         NotifySubscribers(data.InvestorCallbacks, seller);
                     }
                     NotifySubscribers(data.OrderCallbacks, result.Order);
-                    data.Orders[order.Id] = order;
+                    data.Orders[order.Id] = result.Order;
                     foreach (Order ord in result.Matches)
                     {
                         NotifySubscribers(data.OrderCallbacks, ord);
@@ -145,6 +142,10 @@ namespace WallstreetDataService
                     info.PurchasingVolume = CalculatePurchasingVolume(data.Orders.Values);
                     info.SalesVolume = CalculateSalesVolume(data.Orders.Values);
                     NotifySubscribers(data.ShareInformationCallbacks, info);
+                }
+                else
+                {
+                    data.Orders.TryRemove(order.Id, out order);
                 }
             }
         }
