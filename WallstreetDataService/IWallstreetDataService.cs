@@ -36,8 +36,14 @@ namespace WallstreetDataService
         [OperationContract]
         IEnumerable<Order> GetOrders();
 
+        [OperationContract]
+        IEnumerable<Order> GetPendingOrders(string investorId);
+
         [OperationContract(IsOneWay = true)]
         void PutOrder(Order order);
+
+        [OperationContract(IsOneWay = true)]
+        void DeleteOrder(Order order);
 
         [OperationContract]
         IEnumerable<Transaction> GetTransactions();
@@ -56,6 +62,9 @@ namespace WallstreetDataService
 
         [OperationContract(IsOneWay = true)]
         void SubscribeOnNewOrderAvailable();
+
+        [OperationContract(IsOneWay = true)]
+        void SubscribeOnNewInvestorDepotAvailable();
 
         [OperationContract(IsOneWay = true)]
         void SubscribeOnNewTransactionAvailable();

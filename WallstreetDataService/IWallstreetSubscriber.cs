@@ -11,6 +11,9 @@ namespace WallstreetDataService
     public interface IWallstreetSubscriber
     {
         [OperationContract(IsOneWay = true)]
+        void OnNewInvestorDepotAvailable(InvestorDepot depot);
+
+        [OperationContract(IsOneWay = true)]
         void OnNewShareInformationAvailable(ShareInformation info);
 
         [OperationContract(IsOneWay = true)]

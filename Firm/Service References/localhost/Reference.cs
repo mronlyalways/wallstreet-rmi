@@ -1010,11 +1010,23 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
         System.Threading.Tasks.Task<Firm.localhost.Order[]> GetOrdersAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetPendingOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetPendingOrdersResponse")]
+        Firm.localhost.Order[] GetPendingOrders(string investorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetPendingOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetPendingOrdersResponse")]
+        System.Threading.Tasks.Task<Firm.localhost.Order[]> GetPendingOrdersAsync(string investorId);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
         void PutOrder(Firm.localhost.Order order);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
         System.Threading.Tasks.Task PutOrderAsync(Firm.localhost.Order order);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/DeleteOrder")]
+        void DeleteOrder(Firm.localhost.Order order);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/DeleteOrder")]
+        System.Threading.Tasks.Task DeleteOrderAsync(Firm.localhost.Order order);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
         Firm.localhost.Transaction[] GetTransactions();
@@ -1054,6 +1066,12 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
         System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync();
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewInvestorDepotAvailable")]
+        void SubscribeOnNewInvestorDepotAvailable();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewInvestorDepotAvailable")]
+        System.Threading.Tasks.Task SubscribeOnNewInvestorDepotAvailableAsync();
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
         void SubscribeOnNewTransactionAvailable();
         
@@ -1063,6 +1081,9 @@ namespace Firm.localhost {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IWallstreetDataServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/OnNewInvestorDepotAvailable")]
+        void OnNewInvestorDepotAvailable(Firm.localhost.InvestorDepot depot);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/OnNewShareInformationAvailable")]
         void OnNewShareInformationAvailable(Firm.localhost.ShareInformation info);
@@ -1166,12 +1187,28 @@ namespace Firm.localhost {
             return base.Channel.GetOrdersAsync();
         }
         
+        public Firm.localhost.Order[] GetPendingOrders(string investorId) {
+            return base.Channel.GetPendingOrders(investorId);
+        }
+        
+        public System.Threading.Tasks.Task<Firm.localhost.Order[]> GetPendingOrdersAsync(string investorId) {
+            return base.Channel.GetPendingOrdersAsync(investorId);
+        }
+        
         public void PutOrder(Firm.localhost.Order order) {
             base.Channel.PutOrder(order);
         }
         
         public System.Threading.Tasks.Task PutOrderAsync(Firm.localhost.Order order) {
             return base.Channel.PutOrderAsync(order);
+        }
+        
+        public void DeleteOrder(Firm.localhost.Order order) {
+            base.Channel.DeleteOrder(order);
+        }
+        
+        public System.Threading.Tasks.Task DeleteOrderAsync(Firm.localhost.Order order) {
+            return base.Channel.DeleteOrderAsync(order);
         }
         
         public Firm.localhost.Transaction[] GetTransactions() {
@@ -1220,6 +1257,14 @@ namespace Firm.localhost {
         
         public System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync() {
             return base.Channel.SubscribeOnNewOrderAvailableAsync();
+        }
+        
+        public void SubscribeOnNewInvestorDepotAvailable() {
+            base.Channel.SubscribeOnNewInvestorDepotAvailable();
+        }
+        
+        public System.Threading.Tasks.Task SubscribeOnNewInvestorDepotAvailableAsync() {
+            return base.Channel.SubscribeOnNewInvestorDepotAvailableAsync();
         }
         
         public void SubscribeOnNewTransactionAvailable() {

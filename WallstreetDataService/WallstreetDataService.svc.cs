@@ -52,6 +52,7 @@ namespace WallstreetDataService
         public void PutInvestorDepot(InvestorDepot investor)
         {
             data.InvestorDepots[investor.Email] = investor;
+            NotifySubscribers(data.InvestorCallbacks, investor);
         }
 
         public InvestorDepot LoginInvestor(Registration registration)
@@ -70,6 +71,11 @@ namespace WallstreetDataService
         public IEnumerable<Order> GetOrders()
         {
             return data.PendingOrders.Values;
+        }
+
+        public IEnumerable<Order> GetPendingOrders(string investorId)
+        {
+            return data.PendingOrders.Values.Where(x => x.InvestorId == investorId && (x.Status == Order.OrderStatus.PARTIAL || x.Status == Order.OrderStatus.OPEN));
         }
 
         public void PutOrder(Order order)
@@ -111,6 +117,8 @@ namespace WallstreetDataService
                         }
                         data.Transactions.Add(t);
                         NotifySubscribers(data.TransactionCallbacks, t);
+                        NotifySubscribers(data.InvestorCallbacks, buyer);
+                        NotifySubscribers(data.InvestorCallbacks, seller);
                     }
                     NotifySubscribers(data.OrderCallbacks, result.Order);
                     foreach (Order ord in result.Matches)
@@ -123,6 +131,12 @@ namespace WallstreetDataService
             {
                 data.PendingOrders[order.Id] = order;
             }
+        }
+
+        public void DeleteOrder(Order order)
+        {
+            Order o;
+            data.PendingOrders.TryRemove(order.Id, out o);
         }
 
         public IEnumerable<Transaction> GetTransactions()
@@ -188,6 +202,12 @@ namespace WallstreetDataService
         {
             var subscriber = OperationContext.Current.GetCallbackChannel<IWallstreetSubscriber>();
             data.TransactionCallbacks.Add(subscriber.OnNewTransactionAvailable);
+        }
+
+        public void SubscribeOnNewInvestorDepotAvailable()
+        {
+            var subscriber = OperationContext.Current.GetCallbackChannel<IWallstreetSubscriber>();
+            data.InvestorCallbacks.Add(subscriber.OnNewInvestorDepotAvailable);
         }
 
         public void RegisterBroker()

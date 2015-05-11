@@ -14,8 +14,6 @@ namespace Investor.Model
         private WallstreetDataServiceClient client;
         private IList<Action<ShareInformation>> marketCallbacks;
         private IList<Action<Order>> orderAddedCallbacks;
-        private IList<Action<Order>> orderRemovedCallbacks;
-        private IList<Action<IEnumerable<Order>>> pendingOrdersAddedCallbacks;
         private IList<Action<InvestorDepot>> investorAddedCallbacks;
         private IList<Action<Transaction>> transactionAddedCallbacks;
         private string email;
@@ -26,10 +24,9 @@ namespace Investor.Model
             client.SubscribeOnNewShareInformationAvailable();
             client.SubscribeOnNewOrderAvailable();
             client.SubscribeOnNewTransactionAvailable();
+            client.SubscribeOnNewInvestorDepotAvailable();
             marketCallbacks = new List<Action<ShareInformation>>();
             orderAddedCallbacks = new List<Action<Order>>();
-            orderRemovedCallbacks = new List<Action<Order>>();
-            pendingOrdersAddedCallbacks = new List<Action<IEnumerable<Order>>>();
             investorAddedCallbacks = new List<Action<InvestorDepot>>();
             transactionAddedCallbacks = new List<Action<Transaction>>();
         }
@@ -45,7 +42,10 @@ namespace Investor.Model
             client.PutOrder(order);
         }
 
-        public void CancelOrder(Order order) { }
+        public void CancelOrder(Order order)
+        {
+            client.DeleteOrder(order);
+        }
 
         public InvestorDepot LoadInvestorInformation()
         {
@@ -66,7 +66,14 @@ namespace Investor.Model
 
         public IEnumerable<Order> LoadPendingOrders()
         {
-            return new List<Order>();
+            if (email != null)
+            {
+                return client.GetPendingOrders(email);
+            }
+            else
+            {
+                return new List<Order>();
+            }
         }
 
         public void AddNewMarketInformationAvailableCallback(Action<ShareInformation> callback)
@@ -74,14 +81,14 @@ namespace Investor.Model
             marketCallbacks.Add(callback);
         }
 
-        public void AddNewPendingOrdersCallback(Action<IEnumerable<Order>> callback)
-        {
-            pendingOrdersAddedCallbacks.Add(callback);
-        }
-
         public void AddNewInvestorInformationAvailableCallback(Action<InvestorDepot> callback)
         {
             investorAddedCallbacks.Add(callback);
+        }
+
+        public void AddNewOrderAvailableCallback(Action<Order> callback)
+        {
+            orderAddedCallbacks.Add(callback);
         }
 
         public void OnNewShareInformationAvailable(ShareInformation info)
@@ -91,12 +98,26 @@ namespace Investor.Model
 
         public void OnNewOrderAvailable(Order order)
         {
-            ExecuteOnGUIThread(orderAddedCallbacks, order);
+            if (email != null && order.InvestorId == email)
+            {
+                ExecuteOnGUIThread(orderAddedCallbacks, order);
+            }
+        }
+
+        public void OnNewInvestorDepotAvailable(InvestorDepot depot)
+        {
+            if (email != null && depot != null && depot.Email == email)
+            {
+                ExecuteOnGUIThread(investorAddedCallbacks, depot);
+            }
         }
 
         public void OnNewTransactionAvailable(Transaction transaction)
         {
-            ExecuteOnGUIThread(transactionAddedCallbacks, transaction);
+            if (email != null && (transaction.BuyerId == email || transaction.SellerId == email))
+            {
+                ExecuteOnGUIThread(transactionAddedCallbacks, transaction);
+            }
         }
 
         private void ExecuteOnGUIThread<T>(IEnumerable<Action<T>> callbacks, T arg)

@@ -21,6 +21,7 @@ namespace WallstreetDataService
             PendingRequests = new ConcurrentBag<Request>();
             ShareInformationCallbacks = new ConcurrentBag<Action<ShareInformation>>();
             OrderCallbacks = new ConcurrentBag<Action<Order>>();
+            InvestorCallbacks = new ConcurrentBag<Action<InvestorDepot>>();
             TransactionCallbacks = new ConcurrentBag<Action<Transaction>>();
         }
 
@@ -33,6 +34,7 @@ namespace WallstreetDataService
         public ConcurrentBag<Request> PendingRequests { get; set; }
         public ConcurrentBag<Action<ShareInformation>> ShareInformationCallbacks { get; set; }
         public ConcurrentBag<Action<Order>> OrderCallbacks { get; set; }
+        public ConcurrentBag<Action<InvestorDepot>> InvestorCallbacks { get; set; }
         public ConcurrentBag<Action<Transaction>> TransactionCallbacks { get; set; }
     }
 }

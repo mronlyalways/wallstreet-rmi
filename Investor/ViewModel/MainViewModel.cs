@@ -10,27 +10,33 @@ using System.Threading.Tasks;
 
 namespace Investor.ViewModel
 {
-
     public class MainViewModel : ViewModelBase
     {
         private IDataService data;
         private InvestorDepot depot;
-                
+
         public MainViewModel(IDataService data)
         {
             this.data = data;
             depot = data.LoadInvestorInformation();
             MarketInformation = new ObservableCollection<ShareInformation>(data.LoadMarketInformation());
             OwnedShares = new ObservableCollection<OwningShareDTO>();
-            UpdateOwnedShares();
             PendingOrders = new ObservableCollection<Order>(data.LoadPendingOrders());
             data.AddNewInvestorInformationAvailableCallback(UpdateInvestorInformation);
             data.AddNewMarketInformationAvailableCallback(UpdateShareInformation);
-            data.AddNewPendingOrdersCallback(o => PendingOrders = new ObservableCollection<Order>(o));
+            data.AddNewOrderAvailableCallback(UpdateOrderInformation);
             PlaceBuyingOrderCommand = new RelayCommand(PlaceBuyingOrder, () => SelectedBuyingShare != null);
             PlaceSellingOrderCommand = new RelayCommand(PlaceSellingOrder, () => SelectedSellingShare != null);
-            CancelPendingOrderCommand = new RelayCommand(CancelPendingOrder, () => SelectedPendingOrder != null);
-            LogoutCommand = new RelayCommand(Logout, () => true);
+            CancelPendingOrderCommand = new RelayCommand(CancelPendingOrder, () => SelectedPendingOrder != null && SelectedPendingOrder.Status == OrderStatus.OPEN);
+            LogoutCommand = new RelayCommand(Logout, () => true); 
+            
+            UpdateOwnedShares();
+        }
+
+        private void UpdateOrderInformation(Order order)
+        {
+            PendingOrders = new ObservableCollection<Order>(PendingOrders.Where(x => !x.Id.Equals(order.Id) && x.Status != OrderStatus.DONE));
+            PendingOrders.Add(order);
         }
 
         private void UpdateInvestorInformation(InvestorDepot d)
@@ -40,15 +46,24 @@ namespace Investor.ViewModel
             UpdateOwnedShares();
         }
 
+        private void UpdateShareInformation(ShareInformation info)
+        {
+            MarketInformation = new ObservableCollection<ShareInformation>(MarketInformation.Where(x => x.FirmName != info.FirmName));
+            MarketInformation.Add(info);
+            MarketInformation = new ObservableCollection<ShareInformation>(from i in MarketInformation orderby i.FirmName select i);
+            UpdateOwnedShares();
+        }
+
         private void UpdateOwnedShares()
         {
             var collection = new ObservableCollection<OwningShareDTO>();
 
             foreach (String shareName in depot.Shares.Keys)
             {
-                 var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
+                var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
                 ShareInformation info = infos.First();
-                if (info != null) {
+                if (info != null)
+                {
                     OwningShareDTO s = new OwningShareDTO()
                     {
                         ShareName = shareName,
@@ -61,17 +76,27 @@ namespace Investor.ViewModel
 
             OwnedShares = collection;
 
-        }
+            RaisePropertyChanged(() => DepotValue);
 
-        private void UpdateShareInformation(ShareInformation info)
-        {
-            MarketInformation = new ObservableCollection<ShareInformation>(MarketInformation.Where(x => x.FirmName != info.FirmName));
-            MarketInformation.Add(info);
         }
 
         public string Email { get { return depot.Email; } }
 
         public double Budget { get { return depot.Budget; } }
+
+        public double DepotValue
+        {
+            get
+            {
+                double value = 0;
+                foreach (OwningShareDTO s in OwnedShares)
+                {
+                    value += s.Value;
+                }
+
+                return value;
+            }
+        }
 
         private ObservableCollection<ShareInformation> marketInformation;
         public ObservableCollection<ShareInformation> MarketInformation
@@ -82,7 +107,7 @@ namespace Investor.ViewModel
             }
             set
             {
-                marketInformation = value;
+                marketInformation = new ObservableCollection<ShareInformation>(from i in value orderby i.FirmName select i);
                 RaisePropertyChanged(() => MarketInformation);
             }
         }
@@ -96,7 +121,7 @@ namespace Investor.ViewModel
             }
             set
             {
-                ownedShares = value;
+                ownedShares = new ObservableCollection<OwningShareDTO>(from i in value orderby i.ShareName select i); ;
                 RaisePropertyChanged(() => OwnedShares);
             }
         }
@@ -110,7 +135,7 @@ namespace Investor.ViewModel
             }
             set
             {
-                pendingOrders = value;
+                pendingOrders = new ObservableCollection<Order>(from i in value orderby i.Id select i);
                 RaisePropertyChanged(() => PendingOrders);
             }
         }
@@ -224,39 +249,18 @@ namespace Investor.ViewModel
 
         public RelayCommand LogoutCommand { get; private set; }
 
-        private void OnNewMarketInformationAvailable(ShareInformation nu)
-        {
-            var tmp = MarketInformation.Where(x => x.FirmName.Equals(nu.FirmName));
-            var old = tmp.Count() == 0 ? null : tmp.First();
-            if (old != null)
-            {
-                MarketInformation.Insert(MarketInformation.IndexOf(old), nu);
-                MarketInformation.Remove(old);
-            }
-            else
-            {
-                MarketInformation.Add(nu);
-            }
-        }
-
         private void PlaceBuyingOrder()
         {
-            Parallel.Invoke(() =>
-            {
-                var id = Email + DateTime.Now.Ticks.ToString();
-                var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.BUY, ShareName = SelectedBuyingShare.FirmName, Limit = UpperPriceLimit, TotalNoOfShares = NoOfSharesBuying, NoOfProcessedShares = 0 };
-                data.PlaceOrder(order);
-            });
+            var id = Email + DateTime.Now.Ticks.ToString();
+            var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.BUY, ShareName = SelectedBuyingShare.FirmName, Limit = UpperPriceLimit, TotalNoOfShares = NoOfSharesBuying, NoOfProcessedShares = 0 };
+            data.PlaceOrder(order);
         }
 
         private void PlaceSellingOrder()
         {
-            Parallel.Invoke(() =>
-            {
-                var id = Email + DateTime.Now.Ticks.ToString();
-                var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.SELL, ShareName = SelectedSellingShare.ShareName, Limit = LowerPriceLimit, TotalNoOfShares = NoOfSharesSelling, NoOfProcessedShares = 0 };
-                data.PlaceOrder(order);
-            });
+            var id = Email + DateTime.Now.Ticks.ToString();
+            var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.SELL, ShareName = SelectedSellingShare.ShareName, Limit = LowerPriceLimit, TotalNoOfShares = NoOfSharesSelling, NoOfProcessedShares = 0 };
+            data.PlaceOrder(order);
         }
 
         private void CancelPendingOrder()

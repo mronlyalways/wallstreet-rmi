@@ -21,11 +21,19 @@ namespace Investor.Model
         IEnumerable<ShareInformation> LoadMarketInformation();
 
         IEnumerable<Order> LoadPendingOrders();
-
+        
         void AddNewMarketInformationAvailableCallback(Action<ShareInformation> callback);
 
-        void AddNewPendingOrdersCallback(Action<IEnumerable<Order>> callback);
-
         void AddNewInvestorInformationAvailableCallback(Action<InvestorDepot> callback);
+
+        void AddNewOrderAvailableCallback(Action<Order> callback);
+
+        void OnNewShareInformationAvailable(ShareInformation info);
+
+        void OnNewOrderAvailable(Order order);
+
+        void OnNewInvestorDepotAvailable(InvestorDepot depot);
+
+        void OnNewTransactionAvailable(Transaction transaction);
     }
 }
