@@ -124,6 +124,144 @@ namespace Agent.localhost {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvestorDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class InvestorDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double BudgetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Collections.Generic.Dictionary<string, int> SharesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Budget {
+            get {
+                return this.BudgetField;
+            }
+            set {
+                if ((this.BudgetField.Equals(value) != true)) {
+                    this.BudgetField = value;
+                    this.RaisePropertyChanged("Budget");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.Dictionary<string, int> Shares {
+            get {
+                return this.SharesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SharesField, value) != true)) {
+                    this.SharesField = value;
+                    this.RaisePropertyChanged("Shares");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Registration", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class Registration : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double BudgetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Budget {
+            get {
+                return this.BudgetField;
+            }
+            set {
+                if ((this.BudgetField.Equals(value) != true)) {
+                    this.BudgetField = value;
+                    this.RaisePropertyChanged("Budget");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Order", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
     [System.SerializableAttribute()]
     public partial class Order : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -666,6 +804,160 @@ namespace Agent.localhost {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FirmRequestResult", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class FirmRequestResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Agent.localhost.FirmDepot FirmDepotField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Agent.localhost.Order OrderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Agent.localhost.ShareInformation ShareInformationField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Agent.localhost.FirmDepot FirmDepot {
+            get {
+                return this.FirmDepotField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirmDepotField, value) != true)) {
+                    this.FirmDepotField = value;
+                    this.RaisePropertyChanged("FirmDepot");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Agent.localhost.Order Order {
+            get {
+                return this.OrderField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderField, value) != true)) {
+                    this.OrderField = value;
+                    this.RaisePropertyChanged("Order");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Agent.localhost.ShareInformation ShareInformation {
+            get {
+                return this.ShareInformationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShareInformationField, value) != true)) {
+                    this.ShareInformationField = value;
+                    this.RaisePropertyChanged("ShareInformation");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderMatchResult", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class OrderMatchResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Agent.localhost.Order[] MatchesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Agent.localhost.Order OrderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Agent.localhost.Transaction[] TransactionsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Agent.localhost.Order[] Matches {
+            get {
+                return this.MatchesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MatchesField, value) != true)) {
+                    this.MatchesField = value;
+                    this.RaisePropertyChanged("Matches");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Agent.localhost.Order Order {
+            get {
+                return this.OrderField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OrderField, value) != true)) {
+                    this.OrderField = value;
+                    this.RaisePropertyChanged("Order");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Agent.localhost.Transaction[] Transactions {
+            get {
+                return this.TransactionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TransactionsField, value) != true)) {
+                    this.TransactionsField = value;
+                    this.RaisePropertyChanged("Transactions");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="localhost.IWallstreetDataService", CallbackContract=typeof(Agent.localhost.IWallstreetDataServiceCallback))]
     public interface IWallstreetDataService {
@@ -682,11 +974,35 @@ namespace Agent.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetShareInformationResponse")]
         System.Threading.Tasks.Task<Agent.localhost.ShareInformation> GetShareInformationAsync(string shareName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/PutShareInformationResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutShareInformation")]
         void PutShareInformation(Agent.localhost.ShareInformation info);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/PutShareInformationResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutShareInformation")]
         System.Threading.Tasks.Task PutShareInformationAsync(Agent.localhost.ShareInformation info);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorInformationResponse")]
+        Agent.localhost.InvestorDepot[] GetInvestorInformation();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorInformationResponse")]
+        System.Threading.Tasks.Task<Agent.localhost.InvestorDepot[]> GetInvestorInformationAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorDepotResponse")]
+        Agent.localhost.InvestorDepot GetInvestorDepot(string investorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorDepotResponse")]
+        System.Threading.Tasks.Task<Agent.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot")]
+        void PutInvestorDepot(Agent.localhost.InvestorDepot investor);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot")]
+        System.Threading.Tasks.Task PutInvestorDepotAsync(Agent.localhost.InvestorDepot investor);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginInvestor", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginInvestorResponse")]
+        Agent.localhost.InvestorDepot LoginInvestor(Agent.localhost.Registration registration);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginInvestor", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginInvestorResponse")]
+        System.Threading.Tasks.Task<Agent.localhost.InvestorDepot> LoginInvestorAsync(Agent.localhost.Registration registration);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
         Agent.localhost.Order[] GetOrders();
@@ -694,10 +1010,10 @@ namespace Agent.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
         System.Threading.Tasks.Task<Agent.localhost.Order[]> GetOrdersAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutOrder", ReplyAction="http://tempuri.org/IWallstreetDataService/PutOrderResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
         void PutOrder(Agent.localhost.Order order);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutOrder", ReplyAction="http://tempuri.org/IWallstreetDataService/PutOrderResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
         System.Threading.Tasks.Task PutOrderAsync(Agent.localhost.Order order);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
@@ -706,10 +1022,10 @@ namespace Agent.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
         System.Threading.Tasks.Task<Agent.localhost.Transaction[]> GetTransactionsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutTransaction", ReplyAction="http://tempuri.org/IWallstreetDataService/PutTransactionResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutTransaction")]
         void PutTransaction(Agent.localhost.Transaction transaction);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutTransaction", ReplyAction="http://tempuri.org/IWallstreetDataService/PutTransactionResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutTransaction")]
         System.Threading.Tasks.Task PutTransactionAsync(Agent.localhost.Transaction transaction);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/RegisterFirm", ReplyAction="http://tempuri.org/IWallstreetDataService/RegisterFirmResponse")]
@@ -724,28 +1040,24 @@ namespace Agent.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFirmDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFirmDepotResponse")]
         System.Threading.Tasks.Task<Agent.localhost.FirmDepot> GetFirmDepotAsync(string firmName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "Response")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
+            "")]
         void SubscribeOnNewShareInformationAvailable();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "Response")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
+            "")]
         System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailableResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
         void SubscribeOnNewOrderAvailable();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailableResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
         System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailableRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
         void SubscribeOnNewTransactionAvailable();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailableRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
         System.Threading.Tasks.Task SubscribeOnNewTransactionAvailableAsync();
     }
     
@@ -812,6 +1124,38 @@ namespace Agent.localhost {
         
         public System.Threading.Tasks.Task PutShareInformationAsync(Agent.localhost.ShareInformation info) {
             return base.Channel.PutShareInformationAsync(info);
+        }
+        
+        public Agent.localhost.InvestorDepot[] GetInvestorInformation() {
+            return base.Channel.GetInvestorInformation();
+        }
+        
+        public System.Threading.Tasks.Task<Agent.localhost.InvestorDepot[]> GetInvestorInformationAsync() {
+            return base.Channel.GetInvestorInformationAsync();
+        }
+        
+        public Agent.localhost.InvestorDepot GetInvestorDepot(string investorId) {
+            return base.Channel.GetInvestorDepot(investorId);
+        }
+        
+        public System.Threading.Tasks.Task<Agent.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId) {
+            return base.Channel.GetInvestorDepotAsync(investorId);
+        }
+        
+        public void PutInvestorDepot(Agent.localhost.InvestorDepot investor) {
+            base.Channel.PutInvestorDepot(investor);
+        }
+        
+        public System.Threading.Tasks.Task PutInvestorDepotAsync(Agent.localhost.InvestorDepot investor) {
+            return base.Channel.PutInvestorDepotAsync(investor);
+        }
+        
+        public Agent.localhost.InvestorDepot LoginInvestor(Agent.localhost.Registration registration) {
+            return base.Channel.LoginInvestor(registration);
+        }
+        
+        public System.Threading.Tasks.Task<Agent.localhost.InvestorDepot> LoginInvestorAsync(Agent.localhost.Registration registration) {
+            return base.Channel.LoginInvestorAsync(registration);
         }
         
         public Agent.localhost.Order[] GetOrders() {
@@ -902,7 +1246,10 @@ namespace Agent.localhost {
     public interface IBrokerServiceCallback {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewRegistrationRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewRegistrationRequestAvailableResponse")]
-        System.Tuple<string, int, int, double, int, int, System.Tuple<string, int>> OnNewRegistrationRequestAvailable(Agent.localhost.Request info);
+        Agent.localhost.FirmRequestResult OnNewRegistrationRequestAvailable(Agent.localhost.Request request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailableResponse")]
+        Agent.localhost.OrderMatchResult OnNewOrderMatchingRequestAvailable(Agent.localhost.Order order, Agent.localhost.Order[] orders);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
