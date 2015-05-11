@@ -1,6 +1,5 @@
 ﻿using Ninject;
 using Investor.Model;
-using XcoSpaces;
 
 namespace Investor.ViewModel
 {
