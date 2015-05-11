@@ -34,11 +34,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="PutShareInformationResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetInvestorInformation">
     <xs:complexType>
       <xs:sequence />
@@ -70,11 +65,6 @@
       <xs:sequence>
         <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="investor" nillable="true" type="q6:InvestorDepot" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="PutInvestorDepotResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="LoginInvestor">
@@ -110,11 +100,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="PutOrderResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetTransactions">
     <xs:complexType>
       <xs:sequence />
@@ -134,11 +119,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="PutTransactionResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="RegisterFirm">
     <xs:complexType>
       <xs:sequence>
@@ -149,7 +129,7 @@
   <xs:element name="RegisterFirmResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="RegisterFirmResult" nillable="true" type="q14:FirmRequestResult" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="RegisterFirmResult" nillable="true" type="q14:FirmDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -172,27 +152,12 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SubscribeOnNewShareInformationAvailableResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="SubscribeOnNewOrderAvailable">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="SubscribeOnNewOrderAvailableResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="SubscribeOnNewTransactionAvailable">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="SubscribeOnNewTransactionAvailableResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

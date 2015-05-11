@@ -21,95 +21,107 @@ namespace WallstreetDataService
 
         public IEnumerable<ShareInformation> GetMarketInformation()
         {
-            return data.ShareInformation;
+            return data.ShareInformation.Values;
         }
 
         public ShareInformation GetShareInformation(string shareName)
         {
-            return data.ShareInformation.SingleOrDefault(x => x.FirmName == shareName);
+            ShareInformation result;
+            data.ShareInformation.TryGetValue(shareName, out result);
+            return result;
         }
 
         public void PutShareInformation(ShareInformation info)
         {
-            data.ShareInformation.Add(info);
+            data.ShareInformation[info.FirmName] = info;
             NotifySubscribers(data.ShareInformationCallbacks, info);
         }
 
         public IEnumerable<InvestorDepot> GetInvestorInformation()
         {
-            return data.InvestorDepots;
+            return data.InvestorDepots.Values;
         }
 
         public InvestorDepot GetInvestorDepot(string investorId)
         {
-            return data.InvestorDepots.SingleOrDefault(x => x.Email == investorId);
+            InvestorDepot result;
+            data.InvestorDepots.TryGetValue(investorId, out result);
+            return result;
         }
 
         public void PutInvestorDepot(InvestorDepot investor)
         {
-            data.InvestorDepots.Add(investor);
+            data.InvestorDepots[investor.Email] = investor;
         }
 
         public InvestorDepot LoginInvestor(Registration registration)
         {
-            var depot = data.InvestorDepots.SingleOrDefault(x => x.Email == registration.Email);
-            if (depot == null)
+            InvestorDepot depot;
+            var exists = data.InvestorDepots.TryGetValue(registration.Email, out depot);
+            if (!exists)
             {
                 depot = new InvestorDepot { Email = registration.Email, Budget = 0, Shares = new Dictionary<string, int>() };
             }
             depot.Budget += registration.Budget;
-            data.InvestorDepots = new ConcurrentBag<InvestorDepot>(data.InvestorDepots.Where(x => x.Email != depot.Email).Union(new List<InvestorDepot> { depot }));
+            data.InvestorDepots[depot.Email] = depot;
             return depot;
         }
 
         public IEnumerable<Order> GetOrders()
         {
-            return data.PendingOrders;
+            return data.PendingOrders.Values;
         }
 
         public void PutOrder(Order order)
         {
             if (data.Brokers.Count > 0)
             {
-                var result = data.Brokers.First().OnNewOrderMatchingRequestAvailable(order, data.PendingOrders.Where(x => x.ShareName == order.ShareName && x.Type != order.Type));
+                var result = data.Brokers.First().OnNewOrderMatchingRequestAvailable(order, data.PendingOrders.Values.Where(x => x.ShareName == order.ShareName && x.Type != order.Type));
                 if (result == null)
                 {
-                    data.PendingOrders.Add(order);
+                    data.PendingOrders[order.Id] = order;
                 }
                 else
                 {
-                    data.PendingOrders = new ConcurrentBag<Order>(data.PendingOrders
-                        .Where(x => !result.Matches.Select(y => y.Id).Contains(x.Id)).Union(result.Matches)
-                        .Where(x => x.Id != order.Id).Union(new List<Order> {order}));
+                    foreach (Order o in result.Matches)
+                    {
+                        if (o.Status != Order.OrderStatus.DONE)
+                        {
+                            data.PendingOrders[o.Id] = o;
+                        }
+                    }
 
                     foreach (Transaction t in result.Transactions)
                     {
-                        var buyer = data.InvestorDepots.Single(x => x.Email == t.BuyerId);
+                        var buyer = data.InvestorDepots[t.BuyerId];
                         buyer.Budget -= (t.TotalCost + t.Provision);
-                        buyer.Shares[order.ShareName] += t.NoOfSharesSold;
-                        var seller = data.InvestorDepots.SingleOrDefault(x => x.Email == t.SellerId);
-                        if (seller != null) // seller is investor
+                        int val;
+                        buyer.Shares[order.ShareName] = buyer.Shares.TryGetValue(order.ShareName, out val) ? val + t.NoOfSharesSold : t.NoOfSharesSold;
+                        InvestorDepot seller;
+                        var sellerExists = data.InvestorDepots.TryGetValue(t.SellerId, out seller);
+                        if (sellerExists) // seller is investor
                         {
                             seller.Budget += t.TotalCost;
                             seller.Shares[order.ShareName] -= t.NoOfSharesSold;
                         }
                         else // seller is firm
                         {
-                            var firm = data.FirmDepots.Single(x => x.FirmName == t.SellerId);
+                            var firm = data.FirmDepots[t.SellerId];
                             firm.OwnedShares -= t.NoOfSharesSold;
                         }
+                        data.Transactions.Add(t);
                         NotifySubscribers(data.TransactionCallbacks, t);
                     }
                     NotifySubscribers(data.OrderCallbacks, result.Order);
-                    foreach (Order o in result.Matches)
+                    foreach (Order ord in result.Matches)
                     {
-                        NotifySubscribers(data.OrderCallbacks, o);
+                        NotifySubscribers(data.OrderCallbacks, ord);
                     }
                 }
             }
             else
             {
-                data.PendingOrders.Add(order);
+                data.PendingOrders[order.Id] = order;
             }
         }
 
@@ -124,7 +136,7 @@ namespace WallstreetDataService
             NotifySubscribers(data.TransactionCallbacks, transaction);
         }
 
-        public FirmRequestResult RegisterFirm(Request request)
+        public FirmDepot RegisterFirm(Request request)
         {
             if (data.Brokers.Count > 0)
             {
@@ -132,14 +144,12 @@ namespace WallstreetDataService
                 var depot = result.FirmDepot;
                 var info = result.ShareInformation;
                 var order = result.Order;
-                data.FirmDepots = new ConcurrentBag<FirmDepot>(data.FirmDepots.Where(x => x.FirmName != depot.FirmName));
-                data.FirmDepots.Add(depot);
-                data.PendingOrders.Add(order);
+                data.FirmDepots[depot.FirmName] = depot;
+                data.PendingOrders[order.Id] = order;
                 NotifySubscribers(data.OrderCallbacks, order);
-                data.ShareInformation = new ConcurrentBag<ShareInformation>(data.ShareInformation.Where(x => x.FirmName != info.FirmName));
-                data.ShareInformation.Add(info);
+                data.ShareInformation[info.FirmName] = info;
                 NotifySubscribers(data.ShareInformationCallbacks, info);
-                return result;
+                return result.FirmDepot;
             }
             else
             {
@@ -151,7 +161,9 @@ namespace WallstreetDataService
 
         public FirmDepot GetFirmDepot(string firmName)
         {
-            return data.FirmDepots.SingleOrDefault(x => x.FirmName.Equals(firmName));
+            FirmDepot result;
+            data.FirmDepots.TryGetValue(firmName, out result);
+            return result;
         }
 
         public void SubscribeOnNewRegistrationRequestAvailable()

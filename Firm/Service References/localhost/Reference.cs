@@ -745,6 +745,67 @@ namespace Firm.localhost {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FirmDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class FirmDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirmNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int OwnedSharesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirmName {
+            get {
+                return this.FirmNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirmNameField, value) != true)) {
+                    this.FirmNameField = value;
+                    this.RaisePropertyChanged("FirmName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int OwnedShares {
+            get {
+                return this.OwnedSharesField;
+            }
+            set {
+                if ((this.OwnedSharesField.Equals(value) != true)) {
+                    this.OwnedSharesField = value;
+                    this.RaisePropertyChanged("OwnedShares");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FirmRequestResult", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
     [System.SerializableAttribute()]
     public partial class FirmRequestResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -806,67 +867,6 @@ namespace Firm.localhost {
                 if ((object.ReferenceEquals(this.ShareInformationField, value) != true)) {
                     this.ShareInformationField = value;
                     this.RaisePropertyChanged("ShareInformation");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FirmDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
-    [System.SerializableAttribute()]
-    public partial class FirmDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FirmNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int OwnedSharesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FirmName {
-            get {
-                return this.FirmNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FirmNameField, value) != true)) {
-                    this.FirmNameField = value;
-                    this.RaisePropertyChanged("FirmName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int OwnedShares {
-            get {
-                return this.OwnedSharesField;
-            }
-            set {
-                if ((this.OwnedSharesField.Equals(value) != true)) {
-                    this.OwnedSharesField = value;
-                    this.RaisePropertyChanged("OwnedShares");
                 }
             }
         }
@@ -974,10 +974,10 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetShareInformationResponse")]
         System.Threading.Tasks.Task<Firm.localhost.ShareInformation> GetShareInformationAsync(string shareName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/PutShareInformationResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutShareInformation")]
         void PutShareInformation(Firm.localhost.ShareInformation info);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/PutShareInformationResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutShareInformation")]
         System.Threading.Tasks.Task PutShareInformationAsync(Firm.localhost.ShareInformation info);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorInformationResponse")]
@@ -992,10 +992,10 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorDepotResponse")]
         System.Threading.Tasks.Task<Firm.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/PutInvestorDepotResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot")]
         void PutInvestorDepot(Firm.localhost.InvestorDepot investor);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/PutInvestorDepotResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot")]
         System.Threading.Tasks.Task PutInvestorDepotAsync(Firm.localhost.InvestorDepot investor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginInvestor", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginInvestorResponse")]
@@ -1010,10 +1010,10 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
         System.Threading.Tasks.Task<Firm.localhost.Order[]> GetOrdersAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutOrder", ReplyAction="http://tempuri.org/IWallstreetDataService/PutOrderResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
         void PutOrder(Firm.localhost.Order order);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutOrder", ReplyAction="http://tempuri.org/IWallstreetDataService/PutOrderResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
         System.Threading.Tasks.Task PutOrderAsync(Firm.localhost.Order order);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
@@ -1022,17 +1022,17 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
         System.Threading.Tasks.Task<Firm.localhost.Transaction[]> GetTransactionsAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutTransaction", ReplyAction="http://tempuri.org/IWallstreetDataService/PutTransactionResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutTransaction")]
         void PutTransaction(Firm.localhost.Transaction transaction);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/PutTransaction", ReplyAction="http://tempuri.org/IWallstreetDataService/PutTransactionResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutTransaction")]
         System.Threading.Tasks.Task PutTransactionAsync(Firm.localhost.Transaction transaction);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/RegisterFirm", ReplyAction="http://tempuri.org/IWallstreetDataService/RegisterFirmResponse")]
-        Firm.localhost.FirmRequestResult RegisterFirm(Firm.localhost.Request request);
+        Firm.localhost.FirmDepot RegisterFirm(Firm.localhost.Request request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/RegisterFirm", ReplyAction="http://tempuri.org/IWallstreetDataService/RegisterFirmResponse")]
-        System.Threading.Tasks.Task<Firm.localhost.FirmRequestResult> RegisterFirmAsync(Firm.localhost.Request request);
+        System.Threading.Tasks.Task<Firm.localhost.FirmDepot> RegisterFirmAsync(Firm.localhost.Request request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFirmDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFirmDepotResponse")]
         Firm.localhost.FirmDepot GetFirmDepot(string firmName);
@@ -1040,28 +1040,24 @@ namespace Firm.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFirmDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFirmDepotResponse")]
         System.Threading.Tasks.Task<Firm.localhost.FirmDepot> GetFirmDepotAsync(string firmName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "Response")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
+            "")]
         void SubscribeOnNewShareInformationAvailable();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
-            "Response")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
+            "")]
         System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailableResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
         void SubscribeOnNewOrderAvailable();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailableResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
         System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailableRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
         void SubscribeOnNewTransactionAvailable();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable", ReplyAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailableRespo" +
-            "nse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
         System.Threading.Tasks.Task SubscribeOnNewTransactionAvailableAsync();
     }
     
@@ -1194,11 +1190,11 @@ namespace Firm.localhost {
             return base.Channel.PutTransactionAsync(transaction);
         }
         
-        public Firm.localhost.FirmRequestResult RegisterFirm(Firm.localhost.Request request) {
+        public Firm.localhost.FirmDepot RegisterFirm(Firm.localhost.Request request) {
             return base.Channel.RegisterFirm(request);
         }
         
-        public System.Threading.Tasks.Task<Firm.localhost.FirmRequestResult> RegisterFirmAsync(Firm.localhost.Request request) {
+        public System.Threading.Tasks.Task<Firm.localhost.FirmDepot> RegisterFirmAsync(Firm.localhost.Request request) {
             return base.Channel.RegisterFirmAsync(request);
         }
         

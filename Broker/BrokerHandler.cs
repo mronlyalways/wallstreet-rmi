@@ -147,8 +147,8 @@ namespace Broker
                 });
                 order.NoOfProcessedShares += sharesProcessed;
                 match.NoOfProcessedShares += sharesProcessed;
-                order.Status = (order.NoOfOpenShares == 0) ? OrderStatus.DONE : OrderStatus.PARTIAL;
-                match.Status = (match.NoOfOpenShares == 0) ? OrderStatus.DONE : OrderStatus.PARTIAL;
+                order.Status = (order.NoOfProcessedShares == order.TotalNoOfShares) ? OrderStatus.DONE : OrderStatus.PARTIAL;
+                match.Status = (match.NoOfProcessedShares == match.TotalNoOfShares) ? OrderStatus.DONE : OrderStatus.PARTIAL;
                 matches.Remove(match);
                 usedOrders.Add(match);
                 sharesProcessedTotal += sharesProcessed;

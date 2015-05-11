@@ -13,11 +13,11 @@ namespace WallstreetDataService
         public DataRepository()
         {
             Brokers = new ConcurrentBag<IBroker>();
-            ShareInformation = new ConcurrentBag<ShareInformation>();
-            InvestorDepots = new ConcurrentBag<InvestorDepot>();
-            PendingOrders = new ConcurrentBag<Order>();
+            ShareInformation = new ConcurrentDictionary<string, ShareInformation>();
+            InvestorDepots = new ConcurrentDictionary<string, InvestorDepot>();
+            PendingOrders = new ConcurrentDictionary<string, Order>();
             Transactions = new ConcurrentBag<Transaction>();
-            FirmDepots = new ConcurrentBag<FirmDepot>();
+            FirmDepots = new ConcurrentDictionary<string, FirmDepot>();
             PendingRequests = new ConcurrentBag<Request>();
             ShareInformationCallbacks = new ConcurrentBag<Action<ShareInformation>>();
             OrderCallbacks = new ConcurrentBag<Action<Order>>();
@@ -25,11 +25,11 @@ namespace WallstreetDataService
         }
 
         public ConcurrentBag<IBroker> Brokers { get; set; }
-        public ConcurrentBag<ShareInformation> ShareInformation { get; set; }
-        public ConcurrentBag<InvestorDepot> InvestorDepots { get; set; }
-        public ConcurrentBag<Order> PendingOrders { get; set; }
+        public ConcurrentDictionary<string, ShareInformation> ShareInformation { get; set; }
+        public ConcurrentDictionary<string, InvestorDepot> InvestorDepots { get; set; }
+        public ConcurrentDictionary<string, Order> PendingOrders { get; set; }
         public ConcurrentBag<Transaction> Transactions { get; set; }
-        public ConcurrentBag<FirmDepot> FirmDepots { get; set; }
+        public ConcurrentDictionary<string, FirmDepot> FirmDepots { get; set; }
         public ConcurrentBag<Request> PendingRequests { get; set; }
         public ConcurrentBag<Action<ShareInformation>> ShareInformationCallbacks { get; set; }
         public ConcurrentBag<Action<Order>> OrderCallbacks { get; set; }

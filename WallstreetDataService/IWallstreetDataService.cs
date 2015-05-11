@@ -18,7 +18,7 @@ namespace WallstreetDataService
         [OperationContract]
         ShareInformation GetShareInformation(string shareName);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void PutShareInformation(ShareInformation info);
 
         [OperationContract]
@@ -27,7 +27,7 @@ namespace WallstreetDataService
         [OperationContract]
         InvestorDepot GetInvestorDepot(string investorId);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void PutInvestorDepot(InvestorDepot investor);
 
         [OperationContract]
@@ -36,28 +36,28 @@ namespace WallstreetDataService
         [OperationContract]
         IEnumerable<Order> GetOrders();
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void PutOrder(Order order);
 
         [OperationContract]
         IEnumerable<Transaction> GetTransactions();
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void PutTransaction(Transaction transaction);
 
         [OperationContract]
-        FirmRequestResult RegisterFirm(Request request);
+        FirmDepot RegisterFirm(Request request);
 
         [OperationContract]
         FirmDepot GetFirmDepot(string firmName);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SubscribeOnNewShareInformationAvailable();
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SubscribeOnNewOrderAvailable();
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SubscribeOnNewTransactionAvailable();
     }
 }
