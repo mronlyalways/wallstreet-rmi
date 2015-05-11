@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using XcoSpaces;
-using XcoSpaces.Collections;
-using XcoSpaces.Exceptions;
 using Wallstreet.localhost;
 using System.ServiceModel;
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e908459d-d5e3-4234-bb55-8b06ec3a3d9b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:60129/WallstreetDataService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WallstreetDataService.xsd" MetadataType="Schema" ID="51d4466f-99c1-4c59-a614-a3fafec563d9" SourceId="1" SourceUrl="http://localhost:60129/WallstreetDataService.svc?xsd=xsd0" />
+    <MetadataFile FileName="WallstreetDataService1.xsd" MetadataType="Schema" ID="896893b3-0051-4cc2-81f8-aa83a8d32298" SourceId="1" SourceUrl="http://localhost:60129/WallstreetDataService.svc?xsd=xsd1" />
+    <MetadataFile FileName="WallstreetDataService.wsdl" MetadataType="Wsdl" ID="9562d46e-0007-4d9b-8e9d-580d56d223e8" SourceId="1" SourceUrl="http://localhost:60129/WallstreetDataService.svc?wsdl" />
+    <MetadataFile FileName="WallstreetDataService.disco" MetadataType="Disco" ID="7ea4252e-e546-47fd-bbf6-ceafd42e83fa" SourceId="1" SourceUrl="http://localhost:60129/WallstreetDataService.svc?disco" />
+    <MetadataFile FileName="WallstreetDataService2.xsd" MetadataType="Schema" ID="f5455a7b-dd7f-48d0-9f53-b412fc92cea1" SourceId="1" SourceUrl="http://localhost:60129/WallstreetDataService.svc?xsd=xsd2" />
+    <MetadataFile FileName="WallstreetDataService3.xsd" MetadataType="Schema" ID="62cff09b-4a82-48e2-9a9c-3058581029a0" SourceId="1" SourceUrl="http://localhost:60129/WallstreetDataService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

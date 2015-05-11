@@ -1,6 +1,5 @@
 ﻿using Ninject;
 using Wallstreet.Model;
-using XcoSpaces;
 
 namespace Wallstreet.ViewModel
 {
