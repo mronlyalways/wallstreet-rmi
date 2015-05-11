@@ -15,7 +15,7 @@ namespace WallstreetDataService
             Brokers = new ConcurrentBag<IBroker>();
             ShareInformation = new ConcurrentBag<ShareInformation>();
             InvestorDepots = new ConcurrentBag<InvestorDepot>();
-            Orders = new ConcurrentBag<Order>();
+            PendingOrders = new ConcurrentBag<Order>();
             Transactions = new ConcurrentBag<Transaction>();
             FirmDepots = new ConcurrentBag<FirmDepot>();
             PendingRequests = new ConcurrentBag<Request>();
@@ -27,7 +27,7 @@ namespace WallstreetDataService
         public ConcurrentBag<IBroker> Brokers { get; set; }
         public ConcurrentBag<ShareInformation> ShareInformation { get; set; }
         public ConcurrentBag<InvestorDepot> InvestorDepots { get; set; }
-        public ConcurrentBag<Order> Orders { get; set; }
+        public ConcurrentBag<Order> PendingOrders { get; set; }
         public ConcurrentBag<Transaction> Transactions { get; set; }
         public ConcurrentBag<FirmDepot> FirmDepots { get; set; }
         public ConcurrentBag<Request> PendingRequests { get; set; }

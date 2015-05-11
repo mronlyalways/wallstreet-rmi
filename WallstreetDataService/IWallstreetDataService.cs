@@ -31,6 +31,9 @@ namespace WallstreetDataService
         void PutInvestorDepot(InvestorDepot investor);
 
         [OperationContract]
+        InvestorDepot LoginInvestor(Registration registration);
+
+        [OperationContract]
         IEnumerable<Order> GetOrders();
 
         [OperationContract]

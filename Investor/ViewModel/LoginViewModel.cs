@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Investor.localhost;
 using Investor.Model;
 using Investor.View;
-using SharedFeatures.Model;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Investor.ViewModel
 {
@@ -11,17 +13,14 @@ namespace Investor.ViewModel
     public class LoginViewModel : ViewModelBase
     {
         private IDataService data;
-        private bool submitted;
 
         public LoginViewModel(IDataService data)
         {
             this.data = data;
-            data.AddNewInvestorInformationAvailableCallback(OnRegistrationConfirmed);
-            SubmitCommand = new RelayCommand(Submit, () => !Email.Equals(string.Empty) && Budget >= 0 && !submitted);
+            SubmitCommand = new RelayCommand(Submit, () => !Email.Equals(string.Empty) && Budget >= 0);
             Email = string.Empty;
             Budget = 0;
             ButtonText = "Submit";
-            submitted = false;
         }
 
         private string email;
@@ -73,18 +72,11 @@ namespace Investor.ViewModel
 
         public void Submit()
         {
-            data.Login(new Registration() { Email = Email, Budget = Budget });
             ButtonText = "Waiting for confirmation ...";
-            submitted = true;
-            SubmitCommand.RaiseCanExecuteChanged();
-        }
-
-        public void OnRegistrationConfirmed(InvestorDepot depot)
-        {
+            data.Login(new Registration() { Email = Email, Budget = Budget });
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
             var MainWindow = new MainWindow();
             MainWindow.Show();
-            data.RemoveNewInvestorInformationAvailableCallback(OnRegistrationConfirmed);
             this.Cleanup();
         }
     }

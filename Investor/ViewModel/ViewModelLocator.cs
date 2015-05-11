@@ -11,7 +11,7 @@ namespace Investor.ViewModel
         static ViewModelLocator()
         {
             kernel = new StandardKernel();
-            kernel.Bind<IDataService>().To<XcoDataService>().InSingletonScope();
+            kernel.Bind<IDataService>().To<WcfDataService>().InSingletonScope();
         }
 
         public MainViewModel Main

@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SharedFeatures;
-using SharedFeatures.Model;
 using GalaSoft.MvvmLight;
+using Investor.localhost;
 
 namespace Investor.Model
 {
     public interface IDataService : IDisposable
     {
-        void Login(Registration r);
+        InvestorDepot Login(Registration r);
 
         void PlaceOrder(Order order);
 
@@ -28,7 +27,5 @@ namespace Investor.Model
         void AddNewPendingOrdersCallback(Action<IEnumerable<Order>> callback);
 
         void AddNewInvestorInformationAvailableCallback(Action<InvestorDepot> callback);
-
-        void RemoveNewInvestorInformationAvailableCallback(Action<InvestorDepot> callback);
     }
 }

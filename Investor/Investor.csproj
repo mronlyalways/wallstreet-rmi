@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\OwningShareDTO.cs" />
+    <Compile Include="Model\WcfDataService.cs" />
     <Compile Include="Service References\localhost\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -93,7 +94,6 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="Model\XcoDataService.cs" />
     <Compile Include="View\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -126,6 +126,9 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Service References\localhost\Investor.localhost.FirmDepot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\Investor.localhost.InvestorDepot.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\localhost\Investor.localhost.Order.datasource">

@@ -1,11 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
-using SharedFeatures.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Investor.Model;
 using System;
 using GalaSoft.MvvmLight.Command;
+using Investor.localhost;
 
 namespace Investor.ViewModel
 {
@@ -241,14 +241,14 @@ namespace Investor.ViewModel
         private void PlaceBuyingOrder()
         {
             var id = Email + DateTime.Now.Ticks.ToString();
-            var order = new Order() { Id = id, InvestorId = Email, Type = Order.OrderType.BUY, ShareName = SelectedBuyingShare.FirmName, Limit = UpperPriceLimit, TotalNoOfShares = NoOfSharesBuying, NoOfProcessedShares = 0 };
+            var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.BUY, ShareName = SelectedBuyingShare.FirmName, Limit = UpperPriceLimit, TotalNoOfShares = NoOfSharesBuying, NoOfProcessedShares = 0 };
             data.PlaceOrder(order);
         }
 
         private void PlaceSellingOrder()
         {
             var id = Email + DateTime.Now.Ticks.ToString();
-            var order = new Order() { Id = id, InvestorId = Email, Type = Order.OrderType.SELL, ShareName = SelectedSellingShare.ShareName, Limit = LowerPriceLimit, TotalNoOfShares = NoOfSharesSelling, NoOfProcessedShares = 0 };
+            var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.SELL, ShareName = SelectedSellingShare.ShareName, Limit = LowerPriceLimit, TotalNoOfShares = NoOfSharesSelling, NoOfProcessedShares = 0 };
             data.PlaceOrder(order);
         }
 
