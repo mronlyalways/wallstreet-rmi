@@ -60,6 +60,12 @@
     <None Include="Service References\localhost\Firm.localhost.FirmDepot.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\localhost\Firm.localhost.FirmRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\Firm.localhost.InvestorDepot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\localhost\Firm.localhost.Order.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -77,6 +83,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\localhost\WallstreetDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\localhost\WallstreetDataService3.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

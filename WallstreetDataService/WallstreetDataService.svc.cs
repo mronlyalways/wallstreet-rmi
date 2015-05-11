@@ -124,11 +124,11 @@ namespace WallstreetDataService
             NotifySubscribers(data.TransactionCallbacks, transaction);
         }
 
-        public FirmDepot RegisterFirm(Request request)
+        public FirmRequestResult RegisterFirm(Request request)
         {
             if (data.Brokers.Count > 0)
             {
-                var result = data.Brokers.First().OnNewRegistrationRequestAvailable(request);
+                FirmRequestResult result = data.Brokers.First().OnNewRegistrationRequestAvailable(request);
                 var depot = result.FirmDepot;
                 var info = result.ShareInformation;
                 var order = result.Order;
@@ -139,7 +139,7 @@ namespace WallstreetDataService
                 data.ShareInformation = new ConcurrentBag<ShareInformation>(data.ShareInformation.Where(x => x.FirmName != info.FirmName));
                 data.ShareInformation.Add(info);
                 NotifySubscribers(data.ShareInformationCallbacks, info);
-                return depot;
+                return result;
             }
             else
             {

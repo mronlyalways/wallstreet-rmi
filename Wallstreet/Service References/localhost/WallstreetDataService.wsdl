@@ -241,6 +241,190 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_GetInvestorInformation_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_GetInvestorInformation_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_GetInvestorDepot_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_GetInvestorDepot_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_PutInvestorDepot_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_PutInvestorDepot_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_LoginInvestor_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_LoginInvestor_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_GetOrders_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -919,12 +1103,58 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" />
-      <xsd:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IWallstreetDataService_GetMarketInformation_InputMessage">
@@ -944,6 +1174,30 @@
   </wsdl:message>
   <wsdl:message name="IWallstreetDataService_PutShareInformation_OutputMessage">
     <wsdl:part name="parameters" element="tns:PutShareInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_GetInvestorInformation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvestorInformation" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_GetInvestorInformation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvestorInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_GetInvestorDepot_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvestorDepot" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_GetInvestorDepot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInvestorDepotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_PutInvestorDepot_InputMessage">
+    <wsdl:part name="parameters" element="tns:PutInvestorDepot" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_PutInvestorDepot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PutInvestorDepotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_LoginInvestor_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoginInvestor" />
+  </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_LoginInvestor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginInvestorResponse" />
   </wsdl:message>
   <wsdl:message name="IWallstreetDataService_GetOrders_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOrders" />
@@ -1020,6 +1274,12 @@
   <wsdl:message name="IBrokerService_OnNewRegistrationRequestAvailable_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnNewRegistrationRequestAvailableResponse" />
   </wsdl:message>
+  <wsdl:message name="IBrokerService_OnNewOrderMatchingRequestAvailable_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnNewOrderMatchingRequestAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IBrokerService_OnNewOrderMatchingRequestAvailable_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnNewOrderMatchingRequestAvailableResponse" />
+  </wsdl:message>
   <wsdl:portType name="IWallstreetDataService">
     <wsdl:operation name="GetMarketInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/GetMarketInformation" message="tns:IWallstreetDataService_GetMarketInformation_InputMessage" />
@@ -1032,6 +1292,22 @@
     <wsdl:operation name="PutShareInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/PutShareInformation" message="tns:IWallstreetDataService_PutShareInformation_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IWallstreetDataService/PutShareInformationResponse" message="tns:IWallstreetDataService_PutShareInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvestorInformation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformation" message="tns:IWallstreetDataService_GetInvestorInformation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformationResponse" message="tns:IWallstreetDataService_GetInvestorInformation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInvestorDepot">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepot" message="tns:IWallstreetDataService_GetInvestorDepot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepotResponse" message="tns:IWallstreetDataService_GetInvestorDepot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PutInvestorDepot">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot" message="tns:IWallstreetDataService_PutInvestorDepot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepotResponse" message="tns:IWallstreetDataService_PutInvestorDepot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoginInvestor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/LoginInvestor" message="tns:IWallstreetDataService_LoginInvestor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWallstreetDataService/LoginInvestorResponse" message="tns:IWallstreetDataService_LoginInvestor_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/GetOrders" message="tns:IWallstreetDataService_GetOrders_InputMessage" />
@@ -1088,6 +1364,10 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/OnNewRegistrationRequestAvailable" message="tns:IBrokerService_OnNewRegistrationRequestAvailable_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/OnNewRegistrationRequestAvailableResponse" message="tns:IBrokerService_OnNewRegistrationRequestAvailable_InputCallbackMessage" />
     </wsdl:operation>
+    <wsdl:operation name="OnNewOrderMatchingRequestAvailable">
+      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable" message="tns:IBrokerService_OnNewOrderMatchingRequestAvailable_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailableResponse" message="tns:IBrokerService_OnNewOrderMatchingRequestAvailable_InputCallbackMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_IWallstreetDataService" type="tns:IWallstreetDataService">
     <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_policy" />
@@ -1122,6 +1402,50 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_PutShareInformation_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvestorInformation">
+      <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/GetInvestorInformation" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_GetInvestorInformation_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_GetInvestorInformation_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInvestorDepot">
+      <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/GetInvestorDepot" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_GetInvestorDepot_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_GetInvestorDepot_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PutInvestorDepot">
+      <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/PutInvestorDepot" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_PutInvestorDepot_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_PutInvestorDepot_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoginInvestor">
+      <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/LoginInvestor" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_LoginInvestor_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_LoginInvestor_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -1268,6 +1592,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewRegistrationRequestAvailable_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OnNewOrderMatchingRequestAvailable">
+      <soap12:operation soapAction="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

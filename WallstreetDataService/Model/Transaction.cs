@@ -44,6 +44,7 @@ namespace WallstreetDataService.Model
             {
                 return PricePerShare * NoOfSharesSold;
             }
+            internal set { }
         }
 
         [DataMember]
@@ -53,6 +54,7 @@ namespace WallstreetDataService.Model
             {
                 return TotalCost * 0.03;
             }
+            internal set { }
         }
     }
 }

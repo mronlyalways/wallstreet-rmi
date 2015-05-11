@@ -149,7 +149,7 @@
   <xs:element name="RegisterFirmResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="RegisterFirmResult" nillable="true" type="q14:FirmDepot" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="RegisterFirmResult" nillable="true" type="q14:FirmRequestResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

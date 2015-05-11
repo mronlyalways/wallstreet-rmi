@@ -60,6 +60,7 @@ namespace WallstreetDataService.Model
             {
                 return TotalNoOfShares - NoOfProcessedShares;
             }
+            internal set { }
         }
 
         [DataMember]

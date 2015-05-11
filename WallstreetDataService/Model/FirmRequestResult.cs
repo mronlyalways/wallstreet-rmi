@@ -7,9 +7,6 @@ using System.Web;
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    [KnownType(typeof(FirmDepot))]
-    [KnownType(typeof(Order))]
-    [KnownType(typeof(ShareInformation))]
     public class FirmRequestResult
     {
         [DataMember]

@@ -46,7 +46,7 @@ namespace WallstreetDataService
         void PutTransaction(Transaction transaction);
 
         [OperationContract]
-        FirmDepot RegisterFirm(Request request);
+        FirmRequestResult RegisterFirm(Request request);
 
         [OperationContract]
         FirmDepot GetFirmDepot(string firmName);

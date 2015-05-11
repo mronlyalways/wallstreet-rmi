@@ -132,6 +132,12 @@
     <None Include="Service References\localhost\Wallstreet.localhost.FirmDepot.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\localhost\Wallstreet.localhost.FirmRequestResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\localhost\Wallstreet.localhost.InvestorDepot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\localhost\Wallstreet.localhost.Order.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

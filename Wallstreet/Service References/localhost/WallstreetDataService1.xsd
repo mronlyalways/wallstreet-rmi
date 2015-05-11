@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="ArrayOfShareInformation">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ShareInformation" nillable="true" type="tns:ShareInformation" />
@@ -16,6 +17,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ShareInformation" nillable="true" type="tns:ShareInformation" />
+  <xs:complexType name="ArrayOfInvestorDepot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InvestorDepot" nillable="true" type="tns:InvestorDepot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInvestorDepot" nillable="true" type="tns:ArrayOfInvestorDepot" />
+  <xs:complexType name="InvestorDepot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Budget" type="xs:double" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Shares" nillable="true" type="q1:ArrayOfKeyValueOfstringint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvestorDepot" nillable="true" type="tns:InvestorDepot" />
+  <xs:complexType name="Registration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Budget" type="xs:double" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Registration" nillable="true" type="tns:Registration" />
   <xs:complexType name="ArrayOfOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
@@ -82,6 +104,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Request" nillable="true" type="tns:Request" />
+  <xs:complexType name="FirmRequestResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirmDepot" nillable="true" type="tns:FirmDepot" />
+      <xs:element minOccurs="0" name="Order" nillable="true" type="tns:Order" />
+      <xs:element minOccurs="0" name="ShareInformation" nillable="true" type="tns:ShareInformation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FirmRequestResult" nillable="true" type="tns:FirmRequestResult" />
   <xs:complexType name="FirmDepot">
     <xs:sequence>
       <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
@@ -89,4 +119,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FirmDepot" nillable="true" type="tns:FirmDepot" />
+  <xs:complexType name="OrderMatchResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Matches" nillable="true" type="tns:ArrayOfOrder" />
+      <xs:element minOccurs="0" name="Order" nillable="true" type="tns:Order" />
+      <xs:element minOccurs="0" name="Transactions" nillable="true" type="tns:ArrayOfTransaction" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderMatchResult" nillable="true" type="tns:OrderMatchResult" />
 </xs:schema>

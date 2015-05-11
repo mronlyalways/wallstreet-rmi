@@ -7,8 +7,6 @@ using System.Web;
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    [KnownType(typeof(Order))]
-    [KnownType(typeof(Transaction))]
     public class OrderMatchResult
     {
         [DataMember]

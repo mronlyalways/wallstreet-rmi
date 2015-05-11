@@ -104,13 +104,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Request" nillable="true" type="tns:Request" />
-  <xs:complexType name="FirmDepot">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OwnedShares" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="FirmDepot" nillable="true" type="tns:FirmDepot" />
   <xs:complexType name="FirmRequestResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="FirmDepot" nillable="true" type="tns:FirmDepot" />
@@ -119,6 +112,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FirmRequestResult" nillable="true" type="tns:FirmRequestResult" />
+  <xs:complexType name="FirmDepot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OwnedShares" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FirmDepot" nillable="true" type="tns:FirmDepot" />
   <xs:complexType name="OrderMatchResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="Matches" nillable="true" type="tns:ArrayOfOrder" />
