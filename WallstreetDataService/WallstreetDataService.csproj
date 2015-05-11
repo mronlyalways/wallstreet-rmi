@@ -83,12 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="DataStore.cs" />
+    <Compile Include="DataRepository.cs" />
     <Compile Include="IBroker.cs" />
     <Compile Include="IBrokerService.cs" />
     <Compile Include="IWallstreetSubscriber.cs" />
     <Compile Include="Model\FirmDepot.cs" />
-    <Compile Include="Model\FirmPackage.cs" />
+    <Compile Include="Model\OrderMatchResult.cs" />
+    <Compile Include="Model\FirmRequestResult.cs" />
     <Compile Include="Model\InvestorDepot.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Registration.cs" />

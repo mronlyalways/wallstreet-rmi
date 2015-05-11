@@ -11,6 +11,9 @@ namespace WallstreetDataService
     public interface IBroker
     {
         [OperationContract]
-        Tuple<string, int, int, double, int, int, Tuple<string, int>> OnNewRegistrationRequestAvailable(Request info);
+        FirmRequestResult OnNewRegistrationRequestAvailable(Request request);
+
+        [OperationContract]
+        OrderMatchResult OnNewOrderMatchingRequestAvailable(Order order, IEnumerable<Order> orders);
     }
 }

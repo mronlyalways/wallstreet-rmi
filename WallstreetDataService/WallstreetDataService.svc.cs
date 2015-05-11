@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,9 +12,9 @@ namespace WallstreetDataService
 {
     public class WallstreetDataService : IWallstreetDataService, IBrokerService
     {
-        DataStore data;
+        DataRepository data;
 
-        public WallstreetDataService(DataStore data)
+        public WallstreetDataService(DataRepository data)
         {
             this.data = data;
         }
@@ -31,7 +32,22 @@ namespace WallstreetDataService
         public void PutShareInformation(ShareInformation info)
         {
             data.ShareInformation.Add(info);
-            CallWithArgument(data.ShareInformationCallbacks, info);
+            NotifySubscribers(data.ShareInformationCallbacks, info);
+        }
+
+        public IEnumerable<InvestorDepot> GetInvestorInformation()
+        {
+            return data.InvestorDepots;
+        }
+
+        public InvestorDepot GetInvestorDepot(string investorId)
+        {
+            return data.InvestorDepots.SingleOrDefault(x => x.Email == investorId);
+        }
+
+        public void PutInvestorDepot(InvestorDepot investor)
+        {
+            data.InvestorDepots.Add(investor);
         }
 
         public IEnumerable<Order> GetOrders()
@@ -41,8 +57,18 @@ namespace WallstreetDataService
 
         public void PutOrder(Order order)
         {
+            if (data.Brokers.Count > 0)
+            {
+                var result = data.Brokers.First().OnNewOrderMatchingRequestAvailable(order, data.Orders.Where(x => x.ShareName == order.ShareName));
+            }
+            else
+            {
+                //data.PendingRequests.Add(request);
+                // TODO implement mechanism to call brokers when coming online.
+                //return null;
+            }
             data.Orders.Add(order);
-            CallWithArgument(data.OrderCallbacks, order);
+            NotifySubscribers(data.OrderCallbacks, order);
         }
 
         public IEnumerable<Transaction> GetTransactions()
@@ -53,40 +79,24 @@ namespace WallstreetDataService
         public void PutTransaction(Transaction transaction)
         {
             data.Transactions.Add(transaction);
-            CallWithArgument(data.TransactionCallbacks, transaction);
+            NotifySubscribers(data.TransactionCallbacks, transaction);
         }
 
         public FirmDepot RegisterFirm(Request request)
         {
             if (data.Brokers.Count > 0)
             {
-                var result = data.Brokers[0](request);
-                var depot = new FirmDepot { FirmName = result.Item1, OwnedShares = result.Item2 };
-                var info = new ShareInformation
-                {
-                    FirmName = result.Item1,
-                    NoOfShares = result.Item3,
-                    PricePerShare = result.Item4,
-                    PurchasingVolume = result.Item5,
-                    SalesVolume = result.Item6
-                };
-                var order = new Order
-                {
-                    Id = result.Item7.Item1,
-                    ShareName = result.Item1,
-                    InvestorId = result.Item1,
-                    Type = Order.OrderType.SELL,
-                    Status = Order.OrderStatus.OPEN,
-                    NoOfProcessedShares = 0,
-                    TotalNoOfShares = result.Item7.Item2,
-                    Limit = 0
-                };
-
-                data.FirmDepots = data.FirmDepots.Where(x => x.FirmName != depot.FirmName).ToList();
+                var result = data.Brokers.First().OnNewRegistrationRequestAvailable(request);
+                var depot = result.FirmDepot;
+                var info = result.ShareInformation;
+                var order = result.Order;
+                data.FirmDepots = new ConcurrentBag<FirmDepot>(data.FirmDepots.Where(x => x.FirmName != depot.FirmName));
                 data.FirmDepots.Add(depot);
                 data.Orders.Add(order);
-                data.ShareInformation = data.ShareInformation.Where(x => x.FirmName != info.FirmName).ToList();
+                NotifySubscribers(data.OrderCallbacks, order);
+                data.ShareInformation = new ConcurrentBag<ShareInformation>(data.ShareInformation.Where(x => x.FirmName != info.FirmName));
                 data.ShareInformation.Add(info);
+                NotifySubscribers(data.ShareInformationCallbacks, info);
                 return depot;
             }
             else
@@ -129,10 +139,10 @@ namespace WallstreetDataService
         public void RegisterBroker()
         {
             var subscriber = OperationContext.Current.GetCallbackChannel<IBroker>();
-            data.Brokers.Add(subscriber.OnNewRegistrationRequestAvailable);
+            data.Brokers.Add(subscriber);
         }
 
-        private void CallWithArgument<T>(IEnumerable<Action<T>> callbacks, T arg)
+        private void NotifySubscribers<T>(IEnumerable<Action<T>> callbacks, T arg)
         {
             foreach (Action<T> callback in callbacks)
             {

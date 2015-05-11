@@ -7,15 +7,17 @@ using System.Web;
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    public class FirmPackage
+    [KnownType(typeof(Order))]
+    [KnownType(typeof(Transaction))]
+    public class OrderMatchResult
     {
         [DataMember]
-        public FirmDepot FirmDepot { get; set; }
-
-        [DataMember]
         public Order Order { get; set; }
+        
+        [DataMember]
+        public IEnumerable<Order> Matches { get; set; }
 
         [DataMember]
-        public ShareInformation ShareInformation { get; set; }
+        public IEnumerable<Transaction> Transactions { get; set; }
     }
 }

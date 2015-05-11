@@ -22,6 +22,15 @@ namespace WallstreetDataService
         void PutShareInformation(ShareInformation info);
 
         [OperationContract]
+        IEnumerable<InvestorDepot> GetInvestorInformation();
+
+        [OperationContract]
+        InvestorDepot GetInvestorDepot(string investorId);
+
+        [OperationContract]
+        void PutInvestorDepot(InvestorDepot investor);
+
+        [OperationContract]
         IEnumerable<Order> GetOrders();
 
         [OperationContract]
