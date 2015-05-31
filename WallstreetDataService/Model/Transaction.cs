@@ -68,6 +68,8 @@ namespace WallstreetDataService.Model
                 }
                 return TotalCost * 0.03 * prioritizationMultiplier;
             }
+
+            internal set { }
         }
 
         [DataMember]
@@ -82,6 +84,8 @@ namespace WallstreetDataService.Model
                 }
                 return TotalCost * 0.03 * prioritizationMultiplier;
             }
+
+            internal set { }
         }
 
         [DataMember]
@@ -98,6 +102,8 @@ namespace WallstreetDataService.Model
                     return 0.0;
                 }
             }
+
+            internal set {  }
         }
     }
 }

@@ -109,7 +109,6 @@ namespace WallstreetDataService
                 var prio_result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Prioritize));
                 ProcessOrder(order, prio_result);
 
-                //TODO: Fix InvalidDataContractException
                 var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type));
                 ProcessOrder(order, result);
             }
