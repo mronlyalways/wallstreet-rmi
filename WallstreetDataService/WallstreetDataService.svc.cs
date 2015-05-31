@@ -106,53 +106,62 @@ namespace WallstreetDataService
                     Interlocked.Exchange(ref putOrdersCounter, 0);
                 }
                 
+                var prio_result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Prioritize));
+                ProcessOrder(order, prio_result);
+
+                //TODO: Fix InvalidDataContractException
                 var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type));
-                if (result.Order != null) // else punish : do nothing
-                {
-                    foreach (Order o in result.Matches)
-                    {
-                         data.Orders[o.Id] = o;
-                    }
+                ProcessOrder(order, result);
+            }
+        }
 
-                    foreach (Transaction t in result.Transactions)
-                    {
-                        var buyer = data.InvestorDepots[t.BuyerId];
-                        buyer.Budget -= (t.TotalCost + t.BuyerProvision);
-                        int val;
-                        buyer.Shares[order.ShareName] = buyer.Shares.TryGetValue(order.ShareName, out val) ? val + t.NoOfSharesSold : t.NoOfSharesSold;
-                        InvestorDepot seller;
-                        var sellerExists = data.InvestorDepots.TryGetValue(t.SellerId, out seller);
-                        if (sellerExists) // seller is investor
-                        {
-                            seller.Budget += t.TotalCost;
-                            seller.Shares[order.ShareName] -= t.NoOfSharesSold;
-                        }
-                        else // seller is firm
-                        {
-                            var firm = data.FirmDepots[t.SellerId];
-                            firm.OwnedShares -= t.NoOfSharesSold;
-                        }
-                        data.Transactions.Add(t);
-                        NotifySubscribers(data.TransactionCallbacks, t);
-                        NotifySubscribers(data.InvestorCallbacks, buyer);
-                        NotifySubscribers(data.InvestorCallbacks, seller);
-                    }
-                    NotifySubscribers(data.OrderCallbacks, result.Order);
-                    data.Orders[order.Id] = result.Order;
-                    foreach (Order ord in result.Matches)
-                    {
-                        NotifySubscribers(data.OrderCallbacks, ord);
-                    }
-
-                    var info = data.ShareInformation[order.ShareName];
-                    info.PurchasingVolume = CalculatePurchasingVolume(data.Orders.Values);
-                    info.SalesVolume = CalculateSalesVolume(data.Orders.Values);
-                    NotifySubscribers(data.ShareInformationCallbacks, info);
-                }
-                else
+        private void ProcessOrder(Order order, OrderMatchResult result)
+        {
+            if (result.Order != null) // else punish : do nothing
+            {
+                foreach (Order o in result.Matches)
                 {
-                    data.Orders.TryRemove(order.Id, out order);
+                    data.Orders[o.Id] = o;
                 }
+
+                foreach (Transaction t in result.Transactions)
+                {
+                    var buyer = data.InvestorDepots[t.BuyerId];
+                    buyer.Budget -= (t.TotalCost + t.BuyerProvision);
+                    int val;
+                    buyer.Shares[order.ShareName] = buyer.Shares.TryGetValue(order.ShareName, out val) ? val + t.NoOfSharesSold : t.NoOfSharesSold;
+                    InvestorDepot seller;
+                    var sellerExists = data.InvestorDepots.TryGetValue(t.SellerId, out seller);
+                    if (sellerExists) // seller is investor
+                    {
+                        seller.Budget += t.TotalCost;
+                        seller.Shares[order.ShareName] -= t.NoOfSharesSold;
+                    }
+                    else // seller is firm
+                    {
+                        var firm = data.FirmDepots[t.SellerId];
+                        firm.OwnedShares -= t.NoOfSharesSold;
+                    }
+                    data.Transactions.Add(t);
+                    NotifySubscribers(data.TransactionCallbacks, t);
+                    NotifySubscribers(data.InvestorCallbacks, buyer);
+                    NotifySubscribers(data.InvestorCallbacks, seller);
+                }
+                NotifySubscribers(data.OrderCallbacks, result.Order);
+                data.Orders[order.Id] = result.Order;
+                foreach (Order ord in result.Matches)
+                {
+                    NotifySubscribers(data.OrderCallbacks, ord);
+                }
+
+                var info = data.ShareInformation[order.ShareName];
+                info.PurchasingVolume = CalculatePurchasingVolume(data.Orders.Values);
+                info.SalesVolume = CalculateSalesVolume(data.Orders.Values);
+                NotifySubscribers(data.ShareInformationCallbacks, info);
+            }
+            else
+            {
+                data.Orders.TryRemove(order.Id, out order);
             }
         }
 
