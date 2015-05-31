@@ -14,6 +14,7 @@
       <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
       <xs:element minOccurs="0" name="PurchasingVolume" type="xs:int" />
       <xs:element minOccurs="0" name="SalesVolume" type="xs:int" />
+      <xs:element minOccurs="0" name="isFund" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ShareInformation" nillable="true" type="tns:ShareInformation" />
@@ -38,6 +39,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Registration" nillable="true" type="tns:Registration" />
+  <xs:complexType name="FundRegistration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FundAssets" type="xs:double" />
+      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FundRegistration" nillable="true" type="tns:FundRegistration" />
+  <xs:complexType name="FundDepot">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FundBank" type="xs:double" />
+      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Shares" nillable="true" type="q2:ArrayOfKeyValueOfstringint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FundDepot" nillable="true" type="tns:FundDepot" />
   <xs:complexType name="ArrayOfOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
@@ -51,6 +69,7 @@
       <xs:element minOccurs="0" name="Limit" type="xs:double" />
       <xs:element minOccurs="0" name="NoOfOpenShares" type="xs:int" />
       <xs:element minOccurs="0" name="NoOfProcessedShares" type="xs:int" />
+      <xs:element minOccurs="0" name="Prioritize" type="xs:boolean" />
       <xs:element minOccurs="0" name="ShareName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Status" type="tns:OrderStatus" />
       <xs:element minOccurs="0" name="TotalNoOfShares" type="xs:int" />
@@ -84,11 +103,16 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="BrokerId" type="xs:long" />
       <xs:element minOccurs="0" name="BuyerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BuyerProvision" type="xs:double" />
       <xs:element minOccurs="0" name="BuyingOrderId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FundProvision" type="xs:double" />
+      <xs:element minOccurs="0" name="IsFund" type="xs:boolean" />
       <xs:element minOccurs="0" name="NoOfSharesSold" type="xs:int" />
       <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
-      <xs:element minOccurs="0" name="Provision" type="xs:double" />
+      <xs:element minOccurs="0" name="PrioritizedBuyingOrder" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PrioritizedSellingOrder" type="xs:boolean" />
       <xs:element minOccurs="0" name="SellerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SellerProvision" type="xs:double" />
       <xs:element minOccurs="0" name="SellingOrderId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShareName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TotalCost" type="xs:double" />

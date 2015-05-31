@@ -14,6 +14,9 @@ namespace WallstreetDataService
         void OnNewInvestorDepotAvailable(InvestorDepot depot);
 
         [OperationContract(IsOneWay = true)]
+        void OnNewFundDepotAvailable(FundDepot depot);
+
+        [OperationContract(IsOneWay = true)]
         void OnNewShareInformationAvailable(ShareInformation info);
 
         [OperationContract(IsOneWay = true)]

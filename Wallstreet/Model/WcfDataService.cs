@@ -72,6 +72,8 @@ namespace Wallstreet.Model
 
         public void OnNewInvestorDepotAvailable(InvestorDepot transaction) { }
 
+        public void OnNewFundDepotAvailable(FundDepot depot) { }
+
         public void OnNewShareInformationAvailable(ShareInformation info)
         {
             ExecuteOnGUIThread(marketCallbacks, info);

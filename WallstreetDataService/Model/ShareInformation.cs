@@ -24,5 +24,8 @@ namespace WallstreetDataService.Model
 
         [DataMember]
         public double PricePerShare { get; set; }
+
+        [DataMember]
+        public bool isFund { get; set; }
     }
 }

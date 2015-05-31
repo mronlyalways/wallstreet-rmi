@@ -17,5 +17,8 @@ namespace Firm
         public void OnNewTransactionAvailable(Transaction transaction) { }
 
         public void OnNewInvestorDepotAvailable(InvestorDepot transaction) { }
+
+        public void OnNewFundDepotAvailable(FundDepot depot) { }
+
     }
 }

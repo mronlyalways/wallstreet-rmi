@@ -74,6 +74,12 @@ namespace WallstreetDataService
             return depot;
         }
 
+        public FundDepot LoginFund(FundRegistration registration)
+        {
+            //TODO: implement fund registration
+            return null;
+        }
+
         public IEnumerable<Order> GetOrders()
         {
             return data.Orders.Values;
@@ -111,7 +117,7 @@ namespace WallstreetDataService
                     foreach (Transaction t in result.Transactions)
                     {
                         var buyer = data.InvestorDepots[t.BuyerId];
-                        buyer.Budget -= (t.TotalCost + t.Provision);
+                        buyer.Budget -= (t.TotalCost + t.BuyerProvision);
                         int val;
                         buyer.Shares[order.ShareName] = buyer.Shares.TryGetValue(order.ShareName, out val) ? val + t.NoOfSharesSold : t.NoOfSharesSold;
                         InvestorDepot seller;

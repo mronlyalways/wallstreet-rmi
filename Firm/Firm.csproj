@@ -57,6 +57,9 @@
     <None Include="Service References\localhost\Firm.localhost.FirmDepot.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\localhost\Firm.localhost.FundDepot.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\localhost\Firm.localhost.InvestorDepot1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

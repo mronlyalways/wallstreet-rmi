@@ -38,6 +38,15 @@ namespace WallstreetDataService.Model
         public int NoOfSharesSold { get; set; }
 
         [DataMember]
+        public bool PrioritizedSellingOrder { get; set; }
+
+        [DataMember]
+        public bool PrioritizedBuyingOrder { get; set; }
+
+        [DataMember]
+        public bool IsFund { get; set; }
+
+        [DataMember]
         public double TotalCost
         {
             get
@@ -48,13 +57,47 @@ namespace WallstreetDataService.Model
         }
 
         [DataMember]
-        public double Provision
+        public double SellerProvision
         {
             get
             {
-                return TotalCost * 0.03;
+                int prioritizationMultiplier = 1;
+                if (PrioritizedSellingOrder)
+                {
+                    prioritizationMultiplier = 2;
+                }
+                return TotalCost * 0.03 * prioritizationMultiplier;
             }
-            internal set { }
+        }
+
+        [DataMember]
+        public double BuyerProvision
+        {
+            get
+            {
+                int prioritizationMultiplier = 1;
+                if (PrioritizedBuyingOrder)
+                {
+                    prioritizationMultiplier = 2;
+                }
+                return TotalCost * 0.03 * prioritizationMultiplier;
+            }
+        }
+
+        [DataMember]
+        public double FundProvision
+        {
+            get
+            {
+                if (IsFund)
+                {
+                    return TotalCost * 0.02;
+                }
+                else
+                {
+                    return 0.0;
+                }
+            }
         }
     }
 }

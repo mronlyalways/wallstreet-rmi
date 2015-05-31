@@ -17,5 +17,7 @@ namespace Agent
         public void OnNewTransactionAvailable(Transaction transaction) { }
 
         public void OnNewInvestorDepotAvailable(InvestorDepot depot) { }
+
+        public void OnNewFundDepotAvailable(FundDepot depot) { }
     }
 }

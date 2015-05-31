@@ -112,6 +112,8 @@ namespace Investor.Model
             }
         }
 
+        public void OnNewFundDepotAvailable(FundDepot depot) { }
+
         public void OnNewTransactionAvailable(Transaction transaction)
         {
             if (email != null && (transaction.BuyerId.Equals(email) || transaction.SellerId.Equals(email)))

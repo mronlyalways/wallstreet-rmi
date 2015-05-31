@@ -28,6 +28,7 @@ namespace WallstreetDataService
         public ConcurrentBag<IBroker> Brokers { get; set; }
         public ConcurrentDictionary<string, ShareInformation> ShareInformation { get; set; }
         public ConcurrentDictionary<string, InvestorDepot> InvestorDepots { get; set; }
+        public ConcurrentDictionary<string, FundDepot> FundDepots { get; set; }
         public ConcurrentDictionary<string, Order> Orders { get; set; }
         public ConcurrentBag<Transaction> Transactions { get; set; }
         public ConcurrentDictionary<string, FirmDepot> FirmDepots { get; set; }

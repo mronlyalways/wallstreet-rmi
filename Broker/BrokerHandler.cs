@@ -74,7 +74,7 @@ namespace Broker
 
         private bool IsAffordableForBuyer(string id, IEnumerable<Transaction> transactions)
         {
-            var moneyNeeded = transactions.Where(x => x.BuyerId == id).Sum(x => x.TotalCost + x.Provision);
+            var moneyNeeded = transactions.Where(x => x.BuyerId == id).Sum(x => x.TotalCost + x.BuyerProvision);
             var balance = wallstreetClient.GetInvestorDepot(id).Budget;
             return balance >= moneyNeeded;
         }
@@ -130,7 +130,7 @@ namespace Broker
                     SellingOrderId = buyMode ? match.Id : order.Id,
                     NoOfSharesSold = sharesProcessed,
                     TotalCost = totalCost,
-                    Provision = totalCost * 0.03,
+                    BuyerProvision = totalCost * 0.03,
                     PricePerShare = stockPrice
                 });
                 order.NoOfProcessedShares += sharesProcessed;
