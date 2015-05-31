@@ -37,7 +37,7 @@ namespace WallstreetDataService
         {
             data.ShareInformation[info.FirmName] = info;
             NotifySubscribers(data.ShareInformationCallbacks, info);
-            foreach (Order o in data.Orders.Values.Where(x => x.Status != Order.OrderStatus.DONE && x.Type == Order.OrderType.BUY))
+            foreach (Order o in data.Orders.Values.Where(x => x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED && x.Type == Order.OrderType.BUY))
             {
                 PutOrder(o);
             }
@@ -106,10 +106,10 @@ namespace WallstreetDataService
                     Interlocked.Exchange(ref putOrdersCounter, 0);
                 }
                 
-                var prio_result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Prioritize));
+                var prio_result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Prioritize && x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED));
                 ProcessOrder(order, prio_result);
 
-                var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type));
+                var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED));
                 ProcessOrder(order, result);
             }
         }
