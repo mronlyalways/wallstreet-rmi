@@ -241,6 +241,7 @@ namespace WallstreetDataService
                 {
                     PutOrder(o);
                 }
+                //TODO pending orders
             }
         }
 
