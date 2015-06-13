@@ -7,15 +7,9 @@ using System.Web;
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    public class FirmRequestResult
+    public class FirmRequestResult : RequestResult
     {
         [DataMember]
         public FirmDepot FirmDepot { get; set; }
-
-        [DataMember]
-        public Order Order { get; set; }
-
-        [DataMember]
-        public ShareInformation ShareInformation { get; set; }
     }
 }

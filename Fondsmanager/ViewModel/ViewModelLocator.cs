@@ -1,7 +1,7 @@
 ﻿using Ninject;
-using Fondsmanager.Model;
+using FundManager.Model;
 
-namespace Fondsmanager.ViewModel
+namespace FundManager.ViewModel
 {
     public class ViewModelLocator
     {

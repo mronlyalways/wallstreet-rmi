@@ -31,7 +31,7 @@ namespace Investor.Model
             transactionAddedCallbacks = new List<Action<Transaction>>();
         }
 
-        public InvestorDepot Login(Registration r)
+        public InvestorDepot Login(InvestorRegistration r)
         {
             email = r.Email;
             return client.LoginInvestor(r);

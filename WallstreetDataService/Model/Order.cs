@@ -57,6 +57,9 @@ namespace WallstreetDataService.Model
         public bool Prioritize { get; set; }
 
         [DataMember]
+        public bool IsFundShare { get; set; }
+
+        [DataMember]
         public int NoOfOpenShares
         {
             get

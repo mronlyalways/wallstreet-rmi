@@ -31,13 +31,13 @@ namespace WallstreetDataService
         void PutInvestorDepot(InvestorDepot investor);
 
         [OperationContract]
-        InvestorDepot LoginInvestor(Registration registration);
+        InvestorDepot LoginInvestor(InvestorRegistration registration);
 
         [OperationContract]
         FundDepot GetFundDepot(string fundId);
 
-        [OperationContract]
-        FundDepot LoginFund(FundRegistration registration);
+        [OperationContract(IsOneWay = true)]
+        void LoginFund(FundRegistration registration);
 
         [OperationContract]
         IEnumerable<Order> GetOrders();
@@ -58,13 +58,16 @@ namespace WallstreetDataService
         void PutTransaction(Transaction transaction);
 
         [OperationContract]
-        FirmDepot RegisterFirm(Request request);
+        FirmDepot RegisterFirm(FirmRegistration request);
 
         [OperationContract]
         FirmDepot GetFirmDepot(string firmName);
 
         [OperationContract(IsOneWay = true)]
         void SubscribeOnNewShareInformationAvailable();
+
+        [OperationContract(IsOneWay = true)]
+        void SubscribeOnNewFundDepotAvailable();
 
         [OperationContract(IsOneWay = true)]
         void SubscribeOnNewOrderAvailable();

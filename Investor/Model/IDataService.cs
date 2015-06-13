@@ -10,7 +10,7 @@ namespace Investor.Model
 {
     public interface IDataService : IDisposable
     {
-        InvestorDepot Login(Registration r);
+        InvestorDepot Login(InvestorRegistration r);
 
         void PlaceOrder(Order order);
 

@@ -7,12 +7,9 @@ using System.Text;
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    public class Registration
+    public class FundRequestResult : RequestResult
     {
         [DataMember]
-        public String Id { get; set; }
-
-        [DataMember]
-        public int Shares { get; set; }
+        public FundDepot FundDepot { get; set; }
     }
 }

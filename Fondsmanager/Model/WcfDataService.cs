@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.ServiceModel;
-using Fondsmanager.localhost;
+using FundManager.localhost;
 
-namespace Fondsmanager.Model
+namespace FundManager.Model
 {
     public class WcfDataService : IDataService, IDisposable, IWallstreetDataServiceCallback
     {
@@ -25,16 +25,17 @@ namespace Fondsmanager.Model
             client.SubscribeOnNewOrderAvailable();
             client.SubscribeOnNewTransactionAvailable();
             client.SubscribeOnNewInvestorDepotAvailable();
+            client.SubscribeOnNewFundDepotAvailable();
             marketCallbacks = new List<Action<ShareInformation>>();
             orderAddedCallbacks = new List<Action<Order>>();
             fundAddedCallbacks = new List<Action<FundDepot>>();
             transactionAddedCallbacks = new List<Action<Transaction>>();
         }
 
-        public FundDepot Login(FundRegistration r)
+        public void Login(FundRegistration r)
         {
-            fundid = r.FundID;
-            return client.LoginFund(r);
+            fundid = r.Id;
+            client.LoginFund(r);
         }
 
         public void PlaceOrder(Order order)

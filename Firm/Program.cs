@@ -32,7 +32,7 @@ namespace Firm
                 shares = Int32.Parse(input[1]);
                 pricePerShare = Double.Parse(input[2]);
             }
-            var depot = wallstreetClient.RegisterFirm(new Request() { FirmName = name, Shares = shares, PricePerShare = pricePerShare });
+            var depot = wallstreetClient.RegisterFirm(new FirmRegistration { Id = name, Shares = shares, PricePerShare = pricePerShare });
             Console.WriteLine("Depot created.");
 
             Thread.Sleep(2000);

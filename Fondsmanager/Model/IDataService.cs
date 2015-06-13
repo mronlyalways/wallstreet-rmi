@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
-using Fondsmanager.localhost;
+using FundManager.localhost;
 
-namespace Fondsmanager.Model
+namespace FundManager.Model
 {
     public interface IDataService : IDisposable
     {
-        FundDepot Login(FundRegistration r);
+        void Login(FundRegistration r);
 
         void PlaceOrder(Order order);
 

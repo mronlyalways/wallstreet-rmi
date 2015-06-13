@@ -1,11 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using Fondsmanager.Model;
-using Fondsmanager.View;
-using Fondsmanager.localhost;
+using FundManager.Model;
+using FundManager.View;
+using FundManager.localhost;
 
-namespace Fondsmanager.ViewModel
+namespace FundManager.ViewModel
 {
 
     public class LoginViewModel : ViewModelBase
@@ -16,6 +16,7 @@ namespace Fondsmanager.ViewModel
         public LoginViewModel(IDataService data)
         {
             this.data = data;
+            data.AddNewFundInformationAvailableCallback(OnNewFundDepotAvailable);
             SubmitCommand = new RelayCommand(Submit, () => !FundID.Equals(string.Empty) && FundAssests >= 0 && FundShares >= 0 && !submitted);
             FundID = string.Empty;
             FundAssests = 0;
@@ -88,7 +89,13 @@ namespace Fondsmanager.ViewModel
 
         public void Submit()
         {
-            data.Login(new FundRegistration() { FundID = FundID, FundAssets = FundAssests, FundShares = FundShares });
+            data.Login(new FundRegistration() { Id = FundID, FundAssets = FundAssests, Shares = FundShares });
+            submitted = true;
+            ButtonText = "Waiting for confirmation ...";
+        }
+
+        public void OnNewFundDepotAvailable(FundDepot depot)
+        {
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
             var MainWindow = new MainWindow();
             MainWindow.Show();

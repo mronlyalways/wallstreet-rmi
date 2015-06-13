@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Fondsmanager.View
+namespace FundManager.View
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml

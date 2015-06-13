@@ -61,7 +61,7 @@ namespace WallstreetDataService
             NotifySubscribers(data.InvestorCallbacks, investor);
         }
 
-        public InvestorDepot LoginInvestor(Registration registration)
+        public InvestorDepot LoginInvestor(InvestorRegistration registration)
         {
             InvestorDepot depot;
             var exists = data.InvestorDepots.TryGetValue(registration.Email, out depot);
@@ -81,16 +81,35 @@ namespace WallstreetDataService
             return result;
         }
 
-        public FundDepot LoginFund(FundRegistration registration)
+        public void LoginFund(FundRegistration registration)
         {
             FundDepot depot;
-            var exists = data.FundDepots.TryGetValue(registration.FundID, out depot);
+            var exists = data.FundDepots.TryGetValue(registration.Id, out depot);
             if (!exists)
             {
-                depot = new FundDepot { FundID = registration.FundID, FundBank = registration.FundAssets, Shares = new Dictionary<string,int>(), FundShares = registration.FundShares };
+                if (data.Brokers.Count > 0)
+                {
+                    FundRequestResult result = data.Brokers.First().OnNewFundRegistrationRequestAvailable(registration);
+                    depot = result.FundDepot;
+                    var info = result.ShareInformation;
+                    var order = result.Order;
+                    data.FundDepots[depot.FundID] = depot;
+                    data.Orders[order.Id] = order;
+                    NotifySubscribers(data.OrderCallbacks, order);
+                    data.ShareInformation[info.FirmName] = info;
+                    NotifySubscribers(data.ShareInformationCallbacks, info);
+                    NotifySubscribers(data.FundRegistrationCallbacks, result.FundDepot);
+                }
+                else
+                {
+                    data.PendingFundRegistrationRequests.Add(registration);
+                    // TODO implement mechanism to call brokers when coming online.
+                }
             }
-            data.FundDepots[depot.FundID] = depot;
-            return depot;
+            else
+            {
+                NotifySubscribers(data.FundRegistrationCallbacks, data.FundDepots[registration.Id]);
+            }
         }
 
         public IEnumerable<Order> GetOrders()
@@ -201,11 +220,11 @@ namespace WallstreetDataService
             return result;
         }
 
-        public FirmDepot RegisterFirm(Request request)
+        public FirmDepot RegisterFirm(FirmRegistration request)
         {
             if (data.Brokers.Count > 0)
             {
-                FirmRequestResult result = data.Brokers.First().OnNewRegistrationRequestAvailable(request);
+                FirmRequestResult result = data.Brokers.First().OnNewFirmRegistrationRequestAvailable(request) as FirmRequestResult;
                 var depot = result.FirmDepot;
                 var info = result.ShareInformation;
                 var order = result.Order;
@@ -218,7 +237,7 @@ namespace WallstreetDataService
             }
             else
             {
-                data.PendingRequests.Add(request);
+                data.PendingFirmRegistrationRequests.Add(request);
                 // TODO implement mechanism to call brokers when coming online.
                 return null;
             }
@@ -234,6 +253,12 @@ namespace WallstreetDataService
         {
             var subscriber = OperationContext.Current.GetCallbackChannel<IWallstreetSubscriber>();
             data.ShareInformationCallbacks.Add(subscriber.OnNewShareInformationAvailable);
+        }
+
+        public void SubscribeOnNewFundDepotAvailable()
+        {
+            var subscriber = OperationContext.Current.GetCallbackChannel<IWallstreetSubscriber>();
+            data.FundRegistrationCallbacks.Add(subscriber.OnNewFundDepotAvailable);
         }
 
         public void SubscribeOnNewOrderAvailable()

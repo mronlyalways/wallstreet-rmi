@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Fondsmanager.Model;
+using FundManager.Model;
 using System;
 using GalaSoft.MvvmLight.Command;
-using Fondsmanager.localhost;
+using FundManager.localhost;
 
-namespace Fondsmanager.ViewModel
+namespace FundManager.ViewModel
 {
 
     public class MainViewModel : ViewModelBase

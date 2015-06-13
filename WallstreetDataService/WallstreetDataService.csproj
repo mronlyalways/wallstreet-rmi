@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="DataRepository.cs" />
+    <Compile Include="Model\FundRequestResult.cs" />
     <Compile Include="IBroker.cs" />
     <Compile Include="Model\FundRegistration.cs" />
     <Compile Include="Model\IBrokerService.cs" />
@@ -94,8 +95,10 @@
     <Compile Include="Model\FirmRequestResult.cs" />
     <Compile Include="Model\InvestorDepot.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\InvestorRegistration.cs" />
+    <Compile Include="Model\FirmRegistration.cs" />
     <Compile Include="Model\Registration.cs" />
-    <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\RequestResult.cs" />
     <Compile Include="Model\Share.cs" />
     <Compile Include="Model\ShareInformation.cs" />
     <Compile Include="Model\Transaction.cs" />

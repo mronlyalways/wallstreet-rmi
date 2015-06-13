@@ -18,9 +18,9 @@ namespace Broker
             this.wallstreetClient = wallstreetClient;
         }
 
-        public FirmRequestResult OnNewRegistrationRequestAvailable(Request request)
+        public FirmRequestResult OnNewFirmRegistrationRequestAvailable(FirmRegistration request)
         {
-            var firmName = request.FirmName;
+            var firmName = request.Id;
             var depot = wallstreetClient.GetFirmDepot(firmName);
 
             if (depot == null)
@@ -47,10 +47,35 @@ namespace Broker
                 NoOfOpenShares = request.Shares,
                 NoOfProcessedShares = 0,
                 Status = OrderStatus.OPEN,
-                Limit = 0
+                Limit = 0,
+                Prioritize = false,
+                IsFundShare = false
             };
 
             return new FirmRequestResult { FirmDepot = depot, ShareInformation = info, Order = order };
+        }
+
+        public FundRequestResult OnNewFundRegistrationRequestAvailable(FundRegistration request)
+        {
+            var fundName = request.Id;
+            var depot = new FundDepot() { FundID = fundName, FundShares = request.Shares, FundBank = request.FundAssets, Shares = new Dictionary<string,int>() };
+            var info = new ShareInformation() { FirmName = fundName, NoOfShares = request.Shares, PricePerShare = request.FundAssets / request.Shares, PurchasingVolume = 0, SalesVolume = request.Shares };
+            var order = new Order()
+            {
+                Id = fundName + DateTime.Now.Ticks,
+                ShareName = fundName,
+                InvestorId = fundName,
+                Type = OrderType.SELL,
+                TotalNoOfShares = request.Shares,
+                NoOfOpenShares = request.Shares,
+                NoOfProcessedShares = 0,
+                Status = OrderStatus.OPEN,
+                Limit = 0,
+                Prioritize = false,
+                IsFundShare = true
+            };
+
+            return new FundRequestResult { FundDepot = depot, ShareInformation = info, Order = order };
         }
 
         public OrderMatchResult OnNewOrderMatchingRequestAvailable(Order order, Order[] orders)

@@ -19,8 +19,10 @@ namespace WallstreetDataService
             Orders = new ConcurrentDictionary<string, Order>();
             Transactions = new ConcurrentBag<Transaction>();
             FirmDepots = new ConcurrentDictionary<string, FirmDepot>();
-            PendingRequests = new ConcurrentBag<Request>();
+            PendingFirmRegistrationRequests = new ConcurrentBag<FirmRegistration>();
+            PendingFundRegistrationRequests = new ConcurrentBag<FundRegistration>();
             ShareInformationCallbacks = new ConcurrentBag<Action<ShareInformation>>();
+            FundRegistrationCallbacks = new ConcurrentBag<Action<FundDepot>>();
             OrderCallbacks = new ConcurrentBag<Action<Order>>();
             InvestorCallbacks = new ConcurrentBag<Action<InvestorDepot>>();
             TransactionCallbacks = new ConcurrentBag<Action<Transaction>>();
@@ -33,8 +35,10 @@ namespace WallstreetDataService
         public ConcurrentDictionary<string, Order> Orders { get; set; }
         public ConcurrentBag<Transaction> Transactions { get; set; }
         public ConcurrentDictionary<string, FirmDepot> FirmDepots { get; set; }
-        public ConcurrentBag<Request> PendingRequests { get; set; }
+        public ConcurrentBag<FirmRegistration> PendingFirmRegistrationRequests { get; set; }
+        public ConcurrentBag<FundRegistration> PendingFundRegistrationRequests { get; set; }
         public ConcurrentBag<Action<ShareInformation>> ShareInformationCallbacks { get; set; }
+        public ConcurrentBag<Action<FundDepot>> FundRegistrationCallbacks { get; set; }
         public ConcurrentBag<Action<Order>> OrderCallbacks { get; set; }
         public ConcurrentBag<Action<InvestorDepot>> InvestorCallbacks { get; set; }
         public ConcurrentBag<Action<Transaction>> TransactionCallbacks { get; set; }

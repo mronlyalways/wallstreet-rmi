@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using Fondsmanager.ViewModel;
+using FundManager.ViewModel;
 
-namespace Fondsmanager.View
+namespace FundManager.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

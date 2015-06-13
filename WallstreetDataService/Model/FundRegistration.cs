@@ -8,24 +8,10 @@ using System.Threading.Tasks;
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    public class FundRegistration
+    public class FundRegistration : Registration
     {
         [DataMember]
-        public String FundID
-        {
-            get;
-            set;
-        }
-
-        [DataMember]
         public double FundAssets
-        {
-            get;
-            set;
-        }
-
-        [DataMember]
-        public int FundShares
         {
             get;
             set;

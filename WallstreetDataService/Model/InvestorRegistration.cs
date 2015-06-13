@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace WallstreetDataService.Model
 {
     [DataContract]
-    public class Registration
+    public class InvestorRegistration
     {
         [DataMember]
-        public String Id { get; set; }
+        public string Email { get; set; }
 
         [DataMember]
-        public int Shares { get; set; }
+        public double Budget { get; set; }
     }
 }

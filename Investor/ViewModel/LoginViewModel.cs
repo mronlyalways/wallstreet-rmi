@@ -73,7 +73,7 @@ namespace Investor.ViewModel
         public void Submit()
         {
             ButtonText = "Waiting for confirmation ...";
-            data.Login(new Registration() { Email = Email, Budget = Budget });
+            data.Login(new InvestorRegistration() { Email = Email, Budget = Budget });
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
             var MainWindow = new MainWindow();
             MainWindow.Show();

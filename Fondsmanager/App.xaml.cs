@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using GalaSoft.MvvmLight.Threading;
 
-namespace Fondsmanager 
+namespace FundManager 
 {
     /// <summary>
     /// Interaction logic for App.xaml
