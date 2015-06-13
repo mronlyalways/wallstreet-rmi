@@ -16,7 +16,6 @@ namespace Fondsmanager.ViewModel
         public LoginViewModel(IDataService data)
         {
             this.data = data;
-            data.AddNewFundInformationAvailableCallback(OnRegistrationConfirmed);
             SubmitCommand = new RelayCommand(Submit, () => !FundID.Equals(string.Empty) && FundAssests >= 0 && FundShares >= 0 && !submitted);
             FundID = string.Empty;
             FundAssests = 0;
@@ -82,7 +81,6 @@ namespace Fondsmanager.ViewModel
             {
                 buttonText = value;
                 RaisePropertyChanged(() => ButtonText);
-                SubmitCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -91,17 +89,9 @@ namespace Fondsmanager.ViewModel
         public void Submit()
         {
             data.Login(new FundRegistration() { FundID = FundID, FundAssets = FundAssests, FundShares = FundShares });
-            ButtonText = "Waiting for confirmation ...";
-            submitted = true;
-            SubmitCommand.RaiseCanExecuteChanged();
-        }
-
-        public void OnRegistrationConfirmed(FundDepot depot)
-        {
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
             var MainWindow = new MainWindow();
             MainWindow.Show();
-            data.RemoveNewFundInformationAvailableCallback(OnRegistrationConfirmed);
             this.Cleanup();
         }
     }

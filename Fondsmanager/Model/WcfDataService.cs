@@ -51,9 +51,7 @@ namespace Fondsmanager.Model
         {
             if (fundid != null)
             {
-                //TODO:
-                //return client.GetInvestorDepot(fundid);
-                return null;
+                return client.GetFundDepot(fundid);
             }
             else
             {

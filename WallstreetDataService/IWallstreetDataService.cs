@@ -34,6 +34,9 @@ namespace WallstreetDataService
         InvestorDepot LoginInvestor(Registration registration);
 
         [OperationContract]
+        FundDepot GetFundDepot(string fundId);
+
+        [OperationContract]
         FundDepot LoginFund(FundRegistration registration);
 
         [OperationContract]

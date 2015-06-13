@@ -74,10 +74,23 @@ namespace WallstreetDataService
             return depot;
         }
 
+        public FundDepot GetFundDepot(string fundId)
+        {
+            FundDepot result;
+            data.FundDepots.TryGetValue(fundId, out result);
+            return result;
+        }
+
         public FundDepot LoginFund(FundRegistration registration)
         {
-            //TODO: implement fund registration
-            return null;
+            FundDepot depot;
+            var exists = data.FundDepots.TryGetValue(registration.FundID, out depot);
+            if (!exists)
+            {
+                depot = new FundDepot { FundID = registration.FundID, FundBank = registration.FundAssets, Shares = new Dictionary<string,int>(), FundShares = registration.FundShares };
+            }
+            data.FundDepots[depot.FundID] = depot;
+            return depot;
         }
 
         public IEnumerable<Order> GetOrders()
@@ -181,6 +194,13 @@ namespace WallstreetDataService
             NotifySubscribers(data.TransactionCallbacks, transaction);
         }
 
+        public FirmDepot GetFirmDepot(string firmName)
+        {
+            FirmDepot result;
+            data.FirmDepots.TryGetValue(firmName, out result);
+            return result;
+        }
+
         public FirmDepot RegisterFirm(Request request)
         {
             if (data.Brokers.Count > 0)
@@ -202,13 +222,6 @@ namespace WallstreetDataService
                 // TODO implement mechanism to call brokers when coming online.
                 return null;
             }
-        }
-
-        public FirmDepot GetFirmDepot(string firmName)
-        {
-            FirmDepot result;
-            data.FirmDepots.TryGetValue(firmName, out result);
-            return result;
         }
 
         public void SubscribeOnNewRegistrationRequestAvailable()

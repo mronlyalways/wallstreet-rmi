@@ -39,14 +39,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Registration" nillable="true" type="tns:Registration" />
-  <xs:complexType name="FundRegistration">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FundAssets" type="xs:double" />
-      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="FundRegistration" nillable="true" type="tns:FundRegistration" />
   <xs:complexType name="FundDepot">
     <xs:sequence>
       <xs:element minOccurs="0" name="FundBank" type="xs:double" />
@@ -56,6 +48,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FundDepot" nillable="true" type="tns:FundDepot" />
+  <xs:complexType name="FundRegistration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FundAssets" type="xs:double" />
+      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FundRegistration" nillable="true" type="tns:FundRegistration" />
   <xs:complexType name="ArrayOfOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />

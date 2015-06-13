@@ -15,6 +15,7 @@ namespace WallstreetDataService
             Brokers = new ConcurrentBag<IBroker>();
             ShareInformation = new ConcurrentDictionary<string, ShareInformation>();
             InvestorDepots = new ConcurrentDictionary<string, InvestorDepot>();
+            FundDepots = new ConcurrentDictionary<string, FundDepot>();
             Orders = new ConcurrentDictionary<string, Order>();
             Transactions = new ConcurrentBag<Transaction>();
             FirmDepots = new ConcurrentDictionary<string, FirmDepot>();
