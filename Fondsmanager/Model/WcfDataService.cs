@@ -62,7 +62,7 @@ namespace FundManager.Model
 
         public IEnumerable<ShareInformation> LoadMarketInformation()
         {
-            return client.GetMarketInformation();
+            return client.GetMarketInformation().Where(x => !x.IsFund);
         }
 
         public IEnumerable<Order> LoadPendingOrders()
@@ -99,7 +99,10 @@ namespace FundManager.Model
 
         public void OnNewShareInformationAvailable(ShareInformation info)
         {
-            ExecuteOnGUIThread(marketCallbacks, info);
+            if (!info.IsFund)
+            {
+                ExecuteOnGUIThread(marketCallbacks, info);
+            }
         }
 
         public void OnNewOrderAvailable(Order order)
