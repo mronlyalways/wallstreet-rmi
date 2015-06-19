@@ -448,29 +448,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_LoginFund_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_GetOrders_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -771,6 +748,29 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_SubscribeOnNewShareInformationAvailable_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IWallstreetDataService_SubscribeOnNewFundDepotAvailable_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1172,7 +1172,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewFirmRegistrationRequestAvailable_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_ProcessFirmRegistration_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1195,7 +1195,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewFirmRegistrationRequestAvailable_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_ProcessFirmRegistration_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1218,7 +1218,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewFundRegistrationRequestAvailable_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_ProcessFundRegistration_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1241,7 +1241,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewFundRegistrationRequestAvailable_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_ProcessFundRegistration_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1264,7 +1264,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_output_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_ProcessMatchingOrders_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1287,7 +1287,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_Input_policy">
+  <wsp:Policy wsu:Id="WSDualHttpBinding_IBrokerService_ProcessMatchingOrders_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1363,9 +1363,6 @@
   <wsdl:message name="IWallstreetDataService_LoginFund_InputMessage">
     <wsdl:part name="parameters" element="tns:LoginFund" />
   </wsdl:message>
-  <wsdl:message name="IWallstreetDataService_LoginFund_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LoginFundResponse" />
-  </wsdl:message>
   <wsdl:message name="IWallstreetDataService_GetOrders_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOrders" />
   </wsdl:message>
@@ -1408,6 +1405,9 @@
   <wsdl:message name="IWallstreetDataService_SubscribeOnNewShareInformationAvailable_InputMessage">
     <wsdl:part name="parameters" element="tns:SubscribeOnNewShareInformationAvailable" />
   </wsdl:message>
+  <wsdl:message name="IWallstreetDataService_SubscribeOnNewFundDepotAvailable_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeOnNewFundDepotAvailable" />
+  </wsdl:message>
   <wsdl:message name="IWallstreetDataService_SubscribeOnNewOrderAvailable_InputMessage">
     <wsdl:part name="parameters" element="tns:SubscribeOnNewOrderAvailable" />
   </wsdl:message>
@@ -1444,23 +1444,23 @@
   <wsdl:message name="IBrokerService_UnregisterBroker_OutputMessage">
     <wsdl:part name="parameters" element="tns:UnregisterBrokerResponse" />
   </wsdl:message>
-  <wsdl:message name="IBrokerService_OnNewFirmRegistrationRequestAvailable_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnNewFirmRegistrationRequestAvailable" />
+  <wsdl:message name="IBrokerService_ProcessFirmRegistration_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ProcessFirmRegistration" />
   </wsdl:message>
-  <wsdl:message name="IBrokerService_OnNewFirmRegistrationRequestAvailable_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnNewFirmRegistrationRequestAvailableResponse" />
+  <wsdl:message name="IBrokerService_ProcessFirmRegistration_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ProcessFirmRegistrationResponse" />
   </wsdl:message>
-  <wsdl:message name="IBrokerService_OnNewFundRegistrationRequestAvailable_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnNewFundRegistrationRequestAvailable" />
+  <wsdl:message name="IBrokerService_ProcessFundRegistration_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ProcessFundRegistration" />
   </wsdl:message>
-  <wsdl:message name="IBrokerService_OnNewFundRegistrationRequestAvailable_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnNewFundRegistrationRequestAvailableResponse" />
+  <wsdl:message name="IBrokerService_ProcessFundRegistration_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ProcessFundRegistrationResponse" />
   </wsdl:message>
-  <wsdl:message name="IBrokerService_OnNewOrderMatchingRequestAvailable_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnNewOrderMatchingRequestAvailable" />
+  <wsdl:message name="IBrokerService_ProcessMatchingOrders_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ProcessMatchingOrders" />
   </wsdl:message>
-  <wsdl:message name="IBrokerService_OnNewOrderMatchingRequestAvailable_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnNewOrderMatchingRequestAvailableResponse" />
+  <wsdl:message name="IBrokerService_ProcessMatchingOrders_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ProcessMatchingOrdersResponse" />
   </wsdl:message>
   <wsdl:portType name="IWallstreetDataService">
     <wsdl:operation name="GetMarketInformation">
@@ -1495,7 +1495,6 @@
     </wsdl:operation>
     <wsdl:operation name="LoginFund">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/LoginFund" message="tns:IWallstreetDataService_LoginFund_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IWallstreetDataService/LoginFundResponse" message="tns:IWallstreetDataService_LoginFund_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/GetOrders" message="tns:IWallstreetDataService_GetOrders_InputMessage" />
@@ -1528,6 +1527,9 @@
     </wsdl:operation>
     <wsdl:operation name="SubscribeOnNewShareInformationAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" message="tns:IWallstreetDataService_SubscribeOnNewShareInformationAvailable_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubscribeOnNewFundDepotAvailable">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewFundDepotAvailable" message="tns:IWallstreetDataService_SubscribeOnNewFundDepotAvailable_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SubscribeOnNewOrderAvailable">
       <wsdl:input wsaw:Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable" message="tns:IWallstreetDataService_SubscribeOnNewOrderAvailable_InputMessage" />
@@ -1563,17 +1565,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/UnregisterBroker" message="tns:IBrokerService_UnregisterBroker_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/UnregisterBrokerResponse" message="tns:IBrokerService_UnregisterBroker_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnNewFirmRegistrationRequestAvailable">
-      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailable" message="tns:IBrokerService_OnNewFirmRegistrationRequestAvailable_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailableResponse" message="tns:IBrokerService_OnNewFirmRegistrationRequestAvailable_InputCallbackMessage" />
+    <wsdl:operation name="ProcessFirmRegistration">
+      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/ProcessFirmRegistration" message="tns:IBrokerService_ProcessFirmRegistration_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/ProcessFirmRegistrationResponse" message="tns:IBrokerService_ProcessFirmRegistration_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnNewFundRegistrationRequestAvailable">
-      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailable" message="tns:IBrokerService_OnNewFundRegistrationRequestAvailable_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailableResponse" message="tns:IBrokerService_OnNewFundRegistrationRequestAvailable_InputCallbackMessage" />
+    <wsdl:operation name="ProcessFundRegistration">
+      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/ProcessFundRegistration" message="tns:IBrokerService_ProcessFundRegistration_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/ProcessFundRegistrationResponse" message="tns:IBrokerService_ProcessFundRegistration_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="OnNewOrderMatchingRequestAvailable">
-      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable" message="tns:IBrokerService_OnNewOrderMatchingRequestAvailable_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailableResponse" message="tns:IBrokerService_OnNewOrderMatchingRequestAvailable_InputCallbackMessage" />
+    <wsdl:operation name="ProcessMatchingOrders">
+      <wsdl:output wsaw:Action="http://tempuri.org/IBrokerService/ProcessMatchingOrders" message="tns:IBrokerService_ProcessMatchingOrders_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IBrokerService/ProcessMatchingOrdersResponse" message="tns:IBrokerService_ProcessMatchingOrders_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSDualHttpBinding_IWallstreetDataService" type="tns:IWallstreetDataService">
@@ -1665,10 +1667,6 @@
         <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_LoginFund_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_LoginFund_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetOrders">
       <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/GetOrders" style="document" />
@@ -1750,6 +1748,13 @@
       <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" style="document" />
       <wsdl:input>
         <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_SubscribeOnNewShareInformationAvailable_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SubscribeOnNewFundDepotAvailable">
+      <soap12:operation soapAction="http://tempuri.org/IWallstreetDataService/SubscribeOnNewFundDepotAvailable" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IWallstreetDataService_SubscribeOnNewFundDepotAvailable_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
@@ -1835,36 +1840,36 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnNewFirmRegistrationRequestAvailable">
-      <soap12:operation soapAction="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailable" style="document" />
+    <wsdl:operation name="ProcessFirmRegistration">
+      <soap12:operation soapAction="http://tempuri.org/IBrokerService/ProcessFirmRegistration" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewFirmRegistrationRequestAvailable_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_ProcessFirmRegistration_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewFirmRegistrationRequestAvailable_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_ProcessFirmRegistration_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnNewFundRegistrationRequestAvailable">
-      <soap12:operation soapAction="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailable" style="document" />
+    <wsdl:operation name="ProcessFundRegistration">
+      <soap12:operation soapAction="http://tempuri.org/IBrokerService/ProcessFundRegistration" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewFundRegistrationRequestAvailable_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_ProcessFundRegistration_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewFundRegistrationRequestAvailable_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_ProcessFundRegistration_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnNewOrderMatchingRequestAvailable">
-      <soap12:operation soapAction="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable" style="document" />
+    <wsdl:operation name="ProcessMatchingOrders">
+      <soap12:operation soapAction="http://tempuri.org/IBrokerService/ProcessMatchingOrders" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_Input_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_ProcessMatchingOrders_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_OnNewOrderMatchingRequestAvailable_output_policy" />
+        <wsp:PolicyReference URI="#WSDualHttpBinding_IBrokerService_ProcessMatchingOrders_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

@@ -142,6 +142,7 @@ namespace Investor.localhost {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvestorDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Investor.localhost.FundDepot))]
     public partial class InvestorDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -151,7 +152,7 @@ namespace Investor.localhost {
         private double BudgetField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
+        private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Collections.Generic.Dictionary<string, int> SharesField;
@@ -180,14 +181,14 @@ namespace Investor.localhost {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
+        public string Id {
             get {
-                return this.EmailField;
+                return this.IdField;
             }
             set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -211,6 +212,29 @@ namespace Investor.localhost {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FundDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class FundDepot : Investor.localhost.InvestorDepot {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int FundSharesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int FundShares {
+            get {
+                return this.FundSharesField;
+            }
+            set {
+                if ((this.FundSharesField.Equals(value) != true)) {
+                    this.FundSharesField = value;
+                    this.RaisePropertyChanged("FundShares");
+                }
             }
         }
     }
@@ -262,99 +286,6 @@ namespace Investor.localhost {
                 if ((object.ReferenceEquals(this.EmailField, value) != true)) {
                     this.EmailField = value;
                     this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FundDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
-    [System.SerializableAttribute()]
-    public partial class FundDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double FundBankField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FundIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FundSharesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.Dictionary<string, int> SharesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FundBank {
-            get {
-                return this.FundBankField;
-            }
-            set {
-                if ((this.FundBankField.Equals(value) != true)) {
-                    this.FundBankField = value;
-                    this.RaisePropertyChanged("FundBank");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FundID {
-            get {
-                return this.FundIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FundIDField, value) != true)) {
-                    this.FundIDField = value;
-                    this.RaisePropertyChanged("FundID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FundShares {
-            get {
-                return this.FundSharesField;
-            }
-            set {
-                if ((this.FundSharesField.Equals(value) != true)) {
-                    this.FundSharesField = value;
-                    this.RaisePropertyChanged("FundShares");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.Dictionary<string, int> Shares {
-            get {
-                return this.SharesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SharesField, value) != true)) {
-                    this.SharesField = value;
-                    this.RaisePropertyChanged("Shares");
                 }
             }
         }
@@ -1295,11 +1226,11 @@ namespace Investor.localhost {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFundDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFundDepotResponse")]
         System.Threading.Tasks.Task<Investor.localhost.FundDepot> GetFundDepotAsync(string fundId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginFund", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginFundResponse")]
-        Investor.localhost.FundDepot LoginFund(Investor.localhost.FundRegistration registration);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/LoginFund")]
+        void LoginFund(Investor.localhost.FundRegistration registration);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginFund", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginFundResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.FundDepot> LoginFundAsync(Investor.localhost.FundRegistration registration);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/LoginFund")]
+        System.Threading.Tasks.Task LoginFundAsync(Investor.localhost.FundRegistration registration);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
         Investor.localhost.Order[] GetOrders();
@@ -1356,6 +1287,12 @@ namespace Investor.localhost {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
             "")]
         System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewFundDepotAvailable")]
+        void SubscribeOnNewFundDepotAvailable();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewFundDepotAvailable")]
+        System.Threading.Tasks.Task SubscribeOnNewFundDepotAvailableAsync();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
         void SubscribeOnNewOrderAvailable();
@@ -1487,11 +1424,11 @@ namespace Investor.localhost {
             return base.Channel.GetFundDepotAsync(fundId);
         }
         
-        public Investor.localhost.FundDepot LoginFund(Investor.localhost.FundRegistration registration) {
-            return base.Channel.LoginFund(registration);
+        public void LoginFund(Investor.localhost.FundRegistration registration) {
+            base.Channel.LoginFund(registration);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.FundDepot> LoginFundAsync(Investor.localhost.FundRegistration registration) {
+        public System.Threading.Tasks.Task LoginFundAsync(Investor.localhost.FundRegistration registration) {
             return base.Channel.LoginFundAsync(registration);
         }
         
@@ -1567,6 +1504,14 @@ namespace Investor.localhost {
             return base.Channel.SubscribeOnNewShareInformationAvailableAsync();
         }
         
+        public void SubscribeOnNewFundDepotAvailable() {
+            base.Channel.SubscribeOnNewFundDepotAvailable();
+        }
+        
+        public System.Threading.Tasks.Task SubscribeOnNewFundDepotAvailableAsync() {
+            return base.Channel.SubscribeOnNewFundDepotAvailableAsync();
+        }
+        
         public void SubscribeOnNewOrderAvailable() {
             base.Channel.SubscribeOnNewOrderAvailable();
         }
@@ -1612,14 +1557,14 @@ namespace Investor.localhost {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IBrokerServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailableResponse")]
-        Investor.localhost.FirmRequestResult OnNewFirmRegistrationRequestAvailable(Investor.localhost.FirmRegistration request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/ProcessFirmRegistration", ReplyAction="http://tempuri.org/IBrokerService/ProcessFirmRegistrationResponse")]
+        Investor.localhost.FirmRequestResult ProcessFirmRegistration(Investor.localhost.FirmRegistration request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailableResponse")]
-        Investor.localhost.FundRequestResult OnNewFundRegistrationRequestAvailable(Investor.localhost.FundRegistration request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/ProcessFundRegistration", ReplyAction="http://tempuri.org/IBrokerService/ProcessFundRegistrationResponse")]
+        Investor.localhost.FundRequestResult ProcessFundRegistration(Investor.localhost.FundRegistration request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailableResponse")]
-        Investor.localhost.OrderMatchResult OnNewOrderMatchingRequestAvailable(Investor.localhost.Order order, Investor.localhost.Order[] orders);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/ProcessMatchingOrders", ReplyAction="http://tempuri.org/IBrokerService/ProcessMatchingOrdersResponse")]
+        Investor.localhost.OrderMatchResult ProcessMatchingOrders(Investor.localhost.Order order, Investor.localhost.Order[] orders);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

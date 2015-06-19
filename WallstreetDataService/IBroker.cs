@@ -11,12 +11,12 @@ namespace WallstreetDataService
     public interface IBroker
     {
         [OperationContract]
-        FirmRequestResult OnNewFirmRegistrationRequestAvailable(FirmRegistration request);
+        FirmRequestResult ProcessFirmRegistration(FirmRegistration request);
 
         [OperationContract]
-        FundRequestResult OnNewFundRegistrationRequestAvailable(FundRegistration request);
+        FundRequestResult ProcessFundRegistration(FundRegistration request);
 
         [OperationContract]
-        OrderMatchResult OnNewOrderMatchingRequestAvailable(Order order, IEnumerable<Order> orders);
+        OrderMatchResult ProcessMatchingOrders(Order order, IEnumerable<Order> orders);
     }
 }

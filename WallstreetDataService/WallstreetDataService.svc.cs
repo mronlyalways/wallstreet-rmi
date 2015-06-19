@@ -50,14 +50,14 @@ namespace WallstreetDataService
 
         public InvestorDepot GetInvestorDepot(string investorId)
         {
-            InvestorDepot result;
-            data.InvestorDepots.TryGetValue(investorId, out result);
-            return result;
+            InvestorDepot investor;
+            data.InvestorDepots.TryGetValue(investorId, out investor);
+            return investor;
         }
 
         public void PutInvestorDepot(InvestorDepot investor)
         {
-            data.InvestorDepots[investor.Email] = investor;
+            data.InvestorDepots[investor.Id] = investor;
             NotifySubscribers(data.InvestorCallbacks, investor);
         }
 
@@ -67,16 +67,16 @@ namespace WallstreetDataService
             var exists = data.InvestorDepots.TryGetValue(registration.Email, out depot);
             if (!exists)
             {
-                depot = new InvestorDepot { Email = registration.Email, Budget = 0, Shares = new Dictionary<string, int>() };
+                depot = new InvestorDepot { Id = registration.Email, Budget = 0, Shares = new Dictionary<string, int>() };
             }
             depot.Budget += registration.Budget;
-            data.InvestorDepots[depot.Email] = depot;
+            data.InvestorDepots[depot.Id] = depot;
             return depot;
         }
 
         public FundDepot GetFundDepot(string fundId)
         {
-            FundDepot result;
+            FundDepot result = new FundDepot();
             data.FundDepots.TryGetValue(fundId, out result);
             return result;
         }
@@ -89,16 +89,17 @@ namespace WallstreetDataService
             {
                 if (data.Brokers.Count > 0)
                 {
-                    FundRequestResult result = data.Brokers.First().OnNewFundRegistrationRequestAvailable(registration);
+                    FundRequestResult result = data.Brokers.First().ProcessFundRegistration(registration);
                     depot = result.FundDepot;
                     var info = result.ShareInformation;
                     var order = result.Order;
-                    data.FundDepots[depot.FundID] = depot;
+                    data.FundDepots[depot.Id] = depot;
+                    data.InvestorDepots[depot.Id] = depot as InvestorDepot;
                     data.Orders[order.Id] = order;
-                    NotifySubscribers(data.OrderCallbacks, order);
                     data.ShareInformation[info.FirmName] = info;
+                    NotifySubscribers(data.OrderCallbacks, order);
                     NotifySubscribers(data.ShareInformationCallbacks, info);
-                    NotifySubscribers(data.FundRegistrationCallbacks, result.FundDepot);
+                    NotifySubscribers(data.FundCallbacks, result.FundDepot);
                 }
                 else
                 {
@@ -108,7 +109,7 @@ namespace WallstreetDataService
             }
             else
             {
-                NotifySubscribers(data.FundRegistrationCallbacks, data.FundDepots[registration.Id]);
+                NotifySubscribers(data.FundCallbacks, data.FundDepots[registration.Id]);
             }
         }
 
@@ -137,11 +138,8 @@ namespace WallstreetDataService
                 {
                     Interlocked.Exchange(ref putOrdersCounter, 0);
                 }
-                
-                var prio_result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Prioritize && x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED));
-                ProcessOrder(order, prio_result);
 
-                var result = broker.OnNewOrderMatchingRequestAvailable(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED));
+                var result = broker.ProcessMatchingOrders(order, data.Orders.Values.Where(x => x.ShareName.Equals(order.ShareName) && x.Type != order.Type && x.Status != Order.OrderStatus.DONE && x.Status != Order.OrderStatus.DELETED));
                 ProcessOrder(order, result);
             }
         }
@@ -153,19 +151,19 @@ namespace WallstreetDataService
                 foreach (Order o in result.Matches)
                 {
                     data.Orders[o.Id] = o;
+                    NotifySubscribers(data.OrderCallbacks, o);
                 }
 
                 foreach (Transaction t in result.Transactions)
                 {
-                    var buyer = data.InvestorDepots[t.BuyerId];
-                    buyer.Budget -= (t.TotalCost + t.BuyerProvision);
+                    InvestorDepot buyer = GetInvestorDepot(t.BuyerId);
+                    buyer.Budget -= (t.TotalCost + t.BuyerProvision + t.FundProvision);
                     int val;
                     buyer.Shares[order.ShareName] = buyer.Shares.TryGetValue(order.ShareName, out val) ? val + t.NoOfSharesSold : t.NoOfSharesSold;
-                    InvestorDepot seller;
-                    var sellerExists = data.InvestorDepots.TryGetValue(t.SellerId, out seller);
-                    if (sellerExists) // seller is investor
+                    InvestorDepot seller = GetInvestorDepot(t.SellerId);
+                    if (seller != null) // seller is investor (which could also be a fund)
                     {
-                        seller.Budget += t.TotalCost;
+                        seller.Budget += (t.TotalCost - t.SellerProvision - t.FundProvision);
                         seller.Shares[order.ShareName] -= t.NoOfSharesSold;
                     }
                     else // seller is firm
@@ -173,6 +171,13 @@ namespace WallstreetDataService
                         var firm = data.FirmDepots[t.SellerId];
                         firm.OwnedShares -= t.NoOfSharesSold;
                     }
+                    if (t.IsFund)
+                    {
+                        var fund = data.FundDepots[t.ShareName];
+                        fund.Budget += t.FundProvision * 2;
+                        NotifySubscribers(data.FundCallbacks, fund);
+                    }
+
                     data.Transactions.Add(t);
                     NotifySubscribers(data.TransactionCallbacks, t);
                     NotifySubscribers(data.InvestorCallbacks, buyer);
@@ -180,10 +185,6 @@ namespace WallstreetDataService
                 }
                 NotifySubscribers(data.OrderCallbacks, result.Order);
                 data.Orders[order.Id] = result.Order;
-                foreach (Order ord in result.Matches)
-                {
-                    NotifySubscribers(data.OrderCallbacks, ord);
-                }
 
                 var info = data.ShareInformation[order.ShareName];
                 info.PurchasingVolume = CalculatePurchasingVolume(data.Orders.Values);
@@ -224,7 +225,7 @@ namespace WallstreetDataService
         {
             if (data.Brokers.Count > 0)
             {
-                FirmRequestResult result = data.Brokers.First().OnNewFirmRegistrationRequestAvailable(request) as FirmRequestResult;
+                FirmRequestResult result = data.Brokers.First().ProcessFirmRegistration(request) as FirmRequestResult;
                 var depot = result.FirmDepot;
                 var info = result.ShareInformation;
                 var order = result.Order;
@@ -258,7 +259,7 @@ namespace WallstreetDataService
         public void SubscribeOnNewFundDepotAvailable()
         {
             var subscriber = OperationContext.Current.GetCallbackChannel<IWallstreetSubscriber>();
-            data.FundRegistrationCallbacks.Add(subscriber.OnNewFundDepotAvailable);
+            data.FundCallbacks.Add(subscriber.OnNewFundDepotAvailable);
         }
 
         public void SubscribeOnNewOrderAvailable()

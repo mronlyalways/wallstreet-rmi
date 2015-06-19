@@ -10,11 +10,11 @@
   <xs:complexType name="ShareInformation">
     <xs:sequence>
       <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsFund" type="xs:boolean" />
       <xs:element minOccurs="0" name="NoOfShares" type="xs:int" />
       <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
       <xs:element minOccurs="0" name="PurchasingVolume" type="xs:int" />
       <xs:element minOccurs="0" name="SalesVolume" type="xs:int" />
-      <xs:element minOccurs="0" name="isFund" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ShareInformation" nillable="true" type="tns:ShareInformation" />
@@ -27,35 +27,45 @@
   <xs:complexType name="InvestorDepot">
     <xs:sequence>
       <xs:element minOccurs="0" name="Budget" type="xs:double" />
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Shares" nillable="true" type="q1:ArrayOfKeyValueOfstringint" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InvestorDepot" nillable="true" type="tns:InvestorDepot" />
-  <xs:complexType name="Registration">
+  <xs:complexType name="FundDepot">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InvestorDepot">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FundShares" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FundDepot" nillable="true" type="tns:FundDepot" />
+  <xs:complexType name="InvestorRegistration">
     <xs:sequence>
       <xs:element minOccurs="0" name="Budget" type="xs:double" />
       <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Registration" nillable="true" type="tns:Registration" />
+  <xs:element name="InvestorRegistration" nillable="true" type="tns:InvestorRegistration" />
   <xs:complexType name="FundRegistration">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FundAssets" type="xs:double" />
-      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
-    </xs:sequence>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Registration">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FundAssets" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:element name="FundRegistration" nillable="true" type="tns:FundRegistration" />
-  <xs:complexType name="FundDepot">
+  <xs:complexType name="Registration">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FundBank" type="xs:double" />
-      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Shares" nillable="true" type="q2:ArrayOfKeyValueOfstringint" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Shares" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FundDepot" nillable="true" type="tns:FundDepot" />
+  <xs:element name="Registration" nillable="true" type="tns:Registration" />
   <xs:complexType name="ArrayOfOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
@@ -66,6 +76,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="InvestorId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsFundShare" type="xs:boolean" />
       <xs:element minOccurs="0" name="Limit" type="xs:double" />
       <xs:element minOccurs="0" name="NoOfOpenShares" type="xs:int" />
       <xs:element minOccurs="0" name="NoOfProcessedShares" type="xs:int" />
@@ -120,14 +131,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Transaction" nillable="true" type="tns:Transaction" />
-  <xs:complexType name="Request">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
-      <xs:element minOccurs="0" name="Shares" type="xs:int" />
-    </xs:sequence>
+  <xs:complexType name="FirmRegistration">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Registration">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="PricePerShare" type="xs:double" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-  <xs:element name="Request" nillable="true" type="tns:Request" />
+  <xs:element name="FirmRegistration" nillable="true" type="tns:FirmRegistration" />
   <xs:complexType name="FirmDepot">
     <xs:sequence>
       <xs:element minOccurs="0" name="FirmName" nillable="true" type="xs:string" />
@@ -136,13 +149,32 @@
   </xs:complexType>
   <xs:element name="FirmDepot" nillable="true" type="tns:FirmDepot" />
   <xs:complexType name="FirmRequestResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RequestResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FirmDepot" nillable="true" type="tns:FirmDepot" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FirmRequestResult" nillable="true" type="tns:FirmRequestResult" />
+  <xs:complexType name="RequestResult">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FirmDepot" nillable="true" type="tns:FirmDepot" />
       <xs:element minOccurs="0" name="Order" nillable="true" type="tns:Order" />
       <xs:element minOccurs="0" name="ShareInformation" nillable="true" type="tns:ShareInformation" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="FirmRequestResult" nillable="true" type="tns:FirmRequestResult" />
+  <xs:element name="RequestResult" nillable="true" type="tns:RequestResult" />
+  <xs:complexType name="FundRequestResult">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:RequestResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FundDepot" nillable="true" type="tns:FundDepot" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FundRequestResult" nillable="true" type="tns:FundRequestResult" />
   <xs:complexType name="OrderMatchResult">
     <xs:sequence>
       <xs:element minOccurs="0" name="Matches" nillable="true" type="tns:ArrayOfOrder" />

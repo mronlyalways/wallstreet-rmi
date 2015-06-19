@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 namespace WallstreetDataService.Model
 {
     [DataContract]
+    [KnownType(typeof(FundDepot))]
     public class InvestorDepot
     {
         [DataMember]
-        public string Email { get; set; }
+        public string Id { get; set; }
 
         [DataMember]
         public double Budget { get; set; }

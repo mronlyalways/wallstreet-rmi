@@ -106,7 +106,7 @@ namespace Investor.Model
 
         public void OnNewInvestorDepotAvailable(InvestorDepot depot)
         {
-            if (email != null && depot != null && depot.Email.Equals(email))
+            if (email != null && depot != null && depot.Id.Equals(email))
             {
                 ExecuteOnGUIThread(investorAddedCallbacks, depot);
             }

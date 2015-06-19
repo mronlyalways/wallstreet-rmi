@@ -27,11 +27,21 @@
   <xs:complexType name="InvestorDepot">
     <xs:sequence>
       <xs:element minOccurs="0" name="Budget" type="xs:double" />
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
       <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Shares" nillable="true" type="q1:ArrayOfKeyValueOfstringint" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InvestorDepot" nillable="true" type="tns:InvestorDepot" />
+  <xs:complexType name="FundDepot">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:InvestorDepot">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FundShares" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FundDepot" nillable="true" type="tns:FundDepot" />
   <xs:complexType name="InvestorRegistration">
     <xs:sequence>
       <xs:element minOccurs="0" name="Budget" type="xs:double" />
@@ -39,15 +49,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InvestorRegistration" nillable="true" type="tns:InvestorRegistration" />
-  <xs:complexType name="FundDepot">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FundBank" type="xs:double" />
-      <xs:element minOccurs="0" name="FundID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FundShares" type="xs:int" />
-      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Shares" nillable="true" type="q2:ArrayOfKeyValueOfstringint" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="FundDepot" nillable="true" type="tns:FundDepot" />
   <xs:complexType name="FundRegistration">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Registration">

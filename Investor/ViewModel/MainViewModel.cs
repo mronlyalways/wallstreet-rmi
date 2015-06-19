@@ -36,8 +36,10 @@ namespace Investor.ViewModel
         private void UpdateOrderInformation(Order order)
         {
             PendingOrders = new ObservableCollection<Order>(PendingOrders.Where(x => !x.Id.Equals(order.Id) && x.Status != OrderStatus.DONE));
-            PendingOrders.Add(order);
-            PendingOrders = new ObservableCollection<Order>(PendingOrders.Where(x => x.Status != OrderStatus.DONE));
+            if (order.Status != OrderStatus.DONE)
+            {
+                PendingOrders.Add(order);
+            }
         }
 
         private void UpdateInvestorInformation(InvestorDepot d)
@@ -81,7 +83,7 @@ namespace Investor.ViewModel
 
         }
 
-        public string Email { get { return depot.Email; } }
+        public string Email { get { return depot.Id; } }
 
         public double Budget { get { return depot.Budget; } }
 
@@ -297,7 +299,7 @@ namespace Investor.ViewModel
         private void CancelPendingOrder()
         {
             data.CancelOrder(SelectedPendingOrder);
-            pendingOrders.Remove(SelectedPendingOrder);
+            PendingOrders.Remove(SelectedPendingOrder);
         }
 
         private void Logout()

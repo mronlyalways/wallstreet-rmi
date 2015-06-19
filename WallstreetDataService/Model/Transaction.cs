@@ -57,53 +57,12 @@ namespace WallstreetDataService.Model
         }
 
         [DataMember]
-        public double SellerProvision
-        {
-            get
-            {
-                int prioritizationMultiplier = 1;
-                if (PrioritizedSellingOrder)
-                {
-                    prioritizationMultiplier = 2;
-                }
-                return TotalCost * 0.03 * prioritizationMultiplier;
-            }
-
-            internal set { }
-        }
+        public double SellerProvision { get; set; }
 
         [DataMember]
-        public double BuyerProvision
-        {
-            get
-            {
-                int prioritizationMultiplier = 1;
-                if (PrioritizedBuyingOrder)
-                {
-                    prioritizationMultiplier = 2;
-                }
-                return TotalCost * 0.03 * prioritizationMultiplier;
-            }
-
-            internal set { }
-        }
+        public double BuyerProvision { get; set; }
 
         [DataMember]
-        public double FundProvision
-        {
-            get
-            {
-                if (IsFund)
-                {
-                    return TotalCost * 0.02;
-                }
-                else
-                {
-                    return 0.0;
-                }
-            }
-
-            internal set {  }
-        }
+        public double FundProvision { get; set; }
     }
 }

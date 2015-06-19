@@ -22,7 +22,7 @@ namespace WallstreetDataService
             PendingFirmRegistrationRequests = new ConcurrentBag<FirmRegistration>();
             PendingFundRegistrationRequests = new ConcurrentBag<FundRegistration>();
             ShareInformationCallbacks = new ConcurrentBag<Action<ShareInformation>>();
-            FundRegistrationCallbacks = new ConcurrentBag<Action<FundDepot>>();
+            FundCallbacks = new ConcurrentBag<Action<FundDepot>>();
             OrderCallbacks = new ConcurrentBag<Action<Order>>();
             InvestorCallbacks = new ConcurrentBag<Action<InvestorDepot>>();
             TransactionCallbacks = new ConcurrentBag<Action<Transaction>>();
@@ -38,7 +38,7 @@ namespace WallstreetDataService
         public ConcurrentBag<FirmRegistration> PendingFirmRegistrationRequests { get; set; }
         public ConcurrentBag<FundRegistration> PendingFundRegistrationRequests { get; set; }
         public ConcurrentBag<Action<ShareInformation>> ShareInformationCallbacks { get; set; }
-        public ConcurrentBag<Action<FundDepot>> FundRegistrationCallbacks { get; set; }
+        public ConcurrentBag<Action<FundDepot>> FundCallbacks { get; set; }
         public ConcurrentBag<Action<Order>> OrderCallbacks { get; set; }
         public ConcurrentBag<Action<InvestorDepot>> InvestorCallbacks { get; set; }
         public ConcurrentBag<Action<Transaction>> TransactionCallbacks { get; set; }

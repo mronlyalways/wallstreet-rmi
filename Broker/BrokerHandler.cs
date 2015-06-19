@@ -18,7 +18,7 @@ namespace Broker
             this.wallstreetClient = wallstreetClient;
         }
 
-        public FirmRequestResult OnNewFirmRegistrationRequestAvailable(FirmRegistration request)
+        public FirmRequestResult ProcessFirmRegistration(FirmRegistration request)
         {
             var firmName = request.Id;
             var depot = wallstreetClient.GetFirmDepot(firmName);
@@ -33,7 +33,7 @@ namespace Broker
             var info = wallstreetClient.GetShareInformation(firmName);
             if (info == null)
             {
-                info = new ShareInformation() { FirmName = firmName, NoOfShares = 0, PricePerShare = request.PricePerShare, PurchasingVolume = 0, SalesVolume = 0 };
+                info = new ShareInformation { FirmName = firmName, NoOfShares = 0, PricePerShare = request.PricePerShare, PurchasingVolume = 0, SalesVolume = 0 };
             }
             info.NoOfShares += request.Shares;
             info.SalesVolume += request.Shares;
@@ -55,12 +55,26 @@ namespace Broker
             return new FirmRequestResult { FirmDepot = depot, ShareInformation = info, Order = order };
         }
 
-        public FundRequestResult OnNewFundRegistrationRequestAvailable(FundRegistration request)
+        public FundRequestResult ProcessFundRegistration(FundRegistration request)
         {
             var fundName = request.Id;
-            var depot = new FundDepot() { FundID = fundName, FundShares = request.Shares, FundBank = request.FundAssets, Shares = new Dictionary<string,int>() };
-            var info = new ShareInformation() { FirmName = fundName, NoOfShares = request.Shares, PricePerShare = request.FundAssets / request.Shares, PurchasingVolume = 0, SalesVolume = request.Shares };
-            var order = new Order()
+            var depot = new FundDepot
+            {
+                Id = fundName,
+                Budget = request.FundAssets,
+                Shares = new Dictionary<string, int>()
+            };
+            depot.Shares.Add(fundName, request.Shares);
+            var info = new ShareInformation
+            {
+                FirmName = fundName,
+                NoOfShares = request.Shares,
+                PricePerShare = request.FundAssets / request.Shares,
+                PurchasingVolume = 0,
+                SalesVolume = request.Shares,
+                IsFund = true
+            };
+            var order = new Order
             {
                 Id = fundName + DateTime.Now.Ticks,
                 ShareName = fundName,
@@ -78,7 +92,7 @@ namespace Broker
             return new FundRequestResult { FundDepot = depot, ShareInformation = info, Order = order };
         }
 
-        public OrderMatchResult OnNewOrderMatchingRequestAvailable(Order order, Order[] orders)
+        public OrderMatchResult ProcessMatchingOrders(Order order, Order[] orders)
         {
             Console.WriteLine("Process order: " + order);
             var stockPrice = wallstreetClient.GetShareInformation(order.ShareName).PricePerShare;
@@ -100,8 +114,8 @@ namespace Broker
         private bool IsAffordableForBuyer(string id, IEnumerable<Transaction> transactions)
         {
             var moneyNeeded = transactions.Where(x => x.BuyerId == id).Sum(x => x.TotalCost + x.BuyerProvision);
-            var balance = wallstreetClient.GetInvestorDepot(id).Budget;
-            return balance >= moneyNeeded;
+            var depot = wallstreetClient.GetInvestorDepot(id);
+            return depot.Budget >= moneyNeeded;
         }
 
         private bool SellerHasEnoughShares(string id, string shareName, IEnumerable<Transaction> transactions)
@@ -129,6 +143,8 @@ namespace Broker
             IList<Order> matches;
             bool buyMode = order.Type == OrderType.BUY;
 
+            counterParts = counterParts.OrderBy(x => !x.Prioritize).ToList(); // weirdly, when sorting for Priority, false comes before true
+
             if (buyMode)
             {
                 matches = counterParts.Where(x => x.ShareName.Equals(order.ShareName) && x.Limit <= stockPrice && order.Limit >= stockPrice).ToList();
@@ -138,12 +154,14 @@ namespace Broker
                 matches = counterParts.Where(x => x.ShareName.Equals(order.ShareName) && x.Limit >= stockPrice && order.Limit <= stockPrice).ToList();
             }
 
-            while (matches.Count > 0 && sharesProcessedTotal <= order.NoOfOpenShares)
+            while (matches.Count > 0 && sharesProcessedTotal < order.NoOfOpenShares)
             {
                 var match = matches.First();
-
                 var sharesProcessed = Math.Min(order.NoOfOpenShares, match.NoOfOpenShares);
                 var totalCost = sharesProcessed * stockPrice;
+                var buyerPaysDouble = match.Prioritize && match.Type == OrderType.BUY;
+                var sellerPaysDouble = match.Prioritize && match.Type == OrderType.SELL;
+
                 transactions.Add(new Transaction()
                 {
                     TransactionId = order.Id + match.Id,
@@ -155,7 +173,9 @@ namespace Broker
                     SellingOrderId = buyMode ? match.Id : order.Id,
                     NoOfSharesSold = sharesProcessed,
                     TotalCost = totalCost,
-                    BuyerProvision = totalCost * 0.03,
+                    BuyerProvision = totalCost * (buyerPaysDouble ? 0.06 : 0.03),
+                    SellerProvision = totalCost * (sellerPaysDouble ? 0.06 : 0.03),
+                    FundProvision = match.IsFundShare ? totalCost * 0.02 : 0.0,
                     PricePerShare = stockPrice
                 });
                 order.NoOfProcessedShares += sharesProcessed;

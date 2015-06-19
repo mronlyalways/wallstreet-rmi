@@ -14,8 +14,9 @@ namespace FundManager.Model
         private WallstreetDataServiceClient client;
         private IList<Action<ShareInformation>> marketCallbacks;
         private IList<Action<Order>> orderAddedCallbacks;
-        private IList<Action<FundDepot>> fundAddedCallbacks;
+        private IList<Action<InvestorDepot>> investorAddedCallbacks;
         private IList<Action<Transaction>> transactionAddedCallbacks;
+        private IList<Action<FundDepot>> fundAddedCallbacks;
         private string fundid;
 
         public WcfDataService()
@@ -29,6 +30,7 @@ namespace FundManager.Model
             marketCallbacks = new List<Action<ShareInformation>>();
             orderAddedCallbacks = new List<Action<Order>>();
             fundAddedCallbacks = new List<Action<FundDepot>>();
+            investorAddedCallbacks = new List<Action<InvestorDepot>>();
             transactionAddedCallbacks = new List<Action<Transaction>>();
         }
 
@@ -92,6 +94,11 @@ namespace FundManager.Model
             fundAddedCallbacks.Remove(callback);
         }
 
+        public void AddNewInvestorInformationAvailableCallback(Action<InvestorDepot> callback)
+        {
+            investorAddedCallbacks.Add(callback);
+        }
+
         public void AddNewOrderAvailableCallback(Action<Order> callback)
         {
             orderAddedCallbacks.Add(callback);
@@ -115,12 +122,15 @@ namespace FundManager.Model
 
         public void OnNewInvestorDepotAvailable(InvestorDepot depot)
         {
-
+            if (fundid != null && depot != null && depot.Id.Equals(fundid))
+            {
+                ExecuteOnGUIThread(investorAddedCallbacks, depot);
+            }
         }
 
         public void OnNewFundDepotAvailable(FundDepot depot)
         {
-            if (fundid != null && depot != null && depot.FundID.Equals(fundid))
+            if (fundid != null && depot != null && depot.Id.Equals(fundid))
             {
                 ExecuteOnGUIThread(fundAddedCallbacks, depot);
             }

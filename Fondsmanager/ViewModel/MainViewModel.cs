@@ -14,22 +14,49 @@ namespace FundManager.ViewModel
     {
         private IDataService data;
         private FundDepot depot;
-                
+
         public MainViewModel(IDataService data)
         {
             this.data = data;
             depot = data.LoadFundInformation();
             MarketInformation = new ObservableCollection<ShareInformation>(data.LoadMarketInformation());
             OwnedShares = new ObservableCollection<OwningShareDTO>();
-            UpdateOwnedShares();
             PendingOrders = new ObservableCollection<Order>(data.LoadPendingOrders());
-            //data.AddNewInvestorInformationAvailableCallback(UpdateFundInformation);
-            //data.AddNewMarketInformationAvailableCallback(UpdateShareInformation);
-            //data.AddNewPendingOrdersCallback(o => PendingOrders = new ObservableCollection<Order>(o));
+            data.AddNewInvestorInformationAvailableCallback(UpdateInvestorInformation);
+            data.AddNewMarketInformationAvailableCallback(UpdateShareInformation);
+            data.AddNewOrderAvailableCallback(UpdateOrderInformation);
+            data.AddNewFundInformationAvailableCallback(UpdateFundInformation);
             PlaceBuyingOrderCommand = new RelayCommand(PlaceBuyingOrder, () => SelectedBuyingShare != null);
             PlaceSellingOrderCommand = new RelayCommand(PlaceSellingOrder, () => SelectedSellingShare != null);
             CancelPendingOrderCommand = new RelayCommand(CancelPendingOrder, () => SelectedPendingOrder != null && SelectedPendingOrder.Status == OrderStatus.OPEN);
             LogoutCommand = new RelayCommand(Logout, () => true);
+
+            UpdateOwnedShares();
+        }
+
+        private void UpdateOrderInformation(Order order)
+        {
+            PendingOrders = new ObservableCollection<Order>(PendingOrders.Where(x => !x.Id.Equals(order.Id) && x.Status != OrderStatus.DONE));
+            if (order.Status != OrderStatus.DONE)
+            {
+                PendingOrders.Add(order);
+            }
+        }
+
+        private void UpdateInvestorInformation(InvestorDepot d)
+        {
+            depot.Budget = d.Budget;
+            depot.Shares = d.Shares;
+            RaisePropertyChanged(() => FundAssets);
+            UpdateOwnedShares();
+        }
+
+        private void UpdateShareInformation(ShareInformation info)
+        {
+            MarketInformation = new ObservableCollection<ShareInformation>(MarketInformation.Where(x => x.FirmName != info.FirmName));
+            MarketInformation.Add(info);
+            MarketInformation = new ObservableCollection<ShareInformation>(from i in MarketInformation orderby i.FirmName select i);
+            UpdateOwnedShares();
         }
 
         private void UpdateFundInformation(FundDepot d)
@@ -45,9 +72,10 @@ namespace FundManager.ViewModel
 
             foreach (String shareName in depot.Shares.Keys)
             {
-                 var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
-                ShareInformation info = infos.First();
-                if (info != null) {
+                var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
+                ShareInformation info = infos.FirstOrDefault();
+                if (info != null)
+                {
                     OwningShareDTO s = new OwningShareDTO()
                     {
                         ShareName = shareName,
@@ -61,22 +89,17 @@ namespace FundManager.ViewModel
             OwnedShares = collection;
 
             RaisePropertyChanged(() => FundAssets);
-
         }
 
-        private void UpdateShareInformation(ShareInformation info)
+        public string FundID { get { return depot.Id; } }
+
+        public long FundShares
         {
-            MarketInformation = new ObservableCollection<ShareInformation>(MarketInformation.Where(x => x.FirmName != info.FirmName));
-            MarketInformation.Add(info);
-            MarketInformation = new ObservableCollection<ShareInformation>(from i in MarketInformation orderby i.FirmName select i);
-            UpdateOwnedShares();
+            get
+            {
+                return depot.FundShares;
+            }
         }
-
-        public string FundID { get { return depot.FundID; } }
-
-        public long FundShares { get { 
-            return depot.FundShares; 
-        } }
 
         public double FundAssets
         {
@@ -87,9 +110,7 @@ namespace FundManager.ViewModel
                 {
                     value += s.Value;
                 }
-
-                value += depot.FundBank;
-
+                value += depot.Budget;
                 return value;
             }
         }
@@ -238,7 +259,6 @@ namespace FundManager.ViewModel
         }
 
         private bool prioritizeBuying;
-
         public bool PrioritizeBuying
         {
             get
@@ -250,10 +270,9 @@ namespace FundManager.ViewModel
                 prioritizeBuying = value;
                 RaisePropertyChanged(() => PrioritizeBuying);
             }
-        } 
+        }
 
         private bool prioritizeSelling;
-
         public bool PrioritizeSelling
         {
             get
@@ -265,7 +284,7 @@ namespace FundManager.ViewModel
                 prioritizeSelling = value;
                 RaisePropertyChanged(() => PrioritizeSelling);
             }
-        } 
+        }
 
         public RelayCommand PlaceBuyingOrderCommand { get; private set; }
 
@@ -307,6 +326,7 @@ namespace FundManager.ViewModel
         private void CancelPendingOrder()
         {
             data.CancelOrder(SelectedPendingOrder);
+            PendingOrders.Remove(SelectedPendingOrder);
         }
 
         private void Logout()

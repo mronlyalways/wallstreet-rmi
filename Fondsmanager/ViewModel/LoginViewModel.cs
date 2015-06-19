@@ -96,6 +96,7 @@ namespace FundManager.ViewModel
 
         public void OnNewFundDepotAvailable(FundDepot depot)
         {
+            ((ViewModelLocator)App.Current.Resources["Locator"]).SetFundDepot(depot);
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
             var MainWindow = new MainWindow();
             MainWindow.Show();

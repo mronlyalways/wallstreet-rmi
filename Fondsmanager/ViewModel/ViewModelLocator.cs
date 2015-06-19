@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using FundManager.Model;
+using FundManager.localhost;
 
 namespace FundManager.ViewModel
 {
@@ -11,6 +12,11 @@ namespace FundManager.ViewModel
         {
             kernel = new StandardKernel();
             kernel.Bind<IDataService>().To<WcfDataService>().InSingletonScope();
+        }
+
+        public void SetFundDepot(FundDepot depot)
+        {
+            kernel.Bind<FundDepot>().ToConstant(depot);
         }
 
         public MainViewModel Main

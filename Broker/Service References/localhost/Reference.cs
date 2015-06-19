@@ -142,6 +142,7 @@ namespace Broker.localhost {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InvestorDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Broker.localhost.FundDepot))]
     public partial class InvestorDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -151,7 +152,7 @@ namespace Broker.localhost {
         private double BudgetField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
+        private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Collections.Generic.Dictionary<string, int> SharesField;
@@ -180,14 +181,14 @@ namespace Broker.localhost {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
+        public string Id {
             get {
-                return this.EmailField;
+                return this.IdField;
             }
             set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -213,6 +214,13 @@ namespace Broker.localhost {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FundDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
+    [System.SerializableAttribute()]
+    public partial class FundDepot : Broker.localhost.InvestorDepot {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -262,99 +270,6 @@ namespace Broker.localhost {
                 if ((object.ReferenceEquals(this.EmailField, value) != true)) {
                     this.EmailField = value;
                     this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FundDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
-    [System.SerializableAttribute()]
-    public partial class FundDepot : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double FundBankField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FundIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FundSharesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Collections.Generic.Dictionary<string, int> SharesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FundBank {
-            get {
-                return this.FundBankField;
-            }
-            set {
-                if ((this.FundBankField.Equals(value) != true)) {
-                    this.FundBankField = value;
-                    this.RaisePropertyChanged("FundBank");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FundID {
-            get {
-                return this.FundIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FundIDField, value) != true)) {
-                    this.FundIDField = value;
-                    this.RaisePropertyChanged("FundID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FundShares {
-            get {
-                return this.FundSharesField;
-            }
-            set {
-                if ((this.FundSharesField.Equals(value) != true)) {
-                    this.FundSharesField = value;
-                    this.RaisePropertyChanged("FundShares");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.Dictionary<string, int> Shares {
-            get {
-                return this.SharesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SharesField, value) != true)) {
-                    this.SharesField = value;
-                    this.RaisePropertyChanged("Shares");
                 }
             }
         }
@@ -1626,14 +1541,14 @@ namespace Broker.localhost {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IBrokerServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewFirmRegistrationRequestAvailableResponse")]
-        Broker.localhost.FirmRequestResult OnNewFirmRegistrationRequestAvailable(Broker.localhost.FirmRegistration request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/ProcessFirmRegistration", ReplyAction="http://tempuri.org/IBrokerService/ProcessFirmRegistrationResponse")]
+        Broker.localhost.FirmRequestResult ProcessFirmRegistration(Broker.localhost.FirmRegistration request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewFundRegistrationRequestAvailableResponse")]
-        Broker.localhost.FundRequestResult OnNewFundRegistrationRequestAvailable(Broker.localhost.FundRegistration request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/ProcessFundRegistration", ReplyAction="http://tempuri.org/IBrokerService/ProcessFundRegistrationResponse")]
+        Broker.localhost.FundRequestResult ProcessFundRegistration(Broker.localhost.FundRegistration request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailable", ReplyAction="http://tempuri.org/IBrokerService/OnNewOrderMatchingRequestAvailableResponse")]
-        Broker.localhost.OrderMatchResult OnNewOrderMatchingRequestAvailable(Broker.localhost.Order order, Broker.localhost.Order[] orders);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/ProcessMatchingOrders", ReplyAction="http://tempuri.org/IBrokerService/ProcessMatchingOrdersResponse")]
+        Broker.localhost.OrderMatchResult ProcessMatchingOrders(Broker.localhost.Order order, Broker.localhost.Order[] orders);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

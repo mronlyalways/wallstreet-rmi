@@ -28,6 +28,8 @@ namespace FundManager.Model
 
         void RemoveNewFundInformationAvailableCallback(Action<FundDepot> callback);
 
+        void AddNewInvestorInformationAvailableCallback(Action<InvestorDepot> callback);
+
         void AddNewOrderAvailableCallback(Action<Order> callback);
 
         void OnNewShareInformationAvailable(ShareInformation info);
