@@ -14,6 +14,8 @@
             </DataTemplate>
             <DataTemplate x:Key="BuyingShareInformationTemplate" DataType="{x:Type im:ShareInformation}">
                 <StackPanel Orientation="Horizontal" Margin="5,10">
+                    <Label Content="Fund:"/>
+                    <CheckBox IsChecked="{Binding IsFund, Mode=OneWay}"/>
                     <Label Content="Share Name:"/>
                     <Label Content="{Binding FirmName}"/>
                     <Label Content="Share Volume:"/>
@@ -28,6 +30,8 @@
             </DataTemplate>
             <DataTemplate x:Key="SellingShareInformationTemplate" DataType="{x:Type m:OwningShareDTO}">
                 <StackPanel Orientation="Horizontal" Margin="5,10">
+                    <Label Content="Fund:"/>
+                    <CheckBox IsChecked="{Binding IsFund, Mode=OneWay}"/>
                     <Label Content="Exchange:"/>
                     <Label Content="{Binding ExchangeName}"/>
                     <Label Content="Share Name:"/>

@@ -112,12 +112,11 @@ namespace FundManager.ViewModel
         public void Submit()
         {
             submitted = true;
-            data.Login(new FundRegistration { Id = FundID, FundAssets = MainBudget, Shares = MainShares }, MainExchange);
-            
             foreach (RegistrationInfo i in Registrations.Where(x => x.Register))
             {
                 data.Login(new FundRegistration { Id = FundID, FundAssets = i.Budget, Shares = 0 }, i.ExchangeName);
             }
+            data.Login(new FundRegistration { Id = FundID, FundAssets = MainBudget, Shares = MainShares }, MainExchange);
             ButtonText = "Waiting for confirmation ...";
         }
 

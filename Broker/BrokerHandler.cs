@@ -71,12 +71,25 @@ namespace Broker
             Order order = null;
             if (request.Shares > 0)
             {
+                var exchanges = wallstreetClient.GetExchanges();
+                var list = new List<FundDepot>();
+                foreach (string e in exchanges)
+                {
+                    var fund = wallstreetClient.GetFundDepot(fundName, e);
+                    if (fund != null)
+                    {
+                        list.Add(fund);
+                    }
+                }
+                var assets = list.Sum(x => x.Budget);
+                assets += request.FundAssets;
+
                 depot.Shares.Add(fundName, request.Shares);
                 info = new ShareInformation
                 {
                     FirmName = fundName,
                     NoOfShares = request.Shares,
-                    PricePerShare = request.FundAssets / request.Shares,
+                    PricePerShare = assets / request.Shares,
                     PurchasingVolume = 0,
                     SalesVolume = request.Shares,
                     IsFund = true,
@@ -169,6 +182,7 @@ namespace Broker
                 var totalCost = sharesProcessed * stockPrice;
                 var buyerPaysDouble = match.Prioritize && match.Type == OrderType.BUY;
                 var sellerPaysDouble = match.Prioritize && match.Type == OrderType.SELL;
+                var isFundShare = wallstreetClient.GetFundDepot(match.ShareName, exchangeId) != null;
 
                 transactions.Add(new Transaction()
                 {
@@ -183,8 +197,9 @@ namespace Broker
                     TotalCost = totalCost,
                     BuyerProvision = totalCost * (buyerPaysDouble ? 0.06 : 0.03),
                     SellerProvision = totalCost * (sellerPaysDouble ? 0.06 : 0.03),
-                    FundProvision = match.IsFundShare ? totalCost * 0.02 : 0.0,
-                    PricePerShare = stockPrice
+                    FundProvision = isFundShare ? totalCost * 0.02 : 0.0,
+                    PricePerShare = stockPrice,
+                    IsFund = isFundShare
                 });
                 order.NoOfProcessedShares += sharesProcessed;
                 match.NoOfProcessedShares += sharesProcessed;

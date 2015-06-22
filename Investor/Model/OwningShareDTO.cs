@@ -16,6 +16,8 @@ namespace Investor.Model
 
         public double StockPrice { get; set; }
 
+        public bool IsFund { get; set; }
+
         public double Value
         {
             get

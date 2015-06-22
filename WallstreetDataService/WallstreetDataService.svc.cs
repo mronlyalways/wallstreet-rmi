@@ -192,7 +192,7 @@ namespace WallstreetDataService
                         var firm = data.Exchanges[exchangeId].FirmDepots[t.SellerId];
                         firm.OwnedShares -= t.NoOfSharesSold;
                     }
-                    if (t.IsFund)
+                    if (t.IsFund) // sold share is fund share
                     {
                         var fund = data.Exchanges[exchangeId].FundDepots[t.ShareName];
                         fund.Budget += t.FundProvision * 2;

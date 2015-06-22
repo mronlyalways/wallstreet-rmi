@@ -38,12 +38,16 @@
             </DataTemplate>
             <DataTemplate x:Key="ShareInformationTemplate" DataType="{x:Type m:ShareInformation}">
                 <StackPanel Orientation="Horizontal" Margin="5,10">
+                    <Label Content="Exchange:"/>
+                    <Label Content="{Binding ExchangeName}"/>
                     <Label Content="Share Name:"/>
                     <Label Content="{Binding FirmName}"/>
                     <Label Content="Share Volume:"/>
                     <Label Content="{Binding NoOfShares}"/>
                     <Label Content="Price per share:"/>
                     <Label Content="{Binding PricePerShare}"/>
+                    <Label Content="Fund:"/>
+                    <CheckBox IsChecked="{Binding IsFund}" />
                 </StackPanel>
             </DataTemplate>
             <DataTemplate x:Key="OrderTemplate" DataType="{x:Type m:Order}">

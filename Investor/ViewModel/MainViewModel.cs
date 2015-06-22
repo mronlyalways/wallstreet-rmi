@@ -82,7 +82,8 @@ namespace Investor.ViewModel
                             ShareName = shareName,
                             Amount = depot.Shares[shareName],
                             StockPrice = info.PricePerShare,
-                            ExchangeName = info.ExchangeName
+                            ExchangeName = info.ExchangeName,
+                            IsFund = info.IsFund
                         };
                         collection.Add(s);
                     }
