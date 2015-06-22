@@ -10,17 +10,19 @@ namespace FundManager.Model
 {
     public interface IDataService : IDisposable
     {
-        void Login(FundRegistration r);
+        void Login(FundRegistration r, string exchangeId);
 
-        void PlaceOrder(Order order);
+        void PlaceOrder(Order order, string exchangeId);
 
-        void CancelOrder(Order order);
+        void CancelOrder(Order order, string exchangeId);
 
-        FundDepot LoadFundInformation();
+        FundDepot LoadFundInformation(string exchangeId);
 
-        IEnumerable<ShareInformation> LoadMarketInformation();
+        IEnumerable<string> LoadExchangeInformation();
 
-        IEnumerable<Order> LoadPendingOrders();
+        IEnumerable<ShareInformation> LoadMarketInformation(string exchangeId);
+
+        IEnumerable<Order> LoadPendingOrders(string exchangeId);
 
         void AddNewMarketInformationAvailableCallback(Action<ShareInformation> callback);
 

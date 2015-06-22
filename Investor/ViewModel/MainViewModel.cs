@@ -71,10 +71,10 @@ namespace Investor.ViewModel
 
             foreach (InvestorDepot depot in Depots)
             {
-                foreach (String shareName in depot.Shares.Keys)
+                foreach (string shareName in depot.Shares.Keys)
                 {
                     var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
-                    ShareInformation info = infos.First();
+                    ShareInformation info = infos.FirstOrDefault();
                     if (info != null)
                     {
                         OwningShareDTO s = new OwningShareDTO()
@@ -104,7 +104,6 @@ namespace Investor.ViewModel
                 {
                     value += s.Value;
                 }
-
                 return value;
             }
         }

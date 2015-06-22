@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\OwningShareDTO.cs" />
+    <Compile Include="Model\RegistrationInfo.cs" />
     <Compile Include="Model\WcfDataService.cs" />
     <Compile Include="Service References\localhost\Reference.cs">
       <AutoGen>True</AutoGen>

@@ -1,24 +1,38 @@
 ﻿<Window x:Class="FundManager.View.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:m="clr-namespace:FundManager.Model"
         Title="Fund manager login" Height="300" Width="300"
         DataContext="{Binding Login, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <DataTemplate x:Key="RegistrationInfoTemplate" DataType="{x:Type m:RegistrationInfo}">
+            <StackPanel Orientation="Horizontal" Margin="5,10">
+                <CheckBox IsChecked="{Binding Register}" />
+                <Label Content="{Binding ExchangeName}" />
+                <Label Content="Fund Assets:" />
+                <TextBox Text="{Binding Budget}" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Fund-ID" />
         <TextBox Grid.Row="1" Text="{Binding FundID, UpdateSourceTrigger=PropertyChanged}" />
-        <Label Grid.Row="2" Content="Initial fund assets" />
-        <TextBox Grid.Row="3" Text="{Binding FundAssests, UpdateSourceTrigger=PropertyChanged}" />
-        <Label Grid.Row="4" Content="Initial amount of fund shares" />
-        <TextBox Grid.Row="5" Text="{Binding FundShares, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Row="6" Command="{Binding SubmitCommand}" Content="{Binding ButtonText}" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,10">
+            <Label Content="Main:"/>
+            <ComboBox ItemsSource="{Binding Exchanges}" SelectedItem="{Binding MainExchange}"/>
+            <Label Content="Fund Assets:" />
+            <TextBox Text="{Binding MainBudget}" />
+            <Label Content="Fund Shares:" />
+            <TextBox Text="{Binding MainShares}" />
+        </StackPanel>
+        <ListBox Grid.Row="3" ItemsSource="{Binding Registrations, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource RegistrationInfoTemplate}" />
+        <Button Grid.Row="4" Command="{Binding SubmitCommand}" Content="{Binding ButtonText}" />
     </Grid>
 </Window>

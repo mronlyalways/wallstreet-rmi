@@ -16,11 +16,11 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Email" />
         <TextBox Grid.Row="1" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />

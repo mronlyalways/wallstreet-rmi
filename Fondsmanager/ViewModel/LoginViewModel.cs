@@ -4,6 +4,9 @@ using GalaSoft.MvvmLight.Messaging;
 using FundManager.Model;
 using FundManager.View;
 using FundManager.localhost;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FundManager.ViewModel
 {
@@ -11,16 +14,20 @@ namespace FundManager.ViewModel
     public class LoginViewModel : ViewModelBase
     {
         private IDataService data;
+        private ViewModelLocator locator;
         private bool submitted;
+        private int confirmedCounter;
 
         public LoginViewModel(IDataService data)
         {
             this.data = data;
+            this.locator = (ViewModelLocator) App.Current.Resources["Locator"];
+            confirmedCounter = -1;
             data.AddNewFundInformationAvailableCallback(OnNewFundDepotAvailable);
-            SubmitCommand = new RelayCommand(Submit, () => !FundID.Equals(string.Empty) && FundAssests >= 0 && FundShares >= 0 && !submitted);
+            SubmitCommand = new RelayCommand(Submit, () => !FundID.Equals(string.Empty) && !submitted);
             FundID = string.Empty;
-            FundAssests = 0;
-            FundShares = 0;
+            Exchanges = new ObservableCollection<string>(data.LoadExchangeInformation());
+            Registrations = new ObservableCollection<RegistrationInfo>(Exchanges.Select(x => new RegistrationInfo { ExchangeName = x, Budget = 0, Register = false }));
             ButtonText = "Submit";
             submitted = false;
         }
@@ -40,36 +47,51 @@ namespace FundManager.ViewModel
             }
         }
 
-        private double fundassets;
-        public double FundAssests
+        public ObservableCollection<string> Exchanges { get; set; }
+
+        private string mainExchange;
+        public string MainExchange
         {
             get
             {
-                return fundassets;
+                return mainExchange;
             }
             set
             {
-                fundassets = value;
-                RaisePropertyChanged(() => FundAssests);
-                SubmitCommand.RaiseCanExecuteChanged();
+                mainExchange = value;
+                RaisePropertyChanged(() => MainExchange);
             }
         }
 
-        private int fundshares;
-
-        public int FundShares
+        private double mainBudget;
+        public double MainBudget
         {
             get
             {
-                return fundshares;
+                return mainBudget;
             }
             set
             {
-                fundshares = value;
-                RaisePropertyChanged(() => FundShares);
-                SubmitCommand.RaiseCanExecuteChanged();
+                mainBudget = value;
+                RaisePropertyChanged(() => MainBudget);
             }
         }
+
+        private int mainShares;
+        public int MainShares
+        {
+            get
+            {
+                return mainShares;
+            }
+            set
+            {
+                mainShares = value;
+                RaisePropertyChanged(() => MainShares);
+            }
+        }
+
+        public ObservableCollection<RegistrationInfo> Registrations { get; set; }
 
         private string buttonText;
         public string ButtonText
@@ -89,18 +111,31 @@ namespace FundManager.ViewModel
 
         public void Submit()
         {
-            data.Login(new FundRegistration() { Id = FundID, FundAssets = FundAssests, Shares = FundShares });
             submitted = true;
+            data.Login(new FundRegistration { Id = FundID, FundAssets = MainBudget, Shares = MainShares }, MainExchange);
+            
+            foreach (RegistrationInfo i in Registrations.Where(x => x.Register))
+            {
+                data.Login(new FundRegistration { Id = FundID, FundAssets = i.Budget, Shares = 0 }, i.ExchangeName);
+            }
             ButtonText = "Waiting for confirmation ...";
         }
 
         public void OnNewFundDepotAvailable(FundDepot depot)
         {
-            ((ViewModelLocator)App.Current.Resources["Locator"]).SetFundDepot(depot);
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
-            var MainWindow = new MainWindow();
-            MainWindow.Show();
-            this.Cleanup();
+            if (locator.Funds == null)
+            {
+                locator.Funds = new List<FundDepot>();
+            }
+            locator.Funds.Add(depot);
+            confirmedCounter++;
+            if (confirmedCounter == Registrations.Where(x => x.Register).Count())
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage(this, "Close"));
+                var MainWindow = new MainWindow();
+                MainWindow.Show();
+                this.Cleanup();
+            }
         }
     }
 }

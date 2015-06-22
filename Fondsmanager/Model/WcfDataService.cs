@@ -22,11 +22,6 @@ namespace FundManager.Model
         public WcfDataService()
         {
             client = new WallstreetDataServiceClient(new InstanceContext(this));
-            client.SubscribeOnNewShareInformationAvailable();
-            client.SubscribeOnNewOrderAvailable();
-            client.SubscribeOnNewTransactionAvailable();
-            client.SubscribeOnNewInvestorDepotAvailable();
-            client.SubscribeOnNewFundDepotAvailable();
             marketCallbacks = new List<Action<ShareInformation>>();
             orderAddedCallbacks = new List<Action<Order>>();
             fundAddedCallbacks = new List<Action<FundDepot>>();
@@ -34,27 +29,32 @@ namespace FundManager.Model
             transactionAddedCallbacks = new List<Action<Transaction>>();
         }
 
-        public void Login(FundRegistration r)
+        public void Login(FundRegistration r, string exchangeId)
         {
             fundid = r.Id;
-            client.LoginFund(r);
+            client.SubscribeOnNewShareInformationAvailable(exchangeId);
+            client.SubscribeOnNewOrderAvailable(exchangeId);
+            client.SubscribeOnNewTransactionAvailable(exchangeId);
+            client.SubscribeOnNewInvestorDepotAvailable(exchangeId);
+            client.SubscribeOnNewFundDepotAvailable(exchangeId);
+            client.LoginFund(r, exchangeId);
         }
 
-        public void PlaceOrder(Order order)
+        public void PlaceOrder(Order order, string exchangeId)
         {
-            client.PutOrder(order);
+            client.PutOrder(order, exchangeId);
         }
 
-        public void CancelOrder(Order order)
+        public void CancelOrder(Order order, string exchangeId)
         {
-            client.DeleteOrder(order);
+            client.DeleteOrder(order, exchangeId);
         }
 
-        public FundDepot LoadFundInformation()
+        public FundDepot LoadFundInformation(string exchangeId)
         {
             if (fundid != null)
             {
-                return client.GetFundDepot(fundid);
+                return client.GetFundDepot(fundid, exchangeId);
             }
             else
             {
@@ -62,16 +62,21 @@ namespace FundManager.Model
             }
         }
 
-        public IEnumerable<ShareInformation> LoadMarketInformation()
+        public IEnumerable<ShareInformation> LoadMarketInformation(string exchangeId)
         {
-            return client.GetMarketInformation().Where(x => !x.IsFund);
+            return client.GetMarketInformation(exchangeId).Where(x => !x.IsFund);
         }
 
-        public IEnumerable<Order> LoadPendingOrders()
+        public IEnumerable<string> LoadExchangeInformation()
+        {
+            return client.GetExchanges();
+        }
+
+        public IEnumerable<Order> LoadPendingOrders(string exchangeId)
         {
             if (fundid != null)
             {
-                return client.GetPendingOrders(fundid);
+                return client.GetPendingOrders(fundid, exchangeId);
             }
             else
             {

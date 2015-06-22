@@ -16,7 +16,7 @@ namespace Investor.Model
 
         public double StockPrice { get; set; }
 
-        public Double Value
+        public double Value
         {
             get
             {

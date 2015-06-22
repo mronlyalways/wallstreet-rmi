@@ -63,34 +63,40 @@ namespace Broker
             var depot = new FundDepot
             {
                 Id = fundName,
+                ExchangeName = exchangeId,
                 Budget = request.FundAssets,
                 Shares = new Dictionary<string, int>()
             };
-            depot.Shares.Add(fundName, request.Shares);
-            var info = new ShareInformation
+            ShareInformation info = null;
+            Order order = null;
+            if (request.Shares > 0)
             {
-                FirmName = fundName,
-                NoOfShares = request.Shares,
-                PricePerShare = request.FundAssets / request.Shares,
-                PurchasingVolume = 0,
-                SalesVolume = request.Shares,
-                IsFund = true
-            };
-            var order = new Order
-            {
-                Id = fundName + DateTime.Now.Ticks,
-                ShareName = fundName,
-                InvestorId = fundName,
-                Type = OrderType.SELL,
-                TotalNoOfShares = request.Shares,
-                NoOfOpenShares = request.Shares,
-                NoOfProcessedShares = 0,
-                Status = OrderStatus.OPEN,
-                Limit = 0,
-                Prioritize = false,
-                IsFundShare = true
-            };
-
+                depot.Shares.Add(fundName, request.Shares);
+                info = new ShareInformation
+                {
+                    FirmName = fundName,
+                    NoOfShares = request.Shares,
+                    PricePerShare = request.FundAssets / request.Shares,
+                    PurchasingVolume = 0,
+                    SalesVolume = request.Shares,
+                    IsFund = true,
+                    ExchangeName = exchangeId
+                };
+                order = new Order
+                {
+                    Id = fundName + DateTime.Now.Ticks,
+                    ShareName = fundName,
+                    InvestorId = fundName,
+                    Type = OrderType.SELL,
+                    TotalNoOfShares = request.Shares,
+                    NoOfOpenShares = request.Shares,
+                    NoOfProcessedShares = 0,
+                    Status = OrderStatus.OPEN,
+                    Limit = 0,
+                    Prioritize = false,
+                    IsFundShare = true
+                };
+            }
             return new FundRequestResult { FundDepot = depot, ShareInformation = info, Order = order };
         }
 

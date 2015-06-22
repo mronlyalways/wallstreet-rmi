@@ -100,10 +100,13 @@ namespace WallstreetDataService
                     var order = result.Order;
                     data.Exchanges[exchangeId].FundDepots[depot.Id] = depot;
                     data.Exchanges[exchangeId].InvestorDepots[depot.Id] = depot as InvestorDepot;
-                    data.Exchanges[exchangeId].Orders[order.Id] = order;
-                    data.Exchanges[exchangeId].ShareInformation[info.FirmName] = info;
-                    NotifySubscribers(data.Exchanges[exchangeId].OrderCallbacks, order);
-                    NotifySubscribers(data.Exchanges[exchangeId].ShareInformationCallbacks, info);
+                    if (info != null && order != null)
+                    {
+                        data.Exchanges[exchangeId].Orders[order.Id] = order;
+                        data.Exchanges[exchangeId].ShareInformation[info.FirmName] = info;
+                        NotifySubscribers(data.Exchanges[exchangeId].OrderCallbacks, order);
+                        NotifySubscribers(data.Exchanges[exchangeId].ShareInformationCallbacks, info);
+                    }
                     NotifySubscribers(data.Exchanges[exchangeId].FundCallbacks, result.FundDepot);
                 }
                 else
