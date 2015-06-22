@@ -9,6 +9,8 @@ namespace Wallstreet.Model
 {
     public interface IDataService
     {
+        IEnumerable<string> LoadExchanges();
+
         IEnumerable<ShareInformation> LoadMarketInformation();
 
         IEnumerable<Order> LoadOrders();

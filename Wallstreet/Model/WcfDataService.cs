@@ -11,6 +11,7 @@ namespace Wallstreet.Model
 {
     public class WcfDataService : IDataService, IDisposable, IWallstreetDataServiceCallback
     {
+        private IEnumerable<string> exchanges;
         private WallstreetDataServiceClient client;
         private IList<Action<ShareInformation>> marketCallbacks;
         private IList<Action<Order>> orderAddedCallbacks;
@@ -20,29 +21,47 @@ namespace Wallstreet.Model
         public WcfDataService()
         {
             client = new WallstreetDataServiceClient(new InstanceContext(this));
-            client.SubscribeOnNewShareInformationAvailable();
-            client.SubscribeOnNewOrderAvailable();
-            client.SubscribeOnNewTransactionAvailable();
+            exchanges = client.GetExchanges();
+            foreach (string e in exchanges)
+            {
+                client.SubscribeOnNewShareInformationAvailable(e);
+                client.SubscribeOnNewOrderAvailable(e);
+                client.SubscribeOnNewTransactionAvailable(e);
+            }
             marketCallbacks = new List<Action<ShareInformation>>();
             orderAddedCallbacks = new List<Action<Order>>();
             orderRemovedCallbacks = new List<Action<Order>>();
             transactionAddedCallbacks = new List<Action<Transaction>>();
-            processPendingRegistrations();
+        }
+
+        public IEnumerable<string> LoadExchanges()
+        {
+            return exchanges;
         }
 
         public IEnumerable<ShareInformation> LoadMarketInformation()
         {
-            return client.GetMarketInformation();
+            return GenericLoad<ShareInformation>(exchanges, client.GetMarketInformation);
         }
 
         public IEnumerable<Order> LoadOrders()
         {
-            return client.GetOrders();
+            return GenericLoad<Order>(exchanges, client.GetOrders);
         }
 
         public IEnumerable<Transaction> LoadTransactions()
         {
-            return client.GetTransactions();
+            return GenericLoad<Transaction>(exchanges, client.GetTransactions);
+        }
+
+        private IEnumerable<T> GenericLoad<T>(IEnumerable<string> exchanges, Func<string, IEnumerable<T>> function)
+        {
+            var list = new List<T>();
+            foreach (string e in exchanges)
+            {
+                list.AddRange(function(e));
+            }
+            return list;
         }
 
         public void AddNewMarketInformationAvailableCallback(Action<ShareInformation> callback)
@@ -63,11 +82,6 @@ namespace Wallstreet.Model
         public void AddNewTransactionAddedCallback(Action<Transaction> callback)
         {
             transactionAddedCallbacks.Add(callback);
-        }
-
-        private void processPendingRegistrations()
-        {
-
         }
 
         public void OnNewInvestorDepotAvailable(InvestorDepot transaction) { }

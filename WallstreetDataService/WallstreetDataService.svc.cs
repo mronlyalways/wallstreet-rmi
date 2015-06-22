@@ -11,6 +11,7 @@ using System.Threading;
 
 namespace WallstreetDataService
 {
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WallstreetDataService : IWallstreetDataService, IBrokerService
     {
         private DataRepository data;
@@ -112,7 +113,6 @@ namespace WallstreetDataService
                 else
                 {
                     data.Exchanges[exchangeId].PendingFundRegistrationRequests.Add(registration);
-                    // TODO implement mechanism to call brokers when coming online.
                 }
             }
             else
@@ -315,7 +315,22 @@ namespace WallstreetDataService
                 {
                     PutOrder(o, exchangeId);
                 }
-                //TODO pending orders
+            }
+
+            if (data.Exchanges[exchangeId].PendingFirmRegistrationRequests.Count > 0)
+            {
+                foreach (FirmRegistration r in data.Exchanges[exchangeId].PendingFirmRegistrationRequests)
+                {
+                    RegisterFirm(r, exchangeId);
+                }
+            }
+
+            if (data.Exchanges[exchangeId].PendingFundRegistrationRequests.Count > 0)
+            {
+                foreach (FundRegistration r in data.Exchanges[exchangeId].PendingFundRegistrationRequests)
+                {
+                    LoginFund(r, exchangeId);
+                }
             }
         }
 
