@@ -32,6 +32,16 @@ namespace WallstreetDataService
             return data.Exchanges[exchangeId].ShareInformation.Values;
         }
 
+        public IEnumerable<ShareInformation> GetOverallMarketInformation()
+        {
+            var list = new List<ShareInformation>();
+            foreach (string e in data.Exchanges.Keys)
+            {
+                list.AddRange(data.Exchanges[e].ShareInformation.Values);
+            }
+            return list;
+        }
+
         public ShareInformation GetShareInformation(string shareName, string exchangeId)
         {
             ShareInformation result;
@@ -87,6 +97,27 @@ namespace WallstreetDataService
             return result;
         }
 
+        public FundDepot GetOverallFundInformation(string fundId)
+        {
+            FundDepot result = new FundDepot();
+            foreach(string e in data.Exchanges.Keys)
+            {
+                var d = data.Exchanges[e].FundDepots[fundId];
+                if (result.Id == null)
+                {
+                    result.Id = d.Id;
+                    result.Budget = 0;
+                    result.Shares = new Dictionary<string,int>();
+                }
+                result.Budget += d.Budget;
+                foreach (string s in d.Shares.Keys)
+                {
+                    result.Shares.Add(s, d.Shares[s]);
+                }
+            }
+            return result;
+        }
+
         public void LoginFund(FundRegistration registration, string exchangeId)
         {
             FundDepot depot;
@@ -137,6 +168,16 @@ namespace WallstreetDataService
         public IEnumerable<Order> GetOrders(string exchangeId)
         {
             return data.Exchanges[exchangeId].Orders.Values;
+        }
+
+        public IEnumerable<Order> GetOverallOrders()
+        {
+            var list = new List<Order>();
+            foreach (string e in data.Exchanges.Keys)
+            {
+                list.AddRange(data.Exchanges[e].Orders.Values);
+            }
+            return list;
         }
 
         public IEnumerable<Order> GetPendingOrders(string investorId, string exchangeId)

@@ -19,6 +19,9 @@ namespace WallstreetDataService
         IEnumerable<ShareInformation> GetMarketInformation(string exchangeId);
 
         [OperationContract]
+        IEnumerable<ShareInformation> GetOverallMarketInformation();
+
+        [OperationContract]
         ShareInformation GetShareInformation(string shareName, string exchangeId);
 
         [OperationContract(IsOneWay = true)]
@@ -42,11 +45,17 @@ namespace WallstreetDataService
         [OperationContract]
         FundDepot GetFundDepot(string fundId, string exchangeId);
 
+        [OperationContract]
+        FundDepot GetOverallFundInformation(string fundId);
+
         [OperationContract(IsOneWay = true)]
         void LoginFund(FundRegistration registration, string exchangeId);
 
         [OperationContract]
         IEnumerable<Order> GetOrders(string exchangeId);
+
+        [OperationContract]
+        IEnumerable<Order> GetOverallOrders();
 
         [OperationContract]
         IEnumerable<Order> GetPendingOrders(string investorId, string exchangeId);

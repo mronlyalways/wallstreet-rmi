@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" />
-  <xs:element name="GetMarketInformation">
+  <xs:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:60129/WallstreetDataService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" />
+  <xs:element name="GetExchanges">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExchangesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetExchangesResult" nillable="true" type="q1:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMarketInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMarketInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetMarketInformationResult" nillable="true" type="q1:ArrayOfShareInformation" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetMarketInformationResult" nillable="true" type="q2:ArrayOfShareInformation" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOverallMarketInformation">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOverallMarketInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetOverallMarketInformationResult" nillable="true" type="q3:ArrayOfShareInformation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -17,32 +44,36 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="shareName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetShareInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetShareInformationResult" nillable="true" type="q2:ShareInformation" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetShareInformationResult" nillable="true" type="q4:ShareInformation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PutShareInformation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="info" nillable="true" type="q3:ShareInformation" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="info" nillable="true" type="q5:ShareInformation" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetInvestorInformation">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetInvestorInformationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetInvestorInformationResult" nillable="true" type="q4:ArrayOfInvestorDepot" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetInvestorInformationResult" nillable="true" type="q6:ArrayOfInvestorDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -50,34 +81,51 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="investorId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetInvestorDepotResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetInvestorDepotResult" nillable="true" type="q5:InvestorDepot" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetInvestorDepotResult" nillable="true" type="q7:InvestorDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PutInvestorDepot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="investor" nillable="true" type="q6:InvestorDepot" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="investor" nillable="true" type="q8:InvestorDepot" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LoginInvestor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="registration" nillable="true" type="q7:InvestorRegistration" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="registration" nillable="true" type="q9:InvestorRegistration" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LoginInvestorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="LoginInvestorResult" nillable="true" type="q8:InvestorDepot" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="LoginInvestorResult" nillable="true" type="q10:InvestorDepot" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRegisteredExchanges">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="investorId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRegisteredExchangesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetRegisteredExchangesResult" nillable="true" type="q11:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -85,32 +133,62 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="fundId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetFundDepotResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetFundDepotResult" nillable="true" type="q9:FundDepot" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetFundDepotResult" nillable="true" type="q12:FundDepot" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOverallFundInformation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fundId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOverallFundInformationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetOverallFundInformationResult" nillable="true" type="q13:FundDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="LoginFund">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="registration" nillable="true" type="q10:FundRegistration" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="registration" nillable="true" type="q14:FundRegistration" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetOrders">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetOrdersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetOrdersResult" nillable="true" type="q11:ArrayOfOrder" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetOrdersResult" nillable="true" type="q15:ArrayOfOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOverallOrders">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOverallOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetOverallOrdersResult" nillable="true" type="q16:ArrayOfOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -118,60 +196,67 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="investorId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPendingOrdersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetPendingOrdersResult" nillable="true" type="q12:ArrayOfOrder" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetPendingOrdersResult" nillable="true" type="q17:ArrayOfOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PutOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q13:Order" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q18:Order" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q14:Order" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q19:Order" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTransactions">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTransactionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetTransactionsResult" nillable="true" type="q15:ArrayOfTransaction" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetTransactionsResult" nillable="true" type="q20:ArrayOfTransaction" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PutTransaction">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="transaction" nillable="true" type="q16:Transaction" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="transaction" nillable="true" type="q21:Transaction" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegisterFirm">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="request" nillable="true" type="q17:FirmRegistration" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="request" nillable="true" type="q22:FirmRegistration" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegisterFirmResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="RegisterFirmResult" nillable="true" type="q18:FirmDepot" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="RegisterFirmResult" nillable="true" type="q23:FirmDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -179,79 +264,92 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="firmName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetFirmDepotResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetFirmDepotResult" nillable="true" type="q19:FirmDepot" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="GetFirmDepotResult" nillable="true" type="q24:FirmDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeOnNewShareInformationAvailable">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeOnNewFundDepotAvailable">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeOnNewOrderAvailable">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeOnNewInvestorDepotAvailable">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SubscribeOnNewTransactionAvailable">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OnNewInvestorDepotAvailable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="depot" nillable="true" type="q20:InvestorDepot" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="depot" nillable="true" type="q25:InvestorDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OnNewFundDepotAvailable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="depot" nillable="true" type="q21:FundDepot" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="depot" nillable="true" type="q26:FundDepot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OnNewShareInformationAvailable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="info" nillable="true" type="q22:ShareInformation" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="info" nillable="true" type="q27:ShareInformation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OnNewOrderAvailable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q23:Order" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q28:Order" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="OnNewTransactionAvailable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="transaction" nillable="true" type="q24:Transaction" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="transaction" nillable="true" type="q29:Transaction" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegisterBroker">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegisterBrokerResponse">
@@ -261,7 +359,9 @@
   </xs:element>
   <xs:element name="UnregisterBroker">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="exchangeId" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UnregisterBrokerResponse">
@@ -272,43 +372,43 @@
   <xs:element name="ProcessFirmRegistration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="request" nillable="true" type="q25:FirmRegistration" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="request" nillable="true" type="q30:FirmRegistration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ProcessFirmRegistrationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="ProcessFirmRegistrationResult" nillable="true" type="q26:FirmRequestResult" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="ProcessFirmRegistrationResult" nillable="true" type="q31:FirmRequestResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ProcessFundRegistration">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="request" nillable="true" type="q27:FundRegistration" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="request" nillable="true" type="q32:FundRegistration" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ProcessFundRegistrationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="ProcessFundRegistrationResult" nillable="true" type="q28:FundRequestResult" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="ProcessFundRegistrationResult" nillable="true" type="q33:FundRequestResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ProcessMatchingOrders">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q29:Order" />
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="orders" nillable="true" type="q30:ArrayOfOrder" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="order" nillable="true" type="q34:Order" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="orders" nillable="true" type="q35:ArrayOfOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ProcessMatchingOrdersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="ProcessMatchingOrdersResult" nillable="true" type="q31:OrderMatchResult" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model" minOccurs="0" name="ProcessMatchingOrdersResult" nillable="true" type="q36:OrderMatchResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
