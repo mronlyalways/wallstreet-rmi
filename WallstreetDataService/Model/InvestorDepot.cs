@@ -12,6 +12,9 @@ namespace WallstreetDataService.Model
     public class InvestorDepot
     {
         [DataMember]
+        public string ExchangeName { get; set; }
+
+        [DataMember]
         public string Id { get; set; }
 
         [DataMember]

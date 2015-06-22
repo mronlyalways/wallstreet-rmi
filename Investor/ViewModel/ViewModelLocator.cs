@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using Investor.Model;
+using System.Collections.Generic;
 
 namespace Investor.ViewModel
 {
@@ -12,6 +13,8 @@ namespace Investor.ViewModel
             kernel = new StandardKernel();
             kernel.Bind<IDataService>().To<WcfDataService>().InSingletonScope();
         }
+
+        public IEnumerable<string> RegisteredExchanges { get; set; }
 
         public MainViewModel Main
         {

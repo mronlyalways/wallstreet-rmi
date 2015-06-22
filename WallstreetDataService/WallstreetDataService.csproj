@@ -87,7 +87,7 @@
     <Compile Include="Model\FundRequestResult.cs" />
     <Compile Include="IBroker.cs" />
     <Compile Include="Model\FundRegistration.cs" />
-    <Compile Include="Model\IBrokerService.cs" />
+    <Compile Include="IBrokerService.cs" />
     <Compile Include="IWallstreetSubscriber.cs" />
     <Compile Include="Model\FirmDepot.cs" />
     <Compile Include="Model\FundDepot.cs" />

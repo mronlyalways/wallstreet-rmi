@@ -13,12 +13,18 @@ namespace Broker
         static void Main(string[] args)
         {
             var wallstreetClient = new WallstreetDataServiceClient(new InstanceContext(new WallstreetHandlerDummy()));
-            var handler = new BrokerHandler(wallstreetClient);
+            Console.WriteLine("Type in the name of the exchange you want to connect to. Available:");
+            var exchanges = wallstreetClient.GetExchanges();
+            foreach (string e in exchanges) {
+                Console.WriteLine(e);
+            }
+            var exchangeId = Console.ReadLine();
+            var handler = new BrokerHandler(wallstreetClient, exchangeId);
             BrokerServiceClient client = new BrokerServiceClient(new InstanceContext(handler));
-            client.RegisterBroker();
+            client.RegisterBroker(exchangeId);
             Console.WriteLine("Broker online. Press enter to exit ...");
             Console.ReadLine();
-            client.UnregisterBroker();
+            client.UnregisterBroker(exchangeId);
             client.Close();
         }
     }

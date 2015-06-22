@@ -62,6 +62,7 @@ namespace WallstreetDataService.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<DataRepository>().ToSelf().InSingletonScope();
+            var repo = kernel.Get<DataRepository>();
         }        
     }
 }

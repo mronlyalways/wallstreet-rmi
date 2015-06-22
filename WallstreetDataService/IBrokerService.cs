@@ -12,9 +12,9 @@ namespace WallstreetDataService
     public interface IBrokerService
     {
         [OperationContract]
-        void RegisterBroker();
+        void RegisterBroker(string exchangeId);
 
         [OperationContract]
-        void UnregisterBroker();
+        void UnregisterBroker(string exchangeId);
     }
 }

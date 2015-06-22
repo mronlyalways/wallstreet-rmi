@@ -23,6 +23,9 @@ namespace Investor.localhost {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExchangeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FirmNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -47,6 +50,19 @@ namespace Investor.localhost {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExchangeName {
+            get {
+                return this.ExchangeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExchangeNameField, value) != true)) {
+                    this.ExchangeNameField = value;
+                    this.RaisePropertyChanged("ExchangeName");
+                }
             }
         }
         
@@ -152,6 +168,9 @@ namespace Investor.localhost {
         private double BudgetField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExchangeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -176,6 +195,19 @@ namespace Investor.localhost {
                 if ((this.BudgetField.Equals(value) != true)) {
                     this.BudgetField = value;
                     this.RaisePropertyChanged("Budget");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExchangeName {
+            get {
+                return this.ExchangeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExchangeNameField, value) != true)) {
+                    this.ExchangeNameField = value;
+                    this.RaisePropertyChanged("ExchangeName");
                 }
             }
         }
@@ -221,22 +253,6 @@ namespace Investor.localhost {
     [System.Runtime.Serialization.DataContractAttribute(Name="FundDepot", Namespace="http://schemas.datacontract.org/2004/07/WallstreetDataService.Model")]
     [System.SerializableAttribute()]
     public partial class FundDepot : Investor.localhost.InvestorDepot {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int FundSharesField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FundShares {
-            get {
-                return this.FundSharesField;
-            }
-            set {
-                if ((this.FundSharesField.Equals(value) != true)) {
-                    this.FundSharesField = value;
-                    this.RaisePropertyChanged("FundShares");
-                }
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1178,139 +1194,151 @@ namespace Investor.localhost {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="localhost.IWallstreetDataService", CallbackContract=typeof(Investor.localhost.IWallstreetDataServiceCallback))]
     public interface IWallstreetDataService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetMarketInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetMarketInformationResponse")]
-        Investor.localhost.ShareInformation[] GetMarketInformation();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetExchanges", ReplyAction="http://tempuri.org/IWallstreetDataService/GetExchangesResponse")]
+        string[] GetExchanges();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetExchanges", ReplyAction="http://tempuri.org/IWallstreetDataService/GetExchangesResponse")]
+        System.Threading.Tasks.Task<string[]> GetExchangesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetMarketInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetMarketInformationResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.ShareInformation[]> GetMarketInformationAsync();
+        Investor.localhost.ShareInformation[] GetMarketInformation(string exchangeId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetMarketInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetMarketInformationResponse")]
+        System.Threading.Tasks.Task<Investor.localhost.ShareInformation[]> GetMarketInformationAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetShareInformationResponse")]
-        Investor.localhost.ShareInformation GetShareInformation(string shareName);
+        Investor.localhost.ShareInformation GetShareInformation(string shareName, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetShareInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetShareInformationResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.ShareInformation> GetShareInformationAsync(string shareName);
+        System.Threading.Tasks.Task<Investor.localhost.ShareInformation> GetShareInformationAsync(string shareName, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutShareInformation")]
-        void PutShareInformation(Investor.localhost.ShareInformation info);
+        void PutShareInformation(Investor.localhost.ShareInformation info, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutShareInformation")]
-        System.Threading.Tasks.Task PutShareInformationAsync(Investor.localhost.ShareInformation info);
+        System.Threading.Tasks.Task PutShareInformationAsync(Investor.localhost.ShareInformation info, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorInformationResponse")]
-        Investor.localhost.InvestorDepot[] GetInvestorInformation();
+        Investor.localhost.InvestorDepot[] GetInvestorInformation(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorInformation", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorInformationResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.InvestorDepot[]> GetInvestorInformationAsync();
+        System.Threading.Tasks.Task<Investor.localhost.InvestorDepot[]> GetInvestorInformationAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorDepotResponse")]
-        Investor.localhost.InvestorDepot GetInvestorDepot(string investorId);
+        Investor.localhost.InvestorDepot GetInvestorDepot(string investorId, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetInvestorDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetInvestorDepotResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId);
+        System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot")]
-        void PutInvestorDepot(Investor.localhost.InvestorDepot investor);
+        void PutInvestorDepot(Investor.localhost.InvestorDepot investor, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutInvestorDepot")]
-        System.Threading.Tasks.Task PutInvestorDepotAsync(Investor.localhost.InvestorDepot investor);
+        System.Threading.Tasks.Task PutInvestorDepotAsync(Investor.localhost.InvestorDepot investor, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginInvestor", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginInvestorResponse")]
-        Investor.localhost.InvestorDepot LoginInvestor(Investor.localhost.InvestorRegistration registration);
+        Investor.localhost.InvestorDepot LoginInvestor(Investor.localhost.InvestorRegistration registration, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/LoginInvestor", ReplyAction="http://tempuri.org/IWallstreetDataService/LoginInvestorResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> LoginInvestorAsync(Investor.localhost.InvestorRegistration registration);
+        System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> LoginInvestorAsync(Investor.localhost.InvestorRegistration registration, string exchangeId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetRegisteredExchanges", ReplyAction="http://tempuri.org/IWallstreetDataService/GetRegisteredExchangesResponse")]
+        string[] GetRegisteredExchanges(string investorId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetRegisteredExchanges", ReplyAction="http://tempuri.org/IWallstreetDataService/GetRegisteredExchangesResponse")]
+        System.Threading.Tasks.Task<string[]> GetRegisteredExchangesAsync(string investorId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFundDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFundDepotResponse")]
-        Investor.localhost.FundDepot GetFundDepot(string fundId);
+        Investor.localhost.FundDepot GetFundDepot(string fundId, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFundDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFundDepotResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.FundDepot> GetFundDepotAsync(string fundId);
+        System.Threading.Tasks.Task<Investor.localhost.FundDepot> GetFundDepotAsync(string fundId, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/LoginFund")]
-        void LoginFund(Investor.localhost.FundRegistration registration);
+        void LoginFund(Investor.localhost.FundRegistration registration, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/LoginFund")]
-        System.Threading.Tasks.Task LoginFundAsync(Investor.localhost.FundRegistration registration);
+        System.Threading.Tasks.Task LoginFundAsync(Investor.localhost.FundRegistration registration, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
-        Investor.localhost.Order[] GetOrders();
+        Investor.localhost.Order[] GetOrders(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetOrdersResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.Order[]> GetOrdersAsync();
+        System.Threading.Tasks.Task<Investor.localhost.Order[]> GetOrdersAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetPendingOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetPendingOrdersResponse")]
-        Investor.localhost.Order[] GetPendingOrders(string investorId);
+        Investor.localhost.Order[] GetPendingOrders(string investorId, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetPendingOrders", ReplyAction="http://tempuri.org/IWallstreetDataService/GetPendingOrdersResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.Order[]> GetPendingOrdersAsync(string investorId);
+        System.Threading.Tasks.Task<Investor.localhost.Order[]> GetPendingOrdersAsync(string investorId, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
-        void PutOrder(Investor.localhost.Order order);
+        void PutOrder(Investor.localhost.Order order, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutOrder")]
-        System.Threading.Tasks.Task PutOrderAsync(Investor.localhost.Order order);
+        System.Threading.Tasks.Task PutOrderAsync(Investor.localhost.Order order, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/DeleteOrder")]
-        void DeleteOrder(Investor.localhost.Order order);
+        void DeleteOrder(Investor.localhost.Order order, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/DeleteOrder")]
-        System.Threading.Tasks.Task DeleteOrderAsync(Investor.localhost.Order order);
+        System.Threading.Tasks.Task DeleteOrderAsync(Investor.localhost.Order order, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
-        Investor.localhost.Transaction[] GetTransactions();
+        Investor.localhost.Transaction[] GetTransactions(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetTransactions", ReplyAction="http://tempuri.org/IWallstreetDataService/GetTransactionsResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.Transaction[]> GetTransactionsAsync();
+        System.Threading.Tasks.Task<Investor.localhost.Transaction[]> GetTransactionsAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutTransaction")]
-        void PutTransaction(Investor.localhost.Transaction transaction);
+        void PutTransaction(Investor.localhost.Transaction transaction, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/PutTransaction")]
-        System.Threading.Tasks.Task PutTransactionAsync(Investor.localhost.Transaction transaction);
+        System.Threading.Tasks.Task PutTransactionAsync(Investor.localhost.Transaction transaction, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/RegisterFirm", ReplyAction="http://tempuri.org/IWallstreetDataService/RegisterFirmResponse")]
-        Investor.localhost.FirmDepot RegisterFirm(Investor.localhost.FirmRegistration request);
+        Investor.localhost.FirmDepot RegisterFirm(Investor.localhost.FirmRegistration request, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/RegisterFirm", ReplyAction="http://tempuri.org/IWallstreetDataService/RegisterFirmResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.FirmDepot> RegisterFirmAsync(Investor.localhost.FirmRegistration request);
+        System.Threading.Tasks.Task<Investor.localhost.FirmDepot> RegisterFirmAsync(Investor.localhost.FirmRegistration request, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFirmDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFirmDepotResponse")]
-        Investor.localhost.FirmDepot GetFirmDepot(string firmName);
+        Investor.localhost.FirmDepot GetFirmDepot(string firmName, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWallstreetDataService/GetFirmDepot", ReplyAction="http://tempuri.org/IWallstreetDataService/GetFirmDepotResponse")]
-        System.Threading.Tasks.Task<Investor.localhost.FirmDepot> GetFirmDepotAsync(string firmName);
+        System.Threading.Tasks.Task<Investor.localhost.FirmDepot> GetFirmDepotAsync(string firmName, string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
             "")]
-        void SubscribeOnNewShareInformationAvailable();
+        void SubscribeOnNewShareInformationAvailable(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewShareInformationAvailable" +
             "")]
-        System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync();
+        System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewFundDepotAvailable")]
-        void SubscribeOnNewFundDepotAvailable();
+        void SubscribeOnNewFundDepotAvailable(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewFundDepotAvailable")]
-        System.Threading.Tasks.Task SubscribeOnNewFundDepotAvailableAsync();
+        System.Threading.Tasks.Task SubscribeOnNewFundDepotAvailableAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
-        void SubscribeOnNewOrderAvailable();
+        void SubscribeOnNewOrderAvailable(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewOrderAvailable")]
-        System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync();
+        System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewInvestorDepotAvailable")]
-        void SubscribeOnNewInvestorDepotAvailable();
+        void SubscribeOnNewInvestorDepotAvailable(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewInvestorDepotAvailable")]
-        System.Threading.Tasks.Task SubscribeOnNewInvestorDepotAvailableAsync();
+        System.Threading.Tasks.Task SubscribeOnNewInvestorDepotAvailableAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
-        void SubscribeOnNewTransactionAvailable();
+        void SubscribeOnNewTransactionAvailable(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWallstreetDataService/SubscribeOnNewTransactionAvailable")]
-        System.Threading.Tasks.Task SubscribeOnNewTransactionAvailableAsync();
+        System.Threading.Tasks.Task SubscribeOnNewTransactionAvailableAsync(string exchangeId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1360,180 +1388,196 @@ namespace Investor.localhost {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public Investor.localhost.ShareInformation[] GetMarketInformation() {
-            return base.Channel.GetMarketInformation();
+        public string[] GetExchanges() {
+            return base.Channel.GetExchanges();
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.ShareInformation[]> GetMarketInformationAsync() {
-            return base.Channel.GetMarketInformationAsync();
+        public System.Threading.Tasks.Task<string[]> GetExchangesAsync() {
+            return base.Channel.GetExchangesAsync();
         }
         
-        public Investor.localhost.ShareInformation GetShareInformation(string shareName) {
-            return base.Channel.GetShareInformation(shareName);
+        public Investor.localhost.ShareInformation[] GetMarketInformation(string exchangeId) {
+            return base.Channel.GetMarketInformation(exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.ShareInformation> GetShareInformationAsync(string shareName) {
-            return base.Channel.GetShareInformationAsync(shareName);
+        public System.Threading.Tasks.Task<Investor.localhost.ShareInformation[]> GetMarketInformationAsync(string exchangeId) {
+            return base.Channel.GetMarketInformationAsync(exchangeId);
         }
         
-        public void PutShareInformation(Investor.localhost.ShareInformation info) {
-            base.Channel.PutShareInformation(info);
+        public Investor.localhost.ShareInformation GetShareInformation(string shareName, string exchangeId) {
+            return base.Channel.GetShareInformation(shareName, exchangeId);
         }
         
-        public System.Threading.Tasks.Task PutShareInformationAsync(Investor.localhost.ShareInformation info) {
-            return base.Channel.PutShareInformationAsync(info);
+        public System.Threading.Tasks.Task<Investor.localhost.ShareInformation> GetShareInformationAsync(string shareName, string exchangeId) {
+            return base.Channel.GetShareInformationAsync(shareName, exchangeId);
         }
         
-        public Investor.localhost.InvestorDepot[] GetInvestorInformation() {
-            return base.Channel.GetInvestorInformation();
+        public void PutShareInformation(Investor.localhost.ShareInformation info, string exchangeId) {
+            base.Channel.PutShareInformation(info, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.InvestorDepot[]> GetInvestorInformationAsync() {
-            return base.Channel.GetInvestorInformationAsync();
+        public System.Threading.Tasks.Task PutShareInformationAsync(Investor.localhost.ShareInformation info, string exchangeId) {
+            return base.Channel.PutShareInformationAsync(info, exchangeId);
         }
         
-        public Investor.localhost.InvestorDepot GetInvestorDepot(string investorId) {
-            return base.Channel.GetInvestorDepot(investorId);
+        public Investor.localhost.InvestorDepot[] GetInvestorInformation(string exchangeId) {
+            return base.Channel.GetInvestorInformation(exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId) {
-            return base.Channel.GetInvestorDepotAsync(investorId);
+        public System.Threading.Tasks.Task<Investor.localhost.InvestorDepot[]> GetInvestorInformationAsync(string exchangeId) {
+            return base.Channel.GetInvestorInformationAsync(exchangeId);
         }
         
-        public void PutInvestorDepot(Investor.localhost.InvestorDepot investor) {
-            base.Channel.PutInvestorDepot(investor);
+        public Investor.localhost.InvestorDepot GetInvestorDepot(string investorId, string exchangeId) {
+            return base.Channel.GetInvestorDepot(investorId, exchangeId);
         }
         
-        public System.Threading.Tasks.Task PutInvestorDepotAsync(Investor.localhost.InvestorDepot investor) {
-            return base.Channel.PutInvestorDepotAsync(investor);
+        public System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> GetInvestorDepotAsync(string investorId, string exchangeId) {
+            return base.Channel.GetInvestorDepotAsync(investorId, exchangeId);
         }
         
-        public Investor.localhost.InvestorDepot LoginInvestor(Investor.localhost.InvestorRegistration registration) {
-            return base.Channel.LoginInvestor(registration);
+        public void PutInvestorDepot(Investor.localhost.InvestorDepot investor, string exchangeId) {
+            base.Channel.PutInvestorDepot(investor, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> LoginInvestorAsync(Investor.localhost.InvestorRegistration registration) {
-            return base.Channel.LoginInvestorAsync(registration);
+        public System.Threading.Tasks.Task PutInvestorDepotAsync(Investor.localhost.InvestorDepot investor, string exchangeId) {
+            return base.Channel.PutInvestorDepotAsync(investor, exchangeId);
         }
         
-        public Investor.localhost.FundDepot GetFundDepot(string fundId) {
-            return base.Channel.GetFundDepot(fundId);
+        public Investor.localhost.InvestorDepot LoginInvestor(Investor.localhost.InvestorRegistration registration, string exchangeId) {
+            return base.Channel.LoginInvestor(registration, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.FundDepot> GetFundDepotAsync(string fundId) {
-            return base.Channel.GetFundDepotAsync(fundId);
+        public System.Threading.Tasks.Task<Investor.localhost.InvestorDepot> LoginInvestorAsync(Investor.localhost.InvestorRegistration registration, string exchangeId) {
+            return base.Channel.LoginInvestorAsync(registration, exchangeId);
         }
         
-        public void LoginFund(Investor.localhost.FundRegistration registration) {
-            base.Channel.LoginFund(registration);
+        public string[] GetRegisteredExchanges(string investorId) {
+            return base.Channel.GetRegisteredExchanges(investorId);
         }
         
-        public System.Threading.Tasks.Task LoginFundAsync(Investor.localhost.FundRegistration registration) {
-            return base.Channel.LoginFundAsync(registration);
+        public System.Threading.Tasks.Task<string[]> GetRegisteredExchangesAsync(string investorId) {
+            return base.Channel.GetRegisteredExchangesAsync(investorId);
         }
         
-        public Investor.localhost.Order[] GetOrders() {
-            return base.Channel.GetOrders();
+        public Investor.localhost.FundDepot GetFundDepot(string fundId, string exchangeId) {
+            return base.Channel.GetFundDepot(fundId, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.Order[]> GetOrdersAsync() {
-            return base.Channel.GetOrdersAsync();
+        public System.Threading.Tasks.Task<Investor.localhost.FundDepot> GetFundDepotAsync(string fundId, string exchangeId) {
+            return base.Channel.GetFundDepotAsync(fundId, exchangeId);
         }
         
-        public Investor.localhost.Order[] GetPendingOrders(string investorId) {
-            return base.Channel.GetPendingOrders(investorId);
+        public void LoginFund(Investor.localhost.FundRegistration registration, string exchangeId) {
+            base.Channel.LoginFund(registration, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.Order[]> GetPendingOrdersAsync(string investorId) {
-            return base.Channel.GetPendingOrdersAsync(investorId);
+        public System.Threading.Tasks.Task LoginFundAsync(Investor.localhost.FundRegistration registration, string exchangeId) {
+            return base.Channel.LoginFundAsync(registration, exchangeId);
         }
         
-        public void PutOrder(Investor.localhost.Order order) {
-            base.Channel.PutOrder(order);
+        public Investor.localhost.Order[] GetOrders(string exchangeId) {
+            return base.Channel.GetOrders(exchangeId);
         }
         
-        public System.Threading.Tasks.Task PutOrderAsync(Investor.localhost.Order order) {
-            return base.Channel.PutOrderAsync(order);
+        public System.Threading.Tasks.Task<Investor.localhost.Order[]> GetOrdersAsync(string exchangeId) {
+            return base.Channel.GetOrdersAsync(exchangeId);
         }
         
-        public void DeleteOrder(Investor.localhost.Order order) {
-            base.Channel.DeleteOrder(order);
+        public Investor.localhost.Order[] GetPendingOrders(string investorId, string exchangeId) {
+            return base.Channel.GetPendingOrders(investorId, exchangeId);
         }
         
-        public System.Threading.Tasks.Task DeleteOrderAsync(Investor.localhost.Order order) {
-            return base.Channel.DeleteOrderAsync(order);
+        public System.Threading.Tasks.Task<Investor.localhost.Order[]> GetPendingOrdersAsync(string investorId, string exchangeId) {
+            return base.Channel.GetPendingOrdersAsync(investorId, exchangeId);
         }
         
-        public Investor.localhost.Transaction[] GetTransactions() {
-            return base.Channel.GetTransactions();
+        public void PutOrder(Investor.localhost.Order order, string exchangeId) {
+            base.Channel.PutOrder(order, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.Transaction[]> GetTransactionsAsync() {
-            return base.Channel.GetTransactionsAsync();
+        public System.Threading.Tasks.Task PutOrderAsync(Investor.localhost.Order order, string exchangeId) {
+            return base.Channel.PutOrderAsync(order, exchangeId);
         }
         
-        public void PutTransaction(Investor.localhost.Transaction transaction) {
-            base.Channel.PutTransaction(transaction);
+        public void DeleteOrder(Investor.localhost.Order order, string exchangeId) {
+            base.Channel.DeleteOrder(order, exchangeId);
         }
         
-        public System.Threading.Tasks.Task PutTransactionAsync(Investor.localhost.Transaction transaction) {
-            return base.Channel.PutTransactionAsync(transaction);
+        public System.Threading.Tasks.Task DeleteOrderAsync(Investor.localhost.Order order, string exchangeId) {
+            return base.Channel.DeleteOrderAsync(order, exchangeId);
         }
         
-        public Investor.localhost.FirmDepot RegisterFirm(Investor.localhost.FirmRegistration request) {
-            return base.Channel.RegisterFirm(request);
+        public Investor.localhost.Transaction[] GetTransactions(string exchangeId) {
+            return base.Channel.GetTransactions(exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.FirmDepot> RegisterFirmAsync(Investor.localhost.FirmRegistration request) {
-            return base.Channel.RegisterFirmAsync(request);
+        public System.Threading.Tasks.Task<Investor.localhost.Transaction[]> GetTransactionsAsync(string exchangeId) {
+            return base.Channel.GetTransactionsAsync(exchangeId);
         }
         
-        public Investor.localhost.FirmDepot GetFirmDepot(string firmName) {
-            return base.Channel.GetFirmDepot(firmName);
+        public void PutTransaction(Investor.localhost.Transaction transaction, string exchangeId) {
+            base.Channel.PutTransaction(transaction, exchangeId);
         }
         
-        public System.Threading.Tasks.Task<Investor.localhost.FirmDepot> GetFirmDepotAsync(string firmName) {
-            return base.Channel.GetFirmDepotAsync(firmName);
+        public System.Threading.Tasks.Task PutTransactionAsync(Investor.localhost.Transaction transaction, string exchangeId) {
+            return base.Channel.PutTransactionAsync(transaction, exchangeId);
         }
         
-        public void SubscribeOnNewShareInformationAvailable() {
-            base.Channel.SubscribeOnNewShareInformationAvailable();
+        public Investor.localhost.FirmDepot RegisterFirm(Investor.localhost.FirmRegistration request, string exchangeId) {
+            return base.Channel.RegisterFirm(request, exchangeId);
         }
         
-        public System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync() {
-            return base.Channel.SubscribeOnNewShareInformationAvailableAsync();
+        public System.Threading.Tasks.Task<Investor.localhost.FirmDepot> RegisterFirmAsync(Investor.localhost.FirmRegistration request, string exchangeId) {
+            return base.Channel.RegisterFirmAsync(request, exchangeId);
         }
         
-        public void SubscribeOnNewFundDepotAvailable() {
-            base.Channel.SubscribeOnNewFundDepotAvailable();
+        public Investor.localhost.FirmDepot GetFirmDepot(string firmName, string exchangeId) {
+            return base.Channel.GetFirmDepot(firmName, exchangeId);
         }
         
-        public System.Threading.Tasks.Task SubscribeOnNewFundDepotAvailableAsync() {
-            return base.Channel.SubscribeOnNewFundDepotAvailableAsync();
+        public System.Threading.Tasks.Task<Investor.localhost.FirmDepot> GetFirmDepotAsync(string firmName, string exchangeId) {
+            return base.Channel.GetFirmDepotAsync(firmName, exchangeId);
         }
         
-        public void SubscribeOnNewOrderAvailable() {
-            base.Channel.SubscribeOnNewOrderAvailable();
+        public void SubscribeOnNewShareInformationAvailable(string exchangeId) {
+            base.Channel.SubscribeOnNewShareInformationAvailable(exchangeId);
         }
         
-        public System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync() {
-            return base.Channel.SubscribeOnNewOrderAvailableAsync();
+        public System.Threading.Tasks.Task SubscribeOnNewShareInformationAvailableAsync(string exchangeId) {
+            return base.Channel.SubscribeOnNewShareInformationAvailableAsync(exchangeId);
         }
         
-        public void SubscribeOnNewInvestorDepotAvailable() {
-            base.Channel.SubscribeOnNewInvestorDepotAvailable();
+        public void SubscribeOnNewFundDepotAvailable(string exchangeId) {
+            base.Channel.SubscribeOnNewFundDepotAvailable(exchangeId);
         }
         
-        public System.Threading.Tasks.Task SubscribeOnNewInvestorDepotAvailableAsync() {
-            return base.Channel.SubscribeOnNewInvestorDepotAvailableAsync();
+        public System.Threading.Tasks.Task SubscribeOnNewFundDepotAvailableAsync(string exchangeId) {
+            return base.Channel.SubscribeOnNewFundDepotAvailableAsync(exchangeId);
         }
         
-        public void SubscribeOnNewTransactionAvailable() {
-            base.Channel.SubscribeOnNewTransactionAvailable();
+        public void SubscribeOnNewOrderAvailable(string exchangeId) {
+            base.Channel.SubscribeOnNewOrderAvailable(exchangeId);
         }
         
-        public System.Threading.Tasks.Task SubscribeOnNewTransactionAvailableAsync() {
-            return base.Channel.SubscribeOnNewTransactionAvailableAsync();
+        public System.Threading.Tasks.Task SubscribeOnNewOrderAvailableAsync(string exchangeId) {
+            return base.Channel.SubscribeOnNewOrderAvailableAsync(exchangeId);
+        }
+        
+        public void SubscribeOnNewInvestorDepotAvailable(string exchangeId) {
+            base.Channel.SubscribeOnNewInvestorDepotAvailable(exchangeId);
+        }
+        
+        public System.Threading.Tasks.Task SubscribeOnNewInvestorDepotAvailableAsync(string exchangeId) {
+            return base.Channel.SubscribeOnNewInvestorDepotAvailableAsync(exchangeId);
+        }
+        
+        public void SubscribeOnNewTransactionAvailable(string exchangeId) {
+            base.Channel.SubscribeOnNewTransactionAvailable(exchangeId);
+        }
+        
+        public System.Threading.Tasks.Task SubscribeOnNewTransactionAvailableAsync(string exchangeId) {
+            return base.Channel.SubscribeOnNewTransactionAvailableAsync(exchangeId);
         }
     }
     
@@ -1542,16 +1586,16 @@ namespace Investor.localhost {
     public interface IBrokerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/RegisterBroker", ReplyAction="http://tempuri.org/IBrokerService/RegisterBrokerResponse")]
-        void RegisterBroker();
+        void RegisterBroker(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/RegisterBroker", ReplyAction="http://tempuri.org/IBrokerService/RegisterBrokerResponse")]
-        System.Threading.Tasks.Task RegisterBrokerAsync();
+        System.Threading.Tasks.Task RegisterBrokerAsync(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/UnregisterBroker", ReplyAction="http://tempuri.org/IBrokerService/UnregisterBrokerResponse")]
-        void UnregisterBroker();
+        void UnregisterBroker(string exchangeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBrokerService/UnregisterBroker", ReplyAction="http://tempuri.org/IBrokerService/UnregisterBrokerResponse")]
-        System.Threading.Tasks.Task UnregisterBrokerAsync();
+        System.Threading.Tasks.Task UnregisterBrokerAsync(string exchangeId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1595,20 +1639,20 @@ namespace Investor.localhost {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void RegisterBroker() {
-            base.Channel.RegisterBroker();
+        public void RegisterBroker(string exchangeId) {
+            base.Channel.RegisterBroker(exchangeId);
         }
         
-        public System.Threading.Tasks.Task RegisterBrokerAsync() {
-            return base.Channel.RegisterBrokerAsync();
+        public System.Threading.Tasks.Task RegisterBrokerAsync(string exchangeId) {
+            return base.Channel.RegisterBrokerAsync(exchangeId);
         }
         
-        public void UnregisterBroker() {
-            base.Channel.UnregisterBroker();
+        public void UnregisterBroker(string exchangeId) {
+            base.Channel.UnregisterBroker(exchangeId);
         }
         
-        public System.Threading.Tasks.Task UnregisterBrokerAsync() {
-            return base.Channel.UnregisterBrokerAsync();
+        public System.Threading.Tasks.Task UnregisterBrokerAsync(string exchangeId) {
+            return base.Channel.UnregisterBrokerAsync(exchangeId);
         }
     }
 }

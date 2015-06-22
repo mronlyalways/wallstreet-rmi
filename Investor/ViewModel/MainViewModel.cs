@@ -13,20 +13,27 @@ namespace Investor.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private IDataService data;
-        private InvestorDepot depot;
 
-        public MainViewModel(IDataService data)
+        public MainViewModel(IDataService data, IEnumerable<string> exchangeNames)
         {
             this.data = data;
-            depot = data.LoadInvestorInformation();
-            MarketInformation = new ObservableCollection<ShareInformation>(data.LoadMarketInformation());
+            Depots = new ObservableCollection<InvestorDepot>();
+            MarketInformation = new ObservableCollection<ShareInformation>();
             OwnedShares = new ObservableCollection<OwningShareDTO>();
-            PendingOrders = new ObservableCollection<Order>(data.LoadPendingOrders());
+            PendingOrders = new ObservableCollection<Order>();
+            var locator = (ViewModelLocator) App.Current.Resources["Locator"];
+            foreach (string name in locator.RegisteredExchanges)
+            {
+                Depots.Add(data.LoadInvestorInformation(name));
+                MarketInformation = new ObservableCollection<ShareInformation>(MarketInformation.Union(data.LoadMarketInformation(name)));
+                PendingOrders = new ObservableCollection<Order>(PendingOrders.Union(data.LoadPendingOrders(name)));
+            }
+            ActiveDepot = Depots.First();
             data.AddNewInvestorInformationAvailableCallback(UpdateInvestorInformation);
             data.AddNewMarketInformationAvailableCallback(UpdateShareInformation);
             data.AddNewOrderAvailableCallback(UpdateOrderInformation);
-            PlaceBuyingOrderCommand = new RelayCommand(PlaceBuyingOrder, () => SelectedBuyingShare != null);
-            PlaceSellingOrderCommand = new RelayCommand(PlaceSellingOrder, () => SelectedSellingShare != null);
+            PlaceBuyingOrderCommand = new RelayCommand(PlaceBuyingOrder, () => SelectedBuyingShare != null && ActiveDepot != null);
+            PlaceSellingOrderCommand = new RelayCommand(PlaceSellingOrder, () => SelectedSellingShare != null && ActiveDepot != null);
             CancelPendingOrderCommand = new RelayCommand(CancelPendingOrder, () => SelectedPendingOrder != null && SelectedPendingOrder.Status == OrderStatus.OPEN);
             LogoutCommand = new RelayCommand(Logout, () => true); 
             
@@ -44,8 +51,9 @@ namespace Investor.ViewModel
 
         private void UpdateInvestorInformation(InvestorDepot d)
         {
-            depot = d;
-            RaisePropertyChanged(() => Budget);
+            var tmp = new ObservableCollection<InvestorDepot>(Depots.Where(x => x.ExchangeName != d.ExchangeName));
+            tmp.Add(d);
+            Depots = tmp;
             UpdateOwnedShares();
         }
 
@@ -61,19 +69,23 @@ namespace Investor.ViewModel
         {
             var collection = new ObservableCollection<OwningShareDTO>();
 
-            foreach (String shareName in depot.Shares.Keys)
+            foreach (InvestorDepot depot in Depots)
             {
-                var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
-                ShareInformation info = infos.First();
-                if (info != null)
+                foreach (String shareName in depot.Shares.Keys)
                 {
-                    OwningShareDTO s = new OwningShareDTO()
+                    var infos = MarketInformation.Where(x => x.FirmName == shareName).ToList();
+                    ShareInformation info = infos.First();
+                    if (info != null)
                     {
-                        ShareName = shareName,
-                        Amount = depot.Shares[shareName],
-                        StockPrice = info.PricePerShare
-                    };
-                    collection.Add(s);
+                        OwningShareDTO s = new OwningShareDTO()
+                        {
+                            ShareName = shareName,
+                            Amount = depot.Shares[shareName],
+                            StockPrice = info.PricePerShare,
+                            ExchangeName = info.ExchangeName
+                        };
+                        collection.Add(s);
+                    }
                 }
             }
 
@@ -82,10 +94,6 @@ namespace Investor.ViewModel
             RaisePropertyChanged(() => DepotValue);
 
         }
-
-        public string Email { get { return depot.Id; } }
-
-        public double Budget { get { return depot.Budget; } }
 
         public double DepotValue
         {
@@ -101,6 +109,50 @@ namespace Investor.ViewModel
             }
         }
 
+        private InvestorDepot activeDepot;
+        public InvestorDepot ActiveDepot
+        {
+            get
+            {
+                return activeDepot;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    activeDepot = value;
+                }
+                else
+                {
+                    activeDepot = Depots.First();
+                }
+                RaisePropertyChanged(() => ActiveDepot);
+                RaisePropertyChanged(() => ActiveMarketInformation);
+            }
+        }
+
+        private ObservableCollection<InvestorDepot> depots;
+        public ObservableCollection<InvestorDepot> Depots
+        {
+            get
+            {
+                return depots;
+            }
+            set
+            {
+                depots = value;
+                RaisePropertyChanged(() => Depots);
+            }
+        }
+
+        public ObservableCollection<ShareInformation> ActiveMarketInformation
+        {
+            get
+            {
+                return new ObservableCollection<ShareInformation>(MarketInformation.Where(x => x.ExchangeName.Equals(ActiveDepot.ExchangeName)));
+            }
+        }
+
         private ObservableCollection<ShareInformation> marketInformation;
         public ObservableCollection<ShareInformation> MarketInformation
         {
@@ -112,6 +164,7 @@ namespace Investor.ViewModel
             {
                 marketInformation = new ObservableCollection<ShareInformation>(from i in value orderby i.FirmName select i);
                 RaisePropertyChanged(() => MarketInformation);
+                RaisePropertyChanged(() => ActiveMarketInformation);
             }
         }
 
@@ -245,7 +298,6 @@ namespace Investor.ViewModel
         }
 
         private bool prioritizeBuying;
-
         public bool PrioritizeBuying
         {
             get
@@ -260,7 +312,6 @@ namespace Investor.ViewModel
         }
 
         private bool prioritizeSelling;
-
         public bool PrioritizeSelling
         {
             get
@@ -284,21 +335,21 @@ namespace Investor.ViewModel
 
         private void PlaceBuyingOrder()
         {
-            var id = Email + DateTime.Now.Ticks.ToString();
-            var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.BUY, ShareName = SelectedBuyingShare.FirmName, Limit = UpperPriceLimit, TotalNoOfShares = NoOfSharesBuying, NoOfProcessedShares = 0, Prioritize = PrioritizeBuying };
-            data.PlaceOrder(order);
+            var id = ActiveDepot.Id + DateTime.Now.Ticks.ToString();
+            var order = new Order() { Id = id, InvestorId = ActiveDepot.Id, Type = OrderType.BUY, ShareName = SelectedBuyingShare.FirmName, Limit = UpperPriceLimit, TotalNoOfShares = NoOfSharesBuying, NoOfProcessedShares = 0, Prioritize = PrioritizeBuying };
+            data.PlaceOrder(order, ActiveDepot.ExchangeName);
         }
 
         private void PlaceSellingOrder()
         {
-            var id = Email + DateTime.Now.Ticks.ToString();
-            var order = new Order() { Id = id, InvestorId = Email, Type = OrderType.SELL, ShareName = SelectedSellingShare.ShareName, Limit = LowerPriceLimit, TotalNoOfShares = NoOfSharesSelling, NoOfProcessedShares = 0, Prioritize = PrioritizeSelling };
-            data.PlaceOrder(order);
+            var id = ActiveDepot.Id + DateTime.Now.Ticks.ToString();
+            var order = new Order() { Id = id, InvestorId = ActiveDepot.Id, Type = OrderType.SELL, ShareName = SelectedSellingShare.ShareName, Limit = LowerPriceLimit, TotalNoOfShares = NoOfSharesSelling, NoOfProcessedShares = 0, Prioritize = PrioritizeSelling };
+            data.PlaceOrder(order, SelectedSellingShare.ExchangeName);
         }
 
         private void CancelPendingOrder()
         {
-            data.CancelOrder(SelectedPendingOrder);
+            data.CancelOrder(SelectedPendingOrder, ActiveDepot.ExchangeName);
             PendingOrders.Remove(SelectedPendingOrder);
         }
 

@@ -8,23 +8,13 @@ namespace Investor.Model
 {
     public class OwningShareDTO
     {
-        public string ShareName
-        {
-            get;
-            set;
-        }
+        public string ExchangeName { get; set; }
 
-        public int Amount
-        {
-            get;
-            set;
-        }
+        public string ShareName { get; set; }
 
-        public double StockPrice
-        {
-            get;
-            set;
-        }
+        public int Amount { get; set; }
+
+        public double StockPrice { get; set; }
 
         public Double Value
         {

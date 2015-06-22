@@ -11,17 +11,19 @@ namespace Broker
 {
     public class BrokerHandler : IBrokerServiceCallback
     {
-        WallstreetDataServiceClient wallstreetClient;
+        private WallstreetDataServiceClient wallstreetClient;
+        private string exchangeId;
 
-        public BrokerHandler(WallstreetDataServiceClient wallstreetClient)
+        public BrokerHandler(WallstreetDataServiceClient wallstreetClient, string exchangeId)
         {
             this.wallstreetClient = wallstreetClient;
+            this.exchangeId = exchangeId;
         }
 
         public FirmRequestResult ProcessFirmRegistration(FirmRegistration request)
         {
             var firmName = request.Id;
-            var depot = wallstreetClient.GetFirmDepot(firmName);
+            var depot = wallstreetClient.GetFirmDepot(firmName, exchangeId);
 
             if (depot == null)
             {
@@ -30,10 +32,10 @@ namespace Broker
 
             depot.OwnedShares += request.Shares;
 
-            var info = wallstreetClient.GetShareInformation(firmName);
+            var info = wallstreetClient.GetShareInformation(firmName, exchangeId);
             if (info == null)
             {
-                info = new ShareInformation { FirmName = firmName, NoOfShares = 0, PricePerShare = request.PricePerShare, PurchasingVolume = 0, SalesVolume = 0 };
+                info = new ShareInformation { FirmName = firmName, NoOfShares = 0, PricePerShare = request.PricePerShare, PurchasingVolume = 0, SalesVolume = 0, ExchangeName = exchangeId };
             }
             info.NoOfShares += request.Shares;
             info.SalesVolume += request.Shares;
@@ -95,7 +97,7 @@ namespace Broker
         public OrderMatchResult ProcessMatchingOrders(Order order, Order[] orders)
         {
             Console.WriteLine("Process order: " + order);
-            var stockPrice = wallstreetClient.GetShareInformation(order.ShareName).PricePerShare;
+            var stockPrice = wallstreetClient.GetShareInformation(order.ShareName, exchangeId).PricePerShare;
             var result = MatchOrders(order, orders.ToList(), stockPrice);
             var newOrder = result.Item1;
             var matches = result.Item2;
@@ -114,15 +116,15 @@ namespace Broker
         private bool IsAffordableForBuyer(string id, IEnumerable<Transaction> transactions)
         {
             var moneyNeeded = transactions.Where(x => x.BuyerId == id).Sum(x => x.TotalCost + x.BuyerProvision);
-            var depot = wallstreetClient.GetInvestorDepot(id);
+            var depot = wallstreetClient.GetInvestorDepot(id, exchangeId);
             return depot.Budget >= moneyNeeded;
         }
 
         private bool SellerHasEnoughShares(string id, string shareName, IEnumerable<Transaction> transactions)
         {
             var sharesNeeded = transactions.Where(x => x.SellerId == id).Sum(x => x.NoOfSharesSold);
-            var seller = wallstreetClient.GetInvestorDepot(id);
-            var balance = seller == null ? wallstreetClient.GetFirmDepot(id).OwnedShares : seller.Shares[shareName];
+            var seller = wallstreetClient.GetInvestorDepot(id, exchangeId);
+            var balance = seller == null ? wallstreetClient.GetFirmDepot(id, exchangeId).OwnedShares : seller.Shares[shareName];
             return balance >= sharesNeeded;
         }
 

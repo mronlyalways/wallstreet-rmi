@@ -11,6 +11,9 @@ namespace WallstreetDataService.Model
     public class ShareInformation
     {
         [DataMember]
+        public string ExchangeName { get; set; }
+
+        [DataMember]
         public string FirmName { get; set; }
 
         [DataMember]

@@ -13,69 +13,75 @@ namespace WallstreetDataService
     public interface IWallstreetDataService
     {
         [OperationContract]
-        IEnumerable<ShareInformation> GetMarketInformation();
+        IEnumerable<string> GetExchanges();
 
         [OperationContract]
-        ShareInformation GetShareInformation(string shareName);
-
-        [OperationContract(IsOneWay = true)]
-        void PutShareInformation(ShareInformation info);
+        IEnumerable<ShareInformation> GetMarketInformation(string exchangeId);
 
         [OperationContract]
-        IEnumerable<InvestorDepot> GetInvestorInformation();
+        ShareInformation GetShareInformation(string shareName, string exchangeId);
+
+        [OperationContract(IsOneWay = true)]
+        void PutShareInformation(ShareInformation info, string exchangeId);
 
         [OperationContract]
-        InvestorDepot GetInvestorDepot(string investorId);
-
-        [OperationContract(IsOneWay = true)]
-        void PutInvestorDepot(InvestorDepot investor);
+        IEnumerable<InvestorDepot> GetInvestorInformation(string exchangeId);
 
         [OperationContract]
-        InvestorDepot LoginInvestor(InvestorRegistration registration);
+        InvestorDepot GetInvestorDepot(string investorId, string exchangeId);
+
+        [OperationContract(IsOneWay = true)]
+        void PutInvestorDepot(InvestorDepot investor, string exchangeId);
 
         [OperationContract]
-        FundDepot GetFundDepot(string fundId);
-
-        [OperationContract(IsOneWay = true)]
-        void LoginFund(FundRegistration registration);
+        InvestorDepot LoginInvestor(InvestorRegistration registration, string exchangeId);
 
         [OperationContract]
-        IEnumerable<Order> GetOrders();
+        IEnumerable<string> GetRegisteredExchanges(string investorId);
 
         [OperationContract]
-        IEnumerable<Order> GetPendingOrders(string investorId);
+        FundDepot GetFundDepot(string fundId, string exchangeId);
 
         [OperationContract(IsOneWay = true)]
-        void PutOrder(Order order);
-
-        [OperationContract(IsOneWay = true)]
-        void DeleteOrder(Order order);
+        void LoginFund(FundRegistration registration, string exchangeId);
 
         [OperationContract]
-        IEnumerable<Transaction> GetTransactions();
-
-        [OperationContract(IsOneWay = true)]
-        void PutTransaction(Transaction transaction);
+        IEnumerable<Order> GetOrders(string exchangeId);
 
         [OperationContract]
-        FirmDepot RegisterFirm(FirmRegistration request);
+        IEnumerable<Order> GetPendingOrders(string investorId, string exchangeId);
+
+        [OperationContract(IsOneWay = true)]
+        void PutOrder(Order order, string exchangeId);
+
+        [OperationContract(IsOneWay = true)]
+        void DeleteOrder(Order order, string exchangeId);
 
         [OperationContract]
-        FirmDepot GetFirmDepot(string firmName);
+        IEnumerable<Transaction> GetTransactions(string exchangeId);
 
         [OperationContract(IsOneWay = true)]
-        void SubscribeOnNewShareInformationAvailable();
+        void PutTransaction(Transaction transaction, string exchangeId);
+
+        [OperationContract]
+        FirmDepot RegisterFirm(FirmRegistration request, string exchangeId);
+
+        [OperationContract]
+        FirmDepot GetFirmDepot(string firmName, string exchangeId);
 
         [OperationContract(IsOneWay = true)]
-        void SubscribeOnNewFundDepotAvailable();
+        void SubscribeOnNewShareInformationAvailable(string exchangeId);
 
         [OperationContract(IsOneWay = true)]
-        void SubscribeOnNewOrderAvailable();
+        void SubscribeOnNewFundDepotAvailable(string exchangeId);
 
         [OperationContract(IsOneWay = true)]
-        void SubscribeOnNewInvestorDepotAvailable();
+        void SubscribeOnNewOrderAvailable(string exchangeId);
 
         [OperationContract(IsOneWay = true)]
-        void SubscribeOnNewTransactionAvailable();
+        void SubscribeOnNewInvestorDepotAvailable(string exchangeId);
+
+        [OperationContract(IsOneWay = true)]
+        void SubscribeOnNewTransactionAvailable(string exchangeId);
     }
 }

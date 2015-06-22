@@ -21,37 +21,37 @@ namespace Investor.Model
         public WcfDataService()
         {
             client = new WallstreetDataServiceClient(new InstanceContext(this));
-            client.SubscribeOnNewShareInformationAvailable();
-            client.SubscribeOnNewOrderAvailable();
-            client.SubscribeOnNewTransactionAvailable();
-            client.SubscribeOnNewInvestorDepotAvailable();
             marketCallbacks = new List<Action<ShareInformation>>();
             orderAddedCallbacks = new List<Action<Order>>();
             investorAddedCallbacks = new List<Action<InvestorDepot>>();
             transactionAddedCallbacks = new List<Action<Transaction>>();
         }
 
-        public InvestorDepot Login(InvestorRegistration r)
+        public InvestorDepot Login(InvestorRegistration r, string exchangeId)
         {
             email = r.Email;
-            return client.LoginInvestor(r);
+            client.SubscribeOnNewShareInformationAvailable(exchangeId);
+            client.SubscribeOnNewOrderAvailable(exchangeId);
+            client.SubscribeOnNewTransactionAvailable(exchangeId);
+            client.SubscribeOnNewInvestorDepotAvailable(exchangeId);
+            return client.LoginInvestor(r, exchangeId);
         }
 
-        public void PlaceOrder(Order order)
+        public void PlaceOrder(Order order, string exchangeId)
         {
-            client.PutOrder(order);
+            client.PutOrder(order, exchangeId);
         }
 
-        public void CancelOrder(Order order)
+        public void CancelOrder(Order order, string exchangeId)
         {
-            client.DeleteOrder(order);
+            client.DeleteOrder(order, exchangeId);
         }
 
-        public InvestorDepot LoadInvestorInformation()
+        public InvestorDepot LoadInvestorInformation(string exchangeId)
         {
             if (email != null)
             {
-                return client.GetInvestorDepot(email);
+                return client.GetInvestorDepot(email, exchangeId);
             }
             else
             {
@@ -59,16 +59,21 @@ namespace Investor.Model
             }
         }
 
-        public IEnumerable<ShareInformation> LoadMarketInformation()
+        public IEnumerable<string> LoadExchangeInformation()
         {
-            return client.GetMarketInformation();
+            return client.GetExchanges();
         }
 
-        public IEnumerable<Order> LoadPendingOrders()
+        public IEnumerable<ShareInformation> LoadMarketInformation(string exchangeId)
+        {
+            return client.GetMarketInformation(exchangeId);
+        }
+
+        public IEnumerable<Order> LoadPendingOrders(string exchangeId)
         {
             if (email != null)
             {
-                return client.GetPendingOrders(email);
+                return client.GetPendingOrders(email, exchangeId);
             }
             else
             {

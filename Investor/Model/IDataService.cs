@@ -10,17 +10,19 @@ namespace Investor.Model
 {
     public interface IDataService : IDisposable
     {
-        InvestorDepot Login(InvestorRegistration r);
+        InvestorDepot Login(InvestorRegistration r, string exchangeId);
 
-        void PlaceOrder(Order order);
+        void PlaceOrder(Order order, string exchangeId);
 
-        void CancelOrder(Order order);
+        void CancelOrder(Order order, string exchangeId);
 
-        InvestorDepot LoadInvestorInformation();
+        InvestorDepot LoadInvestorInformation(string exchangeId);
 
-        IEnumerable<ShareInformation> LoadMarketInformation();
+        IEnumerable<string> LoadExchangeInformation();
 
-        IEnumerable<Order> LoadPendingOrders();
+        IEnumerable<ShareInformation> LoadMarketInformation(string exchangeId);
+
+        IEnumerable<Order> LoadPendingOrders(string exchangeId);
         
         void AddNewMarketInformationAvailableCallback(Action<ShareInformation> callback);
 

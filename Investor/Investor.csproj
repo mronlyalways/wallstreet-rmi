@@ -79,6 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\RegistrationInfo.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="Model\OwningShareDTO.cs" />
     <Compile Include="Model\WcfDataService.cs" />
